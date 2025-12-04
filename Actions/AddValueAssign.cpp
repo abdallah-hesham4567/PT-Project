@@ -1,6 +1,4 @@
-#include "AddValueAssign.h"
-
-
+﻿#include "AddValueAssign.h"
 
 #include "..\ApplicationManager.h"
 
@@ -11,42 +9,49 @@
 using namespace std;
 
 //constructor: set the ApplicationManager pointer inside this action
-AddValueAssign::AddValueAssign(ApplicationManager *pAppManager):Action(pAppManager)
-{}
+AddValueAssign::AddValueAssign(ApplicationManager* pAppManager) :Action(pAppManager)
+{
+}
+
+
+
 
 void AddValueAssign::ReadActionParameters()
 {
-	Input *pIn = pManager->GetInput();
-	Output *pOut = pManager->GetOutput();
-	
-	//Read the (Position) parameter
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+
+	// 1️⃣ اقرأ موقع النقر
 	pOut->PrintMessage("Value Assignment Statement: Click to add the statement");
-
 	pIn->GetPointClicked(Position);
-	pOut->ClearStatusBar();		
+	pOut->ClearStatusBar();
 
-	//TODO: Ask the user in the status bar to enter the LHS and set the data member
+	// 2️⃣ اقرأ LHS من المستخدم وتحقق من صحته
+	pOut->PrintMessage("Enter the variable name for LHS:");
+	LHS = pIn->GetVariable(pOut);   // GetVariable يضمن اسم متغير صالح
 
-	//TODO: Ask the user in the status bar to enter the RHS and set the data member
+	// 3️⃣ اقرأ RHS من المستخدم وتحقق من صحته
+	pOut->PrintMessage("Enter the value for RHS:");
+	RHS = pIn->GetValue(pOut);      // GetValue يضمن قيمة رقمية صحيحة
 
-	//Note: You should validate the LHS to be variable name and RHS to be a value
-	//      Call the appropriate functions for this.
+	pOut->ClearStatusBar();  // نظف الرسائل بعد إدخال البيانات
 }
+
+
 
 void AddValueAssign::Execute()
 {
 	ReadActionParameters();
-		
-	
+
+
 	//Calculating left corner of assignement statement block
 	Point Corner;
-	Corner.x = Position.x - UI.ASSGN_WDTH/2;
-	Corner.y = Position.y ;
-	
-	ValueAssign *pAssign = new ValueAssign(Corner, "", 0);
+	Corner.x = Position.x - UI.ASSGN_WDTH / 2;
+	Corner.y = Position.y;
+
+	ValueAssign* pAssign = new ValueAssign(Corner, LHS, RHS);
 	//TODO: should set the LHS and RHS of pAssign statement
 	//      with the data members set and validated before in ReadActionParameters()
 
 	pManager->AddStatement(pAssign); // Adds the created statement to application manger's statement list
 }
-

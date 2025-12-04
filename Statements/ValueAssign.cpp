@@ -1,5 +1,9 @@
+#pragma once
 #include "ValueAssign.h"
 #include <sstream>
+#include "Input.h"
+
+
 
 using namespace std;
 
@@ -13,18 +17,20 @@ ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS)
 	UpdateStatementText();
 
 	LeftCorner = Lcorner;
-	
+
 	pOutConn = NULL;	//No connectors yet
 
-	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH /2;
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Inlet.y = LeftCorner.y;
 
 	Outlet.x = Inlet.x;
-	Outlet.y = LeftCorner.y + UI.ASSGN_HI;	
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
 }
 
-void ValueAssign::setLHS(const string &L)
+
+void ValueAssign::setLHS(const string& L)
 {
+
 	LHS = L;
 	UpdateStatementText();
 }
@@ -39,8 +45,7 @@ void ValueAssign::setRHS(double R)
 void ValueAssign::Draw(Output* pOut) const
 {
 	//Call Output::DrawAssign function to draw assignment statement 	
-	pOut->DrawAssign(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
-	
+	pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
 
@@ -49,6 +54,6 @@ void ValueAssign::UpdateStatementText()
 {
 	//Build the statement text: Left handside then equals then right handside
 	ostringstream T;
-	T<<LHS<<" = "<<RHS;	
-	Text = T.str();	 
+	T << LHS << " = " << RHS;
+	Text = T.str();
 }

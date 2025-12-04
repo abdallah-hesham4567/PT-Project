@@ -13,7 +13,7 @@ protected:
 	int ID;			//Each Statement has an ID --> must be unique
 	string Text;	//Statement text (e.g.  "X = 5" OR "salary > 3000" and so on)
 	bool Selected;	//true if the statement is selected on the folwchart
-
+	static int NextID;
 
 	virtual void UpdateStatementText() = 0;	//is called when any part of the stat. is edited	
 
@@ -24,9 +24,9 @@ public:
 	void SetSelected(bool s);
 	bool IsSelected() const;
 
-	virtual void Draw(Output* pOut) const  = 0 ;	//Draw the statement
-	
-	
+	virtual void Draw(Output* pOut) const = 0;	//Draw the statement
+
+
 
 	///TODO:The following functions should be supported by the Statement class
 	///		It should then be overridden by each derived Statement
@@ -39,7 +39,7 @@ public:
 
 	//virtual void Simulate();	//Execute the statement in the simulation mode
 
-	//[BONUS] virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
+	// virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
 
 
 	///TODO: Add more functions if needed
