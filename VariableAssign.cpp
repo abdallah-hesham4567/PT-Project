@@ -23,6 +23,7 @@ void VariableAssign::setLHS(const string& L)
 	LHS = L;
 	UpdateStatementText();
 }
+
 void VariableAssign::setRHS(const string& R)
 {
 	RHS = R;

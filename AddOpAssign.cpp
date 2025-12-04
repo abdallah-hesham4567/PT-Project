@@ -1,5 +1,4 @@
 ﻿#include "AddOpAssign.h"
-
 #include "..\ApplicationManager.h"
 
 #include "..\GUI\Input.h"
