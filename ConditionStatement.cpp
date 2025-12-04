@@ -21,6 +21,7 @@ ConditionStatement::ConditionStatement(Point Lcorner, const string& cond)
     UpdateStatementText();
 }
 
+
 void ConditionStatement::setCondition(const string& cond)
 {
     Condition = cond;
@@ -34,8 +35,10 @@ void ConditionStatement::UpdateStatementText()
     Text = T.str();
 }
 
+
 void ConditionStatement::Draw(Output* pOut) const
 {
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
 }
+
 

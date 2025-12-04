@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddCondition.cpp" />
+    <ClCompile Include="AddDeclare.cpp" />
     <ClCompile Include="AddOperationAssign.cpp" />
     <ClCompile Include="AddWhile.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
@@ -276,6 +277,7 @@
     </ClCompile>
     <ClCompile Include="ConditionStatement.cpp" />
     <ClCompile Include="Connector.cpp" />
+    <ClCompile Include="DeclareStatement.cpp" />
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="GUI\Input.cpp" />
     <ClCompile Include="GUI\Output.cpp" />
@@ -292,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddCondition.h" />
+    <ClInclude Include="AddDeclare.h" />
     <ClInclude Include="AddOperationAssign.h" />
     <ClInclude Include="AddWhile.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
@@ -319,6 +322,7 @@
     <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="ConditionStatement.h" />
     <ClInclude Include="Connector.h" />
+    <ClInclude Include="DeclareStatement.h" />
     <ClInclude Include="DEFS.h" />
     <ClInclude Include="Delete.h" />
     <ClInclude Include="GUI\Input.h" />
