@@ -22,12 +22,22 @@ public:
 	void ClearStatusBar();	//Clears the status bar
 	void ClearDrawArea();	//Clears the drawing area
 	void ClearOutputBar(); //Clears the Output bar
+	void Clear_DesignToolBar(); //clears the design toolbar
+	void Clear_SimulationToolBar(); //clears the simulation toolbar
 
 	void PrintMessage(string msg);	//Prints a message on Status bar
 	void DrawString(const int, const int, const string);  //Writes a string in the specified location
 
 	// -- Statements Drawing Functions
-	void DrawAssign(Point Left, int width, int height, string Text, bool Selected = false);
+
+	void DrawStart(Point Left, int width, int height, string Text, bool Selected = false);          //draw ellipse
+	void DrawEnd(Point Left, int width, int height, string Text, bool Selected = false);            // also draw ellipse but it is mentioned in todo so we repeat
+	void DrawAssignAndDeclare(Point Left, int width, int height, string Text, bool Selected = false); //draw Rectangle
+	void DrawConditionalStat(Point Left, int width, int height, string Text, bool Selected = false);      //draw diamond
+	void DrawReadAndWrite(Point Left, int width, int height, string Text, bool Selected = false);      // draw  parallelogram
+	void DrawConnector(Point Start, Point End, bool Selected = false);                                  //draw connector
+
+
 
 	//TODO: Add similar functions for drawing all other statements.
 	//		e.g. DrawDeclareStat(.....), DrawCondtionalStat(......), DrawStart(......), DrawEnd(.......), ...etc
