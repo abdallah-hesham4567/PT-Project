@@ -27,7 +27,7 @@ private:
 
 	Point LeftCorner;	//left corenr of the statement block.
 
-	virtual void UpdateStatementText();
+	
 
 public:
 	ValueAssign(Point Lcorner, string LeftHS = "", double RightHS = 0);
@@ -36,6 +36,7 @@ public:
 	void setRHS(double R);
 
 	virtual void Draw(Output* pOut) const;
+	virtual void UpdateStatementText();
 
 };
 
