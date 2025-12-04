@@ -1,13 +1,14 @@
 #include <cctype> 
 #include "HelperFn.h"
-// this is a test function to check if the input string is a double value
+
 
 bool IsValue(string input)
 {
 	// checks if the input string is a double value
 	// return true if it's double value, false otherwise
-	// Double values can be: 12.5, -12.5, -23, -23. , -23.0 …etc.
-	//TODO: complete this function 
+	// Double values can be: 12.5, -12.5, -23, -23. , -23.0  etc.
+
+
 	if (input.length() == 0) //Check if the input string is empty
 		return false;
 
@@ -53,9 +54,8 @@ bool IsVariable(string input)
 	// Variable names must start with an alphabetic letter (small or capital) or an underscore (_). 
 	// After the first initial letter, variable names can contain letters, numbers and underscores.  
 	// No spaces or special characters, however, are allowed.
-	//TODO: complete this function
 
-	string* cppKeywords = new string[95]
+	string* cppKeywords = new string[95] //c++ keywords which cannot be used as a variable name
 	{
 		"alignas", "alignof", "and", "and_eq", "asm", "auto",
 		"bitand", "bitor", "bool", "break",
@@ -80,6 +80,7 @@ bool IsVariable(string input)
 
 	if (input.size() == 0)
 		return false;
+
 	for (int i = 0; i < 95; i++)
 	{
 		if (cppKeywords[i] == (input))
@@ -108,7 +109,8 @@ OpType ValueOrVariable(string input)
 {
 	// checks if the input string is a double value or a variable name
 	// chand returns enum "OpType" (the enum is declared in the .h)
-	//TODO: complete this function
+
+
 	if (IsVariable(input))		return VARIABLE_OP;
 	else if (IsValue(input))        return VALUE_OP;
 	return INVALID_OP;
