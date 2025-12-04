@@ -25,7 +25,7 @@ class OperatorAssignment : public Statement
 	virtual void Draw(Output* pOut) const;
 	void setOp(char O);
 	virtual void UpdateStatementText();
-	bool ValidateRHS(string RHS);
+	
 
 
 };
