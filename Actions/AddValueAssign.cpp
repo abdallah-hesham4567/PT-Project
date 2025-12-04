@@ -2,9 +2,9 @@
 
 #include "..\ApplicationManager.h"
 
-#include "..\GUI\input.h"
+#include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
-
+#include "..\HelperFn.h"
 #include <sstream>
 using namespace std;
 

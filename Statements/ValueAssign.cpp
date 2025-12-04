@@ -1,7 +1,8 @@
 #pragma once
 #include "ValueAssign.h"
 #include <sstream>
-#include "Input.h"
+#include "..\GUI\Input.h"
+#include "..\GUI\Output.h"
 
 
 
@@ -45,7 +46,7 @@ void ValueAssign::setRHS(double R)
 void ValueAssign::Draw(Output* pOut) const
 {
 	//Call Output::DrawAssign function to draw assignment statement 	
-	pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
+	pOut->DrawAssign(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
 
