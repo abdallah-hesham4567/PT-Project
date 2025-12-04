@@ -29,7 +29,7 @@ public:
 	// It does not return before taking a valid variable name.
 
 	string GetVariable(Output* p0) const;
-
+	string GetVariableOrVal(Output* p0) const;
 
 	//TODO: Add the function Input::GetArithOperator 
 	// to read an arithmetic operator (+, -, * or /) from the user. 
