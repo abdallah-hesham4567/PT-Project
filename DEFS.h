@@ -19,7 +19,7 @@ enum ActionType // The actions supported
 	ADD_OPER_ASSIGN,  //Add operator assignment statement
 	ADD_CONDITION,    //Add a conditional statement (for if and while-loop statements)
 	ADD_READ,  //Add read statement
-	ADD_WRITE, //Addd write statemetn
+	ADD_WRITE, //Add write statement
 
 	ADD_CONNECTOR, //Add a connector between two statements
 	
