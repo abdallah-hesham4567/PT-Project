@@ -1,6 +1,6 @@
 #include <cctype> 
 #include "HelperFn.h"
-
+// this is a test function to check if the input string is a double value
 
 bool IsValue(string input)
 {
