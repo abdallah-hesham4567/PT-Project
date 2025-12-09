@@ -14,14 +14,20 @@ void ActionSelect::Execute()
     pManager->UnselectAll();
 
     Statement* pClicked = pManager->GetStatementAtPoint(P);
-
+    Connector *pClick = pManager->GetConnectorAtPoint(P);
     if (pClicked)
     {
         pClicked->SetSelected(true);
         pOut->PrintMessage("Statement selected.");
     }
+    if (pClick)
+    {
+        pClicked->SetSelected(true);
+        pOut->PrintMessage("connector selected.");
+    }
+
     else
     {
-        pOut->PrintMessage("No statement clicked.");
+        pOut->PrintMessage("No statement nor connector  clicked.");
     }
 }

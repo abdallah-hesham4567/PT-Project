@@ -1,111 +1,111 @@
-#include "Connector.h"
+//#include "Connector.h"
+//
+//Connector::Connector(Statement* Src, Statement* Dst)	
+////When a connector is created, it must have a source statement and a destination statement
+////There are NO FREE connectors in the flowchart
+//{
+//	
+//	SrcStat = Src;
+//	DstStat = Dst;
+//}
+//
+//void Connector::setSrcStat(Statement *Src)
+//{	SrcStat = Src;	}
+//
+//Statement* Connector::getSrcStat()
+//{	return SrcStat;	}
+//
+//void Connector::setDstStat(Statement *Dst)
+//{	DstStat = Dst;	}
+//
+//Statement* Connector::getDstStat()
+//{	return DstStat;	}
+//
+//
+//void Connector::setStartPoint(Point P)
+//{	Start = P;	}
+//
+//Point Connector::getStartPoint()
+//{	return Start;	}
+//
+//void Connector::setEndPoint(Point P)
+//{	End = P;	}
+//
+//Point Connector::getEndPoint()
+//{	return End;	}
+//
+//void Connector::Draw(Output* pOut) const
+//{
+//	///TODO: Call Output to draw a connector from SrcStat to DstStat on the output window
+//}
 
-Connector::Connector(Statement* Src, Statement* Dst)	
-//When a connector is created, it must have a source statement and a destination statement
-//There are NO FREE connectors in the flowchart
-{
-	
-	SrcStat = Src;
-	DstStat = Dst;
-}
 
-void Connector::setSrcStat(Statement *Src)
-{	SrcStat = Src;	}
-
-Statement* Connector::getSrcStat()
-{	return SrcStat;	}
-
-void Connector::setDstStat(Statement *Dst)
-{	DstStat = Dst;	}
-
-Statement* Connector::getDstStat()
-{	return DstStat;	}
-
-
-void Connector::setStartPoint(Point P)
-{	Start = P;	}
-
-Point Connector::getStartPoint()
-{	return Start;	}
-
-void Connector::setEndPoint(Point P)
-{	End = P;	}
-
-Point Connector::getEndPoint()
-{	return End;	}
-
-void Connector::Draw(Output* pOut) const
-{
-	///TODO: Call Output to draw a connector from SrcStat to DstStat on the output window
-}
-
-
-// ==================== Connector.h ====================
-#ifndef CONNECTOR_H
-#define CONNECTOR_H
-
-#include "Defs.h"
-#include <fstream>
-
-class Statement; // Forward declaration
-class Output;    // Forward declaration
-
-class Connector
-{
-private:
-	Statement* SrcStat;  // Pointer to source statement
-	Statement* DstStat;  // Pointer to destination statement
-	Point Start;         // Start point of the connector (outlet of source)
-	Point End;           // End point of the connector (inlet of destination)
-	bool Selected;       // True if connector is selected
-	int OutletBranch;    // 0 for normal, 1 for YES branch, 2 for NO branch (for conditional statements)
-
-public:
-	// Constructor: creates a connector between two statements
-	Connector(Statement* Src, Statement* Dst, int outletBranch = 0);
-
-	// Setters and Getters
-	void setSrcStat(Statement* Src);
-	Statement* getSrcStat();
-
-	void setDstStat(Statement* Dst);
-	Statement* getDstStat();
-
-	void setStartPoint(Point P);
-	Point getStartPoint();
-
-	void setEndPoint(Point P);
-	Point getEndPoint();
-
-	void setOutletBranch(int branch);
-	int getOutletBranch() const;
-
-	void SetSelected(bool s);
-	bool IsSelected() const;
-
-	// Update the start and end points based on current statement positions
-	void UpdateConnectionPoints();
-
-	// Draw the connector on the output window
-	void Draw(Output* pOut) const;
-
-	// Check if a point is inside/near the connector (for selection)
-	bool IsPointInConnector(Point p) const;
-
-	// Save connector to file
-	void Save(ofstream& OutFile) const;
-
-	// Load connector from file
-	void Load(ifstream& InFile);
-
-	// Validate the connector (check if it's properly connected)
-	bool Validate(string& errorMsg) const;
-
-	// Destructor
-	~Connector();
-};
-
-#endif
+//// ==================== Connector.h ====================
+//#ifndef CONNECTOR_H
+//#define CONNECTOR_H
+//
+//#include "Defs.h"
+//#include <fstream>
+//
+//class Statement; // Forward declaration
+//class Output;    // Forward declaration
+//
+//class Connector
+//{
+//private:
+//	Statement* SrcStat;  // Pointer to source statement
+//	Statement* DstStat;  // Pointer to destination statement
+//	Point Start;         // Start point of the connector (outlet of source)
+//	Point End;           // End point of the connector (inlet of destination)
+//	bool Selected;       // True if connector is selected
+//	int OutletBranch;    // 0 for normal, 1 for YES branch, 2 for NO branch (for conditional statements)
+//
+//public:
+//	// Constructor: creates a connector between two statements
+//	Connector(Statement* Src, Statement* Dst, int outletBranch = 0);
+//
+//	// Setters and Getters
+//	void setSrcStat(Statement* Src);
+//	Statement* getSrcStat();
+//
+//	void setDstStat(Statement* Dst);
+//	Statement* getDstStat();
+//
+//	void setStartPoint(Point P);
+//	Point getStartPoint();
+//
+//	void setEndPoint(Point P);
+//	Point getEndPoint();
+//
+//	void setOutletBranch(int branch);
+//	int getOutletBranch() const;
+//
+//	void SetSelected(bool s);
+//	bool IsSelected() const;
+//
+//	// Update the start and end points based on current statement positions
+//	void UpdateConnectionPoints();
+//
+//	// Draw the connector on the output window
+//	void Draw(Output* pOut) const;
+//
+//	// Check if a point is inside/near the connector (for selection)
+//	bool IsPointInConnector(Point p) const;
+//
+//	// Save connector to file
+//	void Save(ofstream& OutFile) const;
+//
+//	// Load connector from file
+//	void Load(ifstream& InFile);
+//
+//	// Validate the connector (check if it's properly connected)
+//	bool Validate(string& errorMsg) const;
+//
+//	// Destructor
+//	~Connector();
+//};
+//
+//#endif
 
 // ==================== Connector.cpp ====================
 #include "Connector.h"
