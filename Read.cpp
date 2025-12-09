@@ -38,3 +38,29 @@ void Read::UpdateStatementText()
     T << "read " << VarName;
     Text = T.str();
 }
+Point Read::GetOutletPoint(int branch) const
+{
+    // Rectangle - outlet at bottom center
+    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
+        LeftCorner.y + UI.ASSGN_HI);
+}
+
+Point Read::GetInletPoint() const
+{
+    // Rectangle - inlet at top center
+    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
+        LeftCorner.y);
+}
+
+int Read::GetExpectedOutConnCount() const
+{
+    return 1; // Normal statement has 1 output
+}
+
+bool Read::IsPointInside(Point p) const
+{
+    return (p.x >= LeftCorner.x &&
+        p.x <= LeftCorner.x + UI.ASSGN_WDTH &&
+        p.y >= LeftCorner.y &&
+        p.y <= LeftCorner.y + UI.ASSGN_HI);
+}

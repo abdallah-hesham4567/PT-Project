@@ -27,6 +27,15 @@ public:
 	void setRHS(const string& R);
 	virtual void Draw(Output* pOut) const;
 
+	virtual Point GetOutletPoint(int branch = 0) const;
+	virtual Point GetInletPoint() const;
+	virtual int GetExpectedOutConnCount() const;
+	virtual bool IsPointInside(Point p) const;
+
+	virtual void Draw(Output* pOut) const;
+	virtual void Save(ofstream& OutFile) const;
+	virtual void Load(ifstream& InFile);
+
 
 };
 #endif

@@ -38,3 +38,30 @@ void Write::UpdateStatementText()
     T << "write " << Expr;
     Text = T.str();
 }
+
+Point Write::GetOutletPoint(int branch) const
+{
+    // Rectangle - outlet at bottom center
+    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
+        LeftCorner.y + UI.ASSGN_HI);
+}
+
+Point Write::GetInletPoint() const
+{
+    // Rectangle - inlet at top center
+    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
+        LeftCorner.y);
+}
+
+int Write::GetExpectedOutConnCount() const
+{
+    return 1; // Normal statement has 1 output
+}
+
+bool Write::IsPointInside(Point p) const
+{
+    return (p.x >= LeftCorner.x &&
+        p.x <= LeftCorner.x + UI.ASSGN_WDTH &&
+        p.y >= LeftCorner.y &&
+        p.y <= LeftCorner.y + UI.ASSGN_HI);
+}

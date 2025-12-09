@@ -1,7 +1,19 @@
 #include "ApplicationManager.h"
 #include "Actions\AddValueAssign.h"
+#include "AddCondition.h"
+#include "AddRead.h"
+#include "AddWrite.h"
+#include "AddEnd.h"
+#include"AddDeclare.h"
+#include "AddStart.h"
+#include "AddOperationAssign.h"
+#include "AddVariableAssign.h"
+#include "AddWhile.h"
+
+
 #include "GUI\Input.h"
 #include "GUI\Output.h"
+
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -124,6 +136,7 @@ Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 	return nullptr;
 }
 
+
 Statement* ApplicationManager::GetStatementAtPoint(Point p) const
 {
 	for (int i = StatCount - 1; i >= 0; i--)
@@ -173,6 +186,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case ADD_CONDITION:
 		///create AddCondition Action here
+		pAct = new AddCondition(this);
 
 		break;
 

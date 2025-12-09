@@ -28,5 +28,14 @@ public:
     void setFalseBranch(Connector* conn) { FalseBranch = conn; }
     Connector* getTrueBranch() const { return TrueBranch; }
     Connector* getFalseBranch() const { return FalseBranch; }
+    virtual Point GetOutletPoint(int branch = 0) const;
+    virtual Point GetInletPoint() const;
+    virtual int GetExpectedOutConnCount() const;
+    virtual bool IsConditional() const;
+    virtual bool IsPointInside(Point p) const;
+
+    virtual void Draw(Output* pOut) const;
+    virtual void Save(ofstream& OutFile) const;
+    virtual void Load(ifstream& InFile);
 
 };
