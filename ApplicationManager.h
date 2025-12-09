@@ -30,7 +30,7 @@ private:
 	Output* pOut;
 
 public:
-	ApplicationManager();
+	ApplicationManager() { Clipboard = nullptr; };
 	~ApplicationManager();
 
 	// == Actions Related Functions ==
@@ -57,7 +57,7 @@ public:
 	Connector* GetSelectedConnector() const;
 	void SetSelectedConnector(Connector* pConn);
 	void UpdateAllConnectors();
-
+	void SetClipboard(Statement* S);
 	Statement* GetStatementAtPoint(Point p) const;
 
 	void SaveAll(ofstream& OutFile);
