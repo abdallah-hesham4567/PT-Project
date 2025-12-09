@@ -28,4 +28,15 @@ public:
     void setFalseBranch(Statement* stmt) { FalseBranch = stmt; }
     Statement* getTrueBranch() const { return TrueBranch; }
     Statement* getFalseBranch() const { return FalseBranch; }
+
+    virtual Point GetOutletPoint(int branch = 0) const;
+    virtual Point GetInletPoint() const;
+    virtual int GetExpectedOutConnCount() const;
+    virtual bool IsConditional() const;
+    virtual bool IsPointInside(Point p) const;
+
+    virtual void Draw(Output* pOut) const;
+    virtual void Save(ofstream& OutFile) const;
+    virtual void Load(ifstream& InFile);
+
 };

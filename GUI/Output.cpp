@@ -35,6 +35,8 @@ Output::Output()
 	UI.START_END_WDTH = 160;             // width ellipse 
 	UI.START_END_HI = 60;                // hight ellipse
 
+	UI.ConnectorColor = BLACK;
+	UI.HighlightColor = RED;
 
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, 0, 0);

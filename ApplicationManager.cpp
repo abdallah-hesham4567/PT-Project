@@ -12,8 +12,9 @@ ApplicationManager::ApplicationManager()
 
 	StatCount = 0;
 	ConnCount = 0;
-	pSelectedStat = NULL;	//no Statement is selected yet
-	pClipboard = NULL;
+	SelectedStatement = NULL;	//no Statement is selected yet
+	Clipboard = NULL;
+	SelectedConnector = NULL;
 
 	//Create an array of Statement pointers and set them to NULL		
 	for (int i = 0; i < MaxCount; i++)
@@ -21,6 +22,8 @@ ApplicationManager::ApplicationManager()
 		StatList[i] = NULL;
 		ConnList[i] = NULL;
 	}
+	pOut = new Output();
+	pIn = pOut->CreateInput();
 }
 
 
@@ -28,7 +31,128 @@ ApplicationManager::ApplicationManager()
 //								Actions Related Functions							//
 //==================================================================================//
 
+void ApplicationManager::AddConnector(Connector* pConn)
+{
+	if (ConnCount < MaxCount && pConn)
+	{
+		ConnList[ConnCount++] = pConn;
+	}
+}
 
+void ApplicationManager::DeleteConnector(Connector* pConn)
+{
+	if (!pConn) return;
+
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] == pConn)
+		{
+			delete ConnList[i];
+
+			// Shift remaining connectors
+			for (int j = i; j < ConnCount - 1; j++)
+			{
+				ConnList[j] = ConnList[j + 1];
+			}
+			ConnList[ConnCount - 1] = nullptr;
+			ConnCount--;
+
+			if (SelectedConnector == pConn)
+				SelectedConnector = nullptr;
+
+			return;
+		}
+	}
+}
+
+int ApplicationManager::GetOutConnCount(Statement* pStat) const
+{
+	if (!pStat) return 0;
+
+	int count = 0;
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] && ConnList[i]->getSrcStat() == pStat)
+			count++;
+	}
+	return count;
+}
+
+int ApplicationManager::GetInConnCount(Statement* pStat) const
+{
+	if (!pStat) return 0;
+
+	int count = 0;
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] && ConnList[i]->getDstStat() == pStat)
+			count++;
+	}
+	return count;
+}
+
+
+void ApplicationManager::DeleteStatementConnectors(Statement* pStat)
+{
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] &&
+			(ConnList[i]->getSrcStat() == pStat || ConnList[i]->getDstStat() == pStat))
+		{
+			delete ConnList[i];
+
+			for (int j = i; j < ConnCount - 1; j++)
+			{
+				ConnList[j] = ConnList[j + 1];
+			}
+			ConnList[ConnCount - 1] = nullptr;
+			ConnCount--;
+			i--;
+		}
+	}
+}
+
+Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
+{
+	for (int i = ConnCount - 1; i >= 0; i--)
+	{
+		if (ConnList[i] && ConnList[i]->IsPointInConnector(p))
+		{
+			return ConnList[i];
+		}
+	}
+	return nullptr;
+}
+
+Statement* ApplicationManager::GetStatementAtPoint(Point p) const
+{
+	for (int i = StatCount - 1; i >= 0; i--)
+	{
+		if (StatList[i] && StatList[i]->IsPointInside(p))
+		{
+			return StatList[i];
+		}
+	}
+	return nullptr;
+}
+
+void ApplicationManager::UpdateAllConnectors()
+{
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i])
+		{
+			ConnList[i]->UpdateConnectionPoints();
+		}
+	}
+}
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
 ActionType ApplicationManager::GetUserAction() const
 {
 	//Ask the input to get the action from the user.
@@ -105,28 +229,28 @@ Statement* ApplicationManager::GetStatement(Point P) const
 //Returns the selected statement
 Statement* ApplicationManager::GetSelectedStatement() const
 {
-	return pSelectedStat;
+	return SelectedStatement;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 //Set the statement selected by the user
 void ApplicationManager::SetSelectedStatement(Statement* pStat)
 {
-	pSelectedStat = pStat;
+	SelectedStatement = pStat;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the Clipboard
 Statement* ApplicationManager::GetClipboard() const
 {
-	return pClipboard;
+	return Clipboard;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 //Set the Clipboard
 void ApplicationManager::SetClipboard(Statement* pStat)
 {
-	pClipboard = pStat;
+	Clipboard = pStat;
 }
 
 
@@ -146,9 +270,36 @@ void ApplicationManager::UpdateInterface() const
 
 	//Draw all connections
 	for (int i = 0; i < ConnCount; i++)
+		if (ConnList[i])
 		ConnList[i]->Draw(pOut);
 
 }
+
+void ApplicationManager::SaveAll(ofstream& OutFile)
+{
+	// Save statements count
+	OutFile << StatCount << endl;
+
+	// Save each statement
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (StatList[i])
+			StatList[i]->Save(OutFile);
+	}
+
+	// Save connectors count  // ADD THIS
+	OutFile << ConnCount << endl;
+
+	// Save each connector
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i])
+			ConnList[i]->Save(OutFile);
+	}
+}
+
+
+
 
 ///		////////////////////////////////////////Validation Function///////////////////////////////////////////	
 bool ApplicationManager::Validate() const

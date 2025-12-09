@@ -26,5 +26,7 @@ public:
 	void setLHS(const string& L);
 	void setRHS(const string& R);
 	virtual void Draw(Output* pOut) const;
+
+
 };
 #endif

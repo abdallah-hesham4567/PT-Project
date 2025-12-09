@@ -21,11 +21,35 @@ protected:
 
 public:
 	Statement();
-	void SetSelected(bool s);
-	bool IsSelected() const;
+	//void SetSelected(bool s);
+	//bool IsSelected() const;
 
 	virtual void Draw(Output* pOut) const = 0;	//Draw the statement
 
+    // Get outlet point for connectors (branch: 0=default, 1=YES, 2=NO)
+    virtual Point GetOutletPoint(int branch = 0) const = 0;
+
+    // Get inlet point for connectors
+    virtual Point GetInletPoint() const = 0;
+
+    // Get expected number of output connectors
+    virtual int GetExpectedOutConnCount() const = 0;
+
+    // Check if this is a conditional statement
+    virtual bool IsConditional() const { return false; }
+
+    // Check if point is inside statement (for selection)
+    virtual bool IsPointInside(Point p) const = 0;
+
+    // Existing virtual methods
+    virtual void Draw(Output* pOut) const = 0;
+    virtual void Save(ofstream& OutFile) const = 0;
+    virtual void Load(ifstream& InFile) = 0;
+
+    // Getters/Setters
+    int GetID() const { return ID; }
+    void SetSelected(bool s) { Selected = s; }
+    bool IsSelected() const { return Selected; }
 
 
 	///TODO:The following functions should be supported by the Statement class

@@ -30,6 +30,8 @@ struct UI_Info	//User Interface Info.
 	int ASSGN_WDTH;		//Assignment statement default width
 	int ASSGN_HI;		//Assignment statement default height
 
+	color ConnectorColor;      // ADD THIS
+	color HighlightColor;      // ADD THIS (if not exists)
 
 
 	// Conditional Statement size

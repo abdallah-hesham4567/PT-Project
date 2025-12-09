@@ -19,11 +19,11 @@ private:
 	Statement* StatList[MaxCount];	//List of all statements (Array of pointers)
 	Connector* ConnList[MaxCount];	//List of all connectors (Array of pointers)
 
-	Statement* pSelectedStat; //a pointer to the last selected statement
+	Statement* SelectedStatement; //a pointer to the last selected statement
 	//you can set and get this pointer
-	Statement* pClipboard;    //a pointer to the last copied/cut statement
+	Statement* Clipboard;    //a pointer to the last copied/cut statement
 	//you can set and get this pointer
-
+	Connector* SelectedConnector;
 //Pointers to Input and Output classes
 	Input* pIn;
 	Output* pOut;
@@ -44,7 +44,25 @@ public:
 	//      WITHOUT breaking class responsibilities
 
 	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
-	Connector* GetConnector(Point P) const;	//search for a Connector where point P belongs
+	Connector* GetConnectorAtPoint(Point p) const;
+	//search for a Connector where point P belongs
+	void DeleteConnector(Connector* pConn);
+	int GetOutConnCount(Statement* pStat) const;
+	int GetInConnCount(Statement* pStat) const;
+	Connector** GetOutConnectors(Statement* pStat, int& count) const;
+	void DeleteStatementConnectors(Statement* pStat);
+	bool ValidateConnectors(string& errorMsg) const;
+	Connector* GetSelectedConnector() const;
+	void SetSelectedConnector(Connector* pConn);
+	void UpdateAllConnectors();
+
+	Statement* GetStatementAtPoint(Point p) const;
+
+	void SaveAll(ofstream& OutFile);
+
+
+
+
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)
