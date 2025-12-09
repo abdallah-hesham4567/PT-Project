@@ -4,6 +4,7 @@
 #include "..//GUI//Input.h"
 #include "HelperFn.h"
 #include <sstream>
+#include "ApplicationManager.h"
 
 using namespace std;
 class OperatorAssignment : public Statement
@@ -34,7 +35,7 @@ class OperatorAssignment : public Statement
 	virtual void Draw(Output* pOut) const;
 	virtual void Save(ofstream& OutFile) const;
 	virtual void Load(ifstream& InFile);
-
+	virtual void Edit(ApplicationManager* pManager);
 
 	
 

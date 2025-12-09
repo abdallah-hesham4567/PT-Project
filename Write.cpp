@@ -37,12 +37,17 @@ void Write::Edit(ApplicationManager* pManager)
 {
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
-
-    pOut->PrintMessage("Edit Write - enter variable name or message:");
-    string newContent = pIn->GetString(pOut);
-    this->Text = newContent;
-    UpdateStatementText();
-    pOut->ClearStatusBar();
+    pOut->PrintMessage("Edit Write Statement: Enter new expression:");
+    string newExpr = pIn->GetString(pOut);
+    if (!newExpr.empty())
+    {
+        setExpr(newExpr);
+        pOut->PrintMessage("Write statement updated.");
+    }
+    else
+    {
+        pOut->PrintMessage("Edit cancelled. Expression not changed.");
+	}
 }
 
 void Write::UpdateStatementText()

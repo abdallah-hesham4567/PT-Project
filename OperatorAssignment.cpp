@@ -1,6 +1,5 @@
 ﻿#include "OperatorAssignment.h"
 
-
 OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, string Oper, string R1, string R2)
 {
     LHS = LeftHS;
@@ -48,6 +47,27 @@ void OperatorAssignment::Draw(Output* pOut) const
 {
     pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
+
+void OperatorAssignment::Edit(ApplicationManager* pManager)
+{
+    Input* pIn = pManager->GetInput();
+    Output* pOut = pManager->GetOutput();
+    pOut->PrintMessage("Edit Operator Assignment Statement:");
+    pOut->PrintMessage("Enter new LHS variable name:");
+    string newLHS = pIn->GetVariable(pOut);
+    setLHS(newLHS);
+    pOut->PrintMessage("Enter new first operand (RHS1):");
+    string newRHS1 = pIn->GetVariableOrVal(pOut);
+    setRHS1(newRHS1);
+    pOut->PrintMessage("Enter new operator (+, -, *, /):");
+    string newOp = pIn->GetArithOperator(pOut);
+    setOp(newOp[0]);
+    pOut->PrintMessage("Enter new second operand (RHS2):");
+    string newRHS2 = pIn->GetVariableOrVal(pOut);
+    setRHS2(newRHS2);
+	pOut->ClearStatusBar();
+}
+
 
 
 void OperatorAssignment::UpdateStatementText()

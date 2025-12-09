@@ -75,19 +75,12 @@ void VariableAssign::Edit(ApplicationManager* pManager)
 {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-
-	// edit left-hand side variable
-	pOut->PrintMessage("Enter new LHS variable name:");
-	string newLHS = pIn->GetString(pOut);
-	// replace 'LHS' with actual member name if different
-	this->LHS = newLHS;
-
-	// edit right-hand side expression
-	pOut->PrintMessage("Enter new RHS expression:");
-	string newRHS = pIn->GetString(pOut);
-	// replace 'RHS' with actual member name if different
-	this->RHS = newRHS;
-
-	UpdateStatementText();
+	pOut->PrintMessage("Editing Variable Assignment Statement: Enter new LHS variable name:");
+	string newLHS = pIn->GetVariable(pOut);
+	pOut->PrintMessage("Editing Variable Assignment Statement: Enter new RHS variable name:");
+	string newRHS = pIn->GetVariable(pOut);
+	// Update LHS and RHS
+	setLHS(newLHS);
+	setRHS(newRHS);
 	pOut->ClearStatusBar();
 }

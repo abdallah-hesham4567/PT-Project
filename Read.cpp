@@ -70,11 +70,15 @@ void Read::Edit(ApplicationManager* pManager)
 {
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
-
-    pOut->PrintMessage("Enter new variable name: ");
-    string newVar = pIn->GetString(pOut);
-
-    VarName = newVar;   // Update internal variable
-
-    UpdateStatementText();   // regenerate text
+    pOut->PrintMessage("Editing Read Statement: Enter variable name: ");
+    string varName = pIn->GetString(pOut);
+    if (!varName.empty())
+    {
+        setVarName(varName);
+        pOut->PrintMessage("Read statement updated.");
+    }
+    else
+    {
+        pOut->PrintMessage("Edit cancelled. Variable name cannot be empty.");
+	}
 }

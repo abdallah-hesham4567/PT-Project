@@ -1,6 +1,7 @@
 #include "DeclareStatement.h"
 #include "..\GUI\Output.h"
 #include <sstream>
+#include "..\ApplicationManager.h"
 using namespace std;
 
 DeclareStatement::DeclareStatement(Point Lcorner, const string& var, bool hasVal, double val)
@@ -73,6 +74,29 @@ bool DeclareStatement::IsPointInside(Point p) const
         p.x <= LeftCorner.x + UI.ASSGN_WDTH &&
         p.y >= LeftCorner.y &&
         p.y <= LeftCorner.y + UI.ASSGN_HI);
+}
+
+void DeclareStatement::Edit(ApplicationManager* pManager)
+{
+    Input* pIn = pManager->GetInput();
+    Output* pOut = pManager->GetOutput();
+    pOut->PrintMessage("Edit Declare Statement - enter variable name:");
+    string newVar = pIn->GetVariable(pOut);
+    setVariable(newVar);
+	pOut->PrintMessage("Do you want to initialize it? (OK/NO THANKS)");
+    string choice = pIn->GetString(pOut);
+    if (choice == "OK"||choice=="Ok"||choice=="ok")
+    {
+        pOut->PrintMessage("Enter initial value:");
+        double val = pIn->GetValue(pOut);
+        setValue(val);
+    }
+    else
+    {
+        HasValue = false;
+        UpdateStatementText();
+    }
+	pOut->ClearStatusBar();
 }
 
 

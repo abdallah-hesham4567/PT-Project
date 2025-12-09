@@ -1,6 +1,6 @@
 #include "Start.h"
 #include "..\GUI\Output.h"
-
+#include "ApplicationManager.h"
 Start::Start(Point C)
 {
     Center = C;
@@ -25,6 +25,11 @@ void Start::Draw(Output* pOut) const
 {
     // DrawStart expects center point, width, height, text, selected
     pOut->DrawStart(Center, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
+}
+
+void Start::Edit(ApplicationManager* pManager)
+{
+	// Start statement has no editable parameters
 }
 
 

@@ -3,7 +3,7 @@
 #include <sstream>
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
-
+#include "..\ApplicationManager.h"
 
 
 using namespace std;
@@ -47,6 +47,31 @@ void ValueAssign::Draw(Output* pOut) const
 {
 	//Call Output::DrawAssign function to draw assignment statement 	
 	pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
+}
+
+void ValueAssign::Edit(ApplicationManager* pManager)
+{
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+	pOut->PrintMessage("Editing Value Assignment Statement: Enter new LHS variable name:");
+	string newLHS = pIn->GetVariable(pOut);
+	if (newLHS.empty()) // User cancelled
+	{
+		pOut->PrintMessage("Edit cancelled.");
+		return;
+	}
+	pOut->PrintMessage("Enter new RHS value:");
+	double newRHS;
+	newRHS = pIn->GetValue(pOut);
+	bool validRHS = true; // Assume valid if GetValue returns a double; add validation if needed
+	if (!validRHS) // User cancelled or invalid input
+	{
+		pOut->PrintMessage("Edit cancelled or invalid RHS value.");
+		return;
+	}
+	setLHS(newLHS);
+	setRHS(newRHS);
+	pOut->PrintMessage("Value Assignment Statement edited successfully.");
 }
 
 

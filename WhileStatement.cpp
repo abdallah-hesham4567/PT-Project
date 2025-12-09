@@ -1,6 +1,7 @@
 #include "WhileStatement.h"
 #include "..\GUI\Output.h"
 #include <sstream>
+#include "ApplicationManager.h"
 using namespace std;
 
 
@@ -39,6 +40,21 @@ void WhileStatement::UpdateStatementText()
 void WhileStatement::Draw(Output* pOut) const
 {
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
+}
+
+void WhileStatement::Edit(ApplicationManager* pManager)
+{
+    Input* pIn = pManager->GetInput();
+    Output* pOut = pManager->GetOutput();
+    pOut->PrintMessage("Edit While Statement Condition: Enter new LHS:");
+    string LHS = pIn->GetVariableOrVal(pOut);
+    pOut->PrintMessage("Enter new comparison operator (==, !=, <, <=, >, >=):");
+    string op = pIn->GetCompOperator(pOut);
+    pOut->PrintMessage("Enter new RHS:");
+    string RHS = pIn->GetVariableOrVal(pOut);
+    string newCondition = LHS + " " + op + " " + RHS;
+    setCondition(newCondition);
+	pOut->ClearStatusBar();
 }
 
 Point WhileStatement::GetOutletPoint(int branch) const

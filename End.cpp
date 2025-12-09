@@ -1,6 +1,6 @@
 #include "End.h"
 #include "..\GUI\Output.h"
-
+#include "..\ApplicationManager.h"
 End::End(Point C)
 {
     Center = C;
@@ -51,4 +51,9 @@ bool End::IsPointInside(Point p) const
         p.x <= Center.x + UI.START_END_HI / 2 &&
         p.y >= Center.y - UI.START_END_HI / 2 &&
         p.y <= Center.y + UI.START_END_HI / 2);
+}
+
+void End::Edit(ApplicationManager* pManager)
+{
+	// No editable parameters for End statement
 }

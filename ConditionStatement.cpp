@@ -1,7 +1,7 @@
 #include "ConditionStatement.h"
 #include "..\GUI\Output.h"
 #include <sstream>
-
+#include "ApplicationManager.h"
 ConditionStatement::ConditionStatement(Point Lcorner, const string& cond)
 {
     LeftCorner = Lcorner;
@@ -39,6 +39,23 @@ void ConditionStatement::UpdateStatementText()
 void ConditionStatement::Draw(Output* pOut) const
 {
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
+}
+
+void ConditionStatement::Edit(ApplicationManager* pManager)
+{
+    Input* pIn = pManager->GetInput();
+    Output* pOut = pManager->GetOutput();
+    pOut->PrintMessage("Editing Condition Statement: Enter the LHS:");
+	string LHS = pIn->GetVariableOrVal(pOut);  
+	pOut->PrintMessage("Enter the comparison operator (==, !=, <, <=, >, >=):");
+	string op = pIn->GetCompOperator(pOut);
+    pOut->PrintMessage("Enter the RHS:");
+    string RHS = pIn->GetVariableOrVal(pOut);      
+    string ConditionText = LHS + " " + op + " " + RHS;
+    setCondition(ConditionText);
+	pOut->ClearStatusBar();
+    
+
 }
 
 
