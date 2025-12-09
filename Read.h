@@ -7,7 +7,7 @@
 class Read : public Statement
 {
 private:
-    std::string VarName;
+    string VarName;
     Connector* pOutConn;
     Point Inlet;
     Point Outlet;
@@ -29,6 +29,7 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
+    string getStatementType() const override { return "READ"; }
     virtual void Edit(ApplicationManager* pManager);
 };
 

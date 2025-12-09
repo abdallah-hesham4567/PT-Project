@@ -104,16 +104,23 @@ void DeclareStatement::Save(ofstream& OutFile) const
     OutFile << "DECLARE\t" << ID << "\t" << pConn->getPosition().x << "\t"
         << pConn->getPosition().y << "\t" << VarName << "\n";
 }
+//void DeclareStatement::Load(ifstream& InFile)
+//{
+//    int x, y;
+//    InFile >> ID >> x >> y >> VariableName;
+//    LeftCorner = Point(x, y);
+//    Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+//    Inlet.y = LeftCorner.y;
+//    Outlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+//    Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+//    UpdateStatementText();
+//}
+
 void DeclareStatement::Load(ifstream& InFile)
 {
     int x, y;
     InFile >> ID >> x >> y >> VariableName;
-    LeftCorner = Point(x, y);
-    Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
-    Inlet.y = LeftCorner.y;
-    Outlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
-    Outlet.y = LeftCorner.y + UI.ASSGN_HI;
-    UpdateStatementText();
+    pOutconn->setPosition(Point(x, y));
 }
 
 

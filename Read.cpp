@@ -82,3 +82,18 @@ void Read::Edit(ApplicationManager* pManager)
         pOut->PrintMessage("Edit cancelled. Variable name cannot be empty.");
 	}
 }
+
+void Read::Save(ofstream& OutFile) const
+{
+    OutFile << "READ\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
+        << pOutconn->getPosition().y << "\t" << VarName << "\n";
+}
+
+void Read::Load(ifstream& InFile)
+{
+    int x, y;
+    InFile >> ID >> x >> y >> VarName;
+    pOutconn->setPosition(Point(x, y));
+}
+
+

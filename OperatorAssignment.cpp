@@ -104,6 +104,34 @@ bool OperatorAssignment::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.ASSGN_HI);
 }
 
+void OperatorAssignment::Save(ofstream& OutFile) const
+{
+    OutFile << "OP_ASSIGN\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
+        << pOutconn->getPosition().y << "\t" << LHS << "\t"
+        << RHS1 << "\t" << Op << "\t" << RHS2 << "\n";
+}
+
+void OperatorAssignment::Load(ifstream& InFile)
+{
+    int x, y;
+    InFile >> ID >> x >> y >> LHS >> RHS1 >> Op >> RHS2;
+    pOutconn->setPosition(Point(x, y));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //
 //bool OperatorAssignment::ValidateRHS(string RHS)

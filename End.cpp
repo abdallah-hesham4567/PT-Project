@@ -57,3 +57,17 @@ void End::Edit(ApplicationManager* pManager)
 {
 	// No editable parameters for End statement
 }
+
+void End::Save(ofstream& OutFile) const
+{
+    OutFile << "END\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
+        << pOutconn->getPosition().y << "\n";
+}
+
+void End::Load(ifstream& InFile)
+{
+    int x, y;
+    InFile >> ID >> x >> y;
+    pOutconn->setPosition(Point(x, y));
+}
+

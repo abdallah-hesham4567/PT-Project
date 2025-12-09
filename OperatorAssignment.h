@@ -35,6 +35,8 @@ class OperatorAssignment : public Statement
 	virtual void Draw(Output* pOut) const;
 	virtual void Save(ofstream& OutFile) const;
 	virtual void Load(ifstream& InFile);
+	string getStatementType() const override { return "OP_ASSIGN"; }
+
 	virtual void Edit(ApplicationManager* pManager);
 
 	

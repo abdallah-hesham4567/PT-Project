@@ -105,5 +105,17 @@ bool ConditionStatement::IsPointInside(Point p) const
     return ((dx * halfH + dy * halfW) <= (halfW * halfH));
 }
 
+void ConditionStatement::Save(ofstream& OutFile) const
+{
+    OutFile << "COND\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
+        << pOutconn->getPosition().y << "\t" << Condition << "\n";
+}
+
+void ConditionStatement::Load(ifstream& InFile)
+{
+    int x, y;
+    InFile >> ID >> x >> y >> Condition;
+    pOutconn->setPosition(Point(x, y));
+}
 
 
