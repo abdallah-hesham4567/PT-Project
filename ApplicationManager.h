@@ -70,7 +70,7 @@ public:
 	void SetSelectedStatement(Statement* pStat); //Set the Statement selected by the user
 	Statement* GetClipboard() const;	         //Returns the Clipboard
 	void SetClipboard(Statement* pStat);         //Set the Clipboard
-
+	void UnselectAll();
 	// == Interface Management Functions ==
 	Input* GetInput() const;        //Return pointer to the input
 	Output* GetOutput() const;      //Return pointer to the output

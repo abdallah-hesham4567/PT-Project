@@ -149,6 +149,13 @@ Statement* ApplicationManager::GetStatementAtPoint(Point p) const
 	return nullptr;
 }
 
+void ApplicationManager::UnselectAll()
+{
+	for (auto s : StatList)
+		s->SetSelected(false);
+}
+
+
 void ApplicationManager::UpdateAllConnectors()
 {
 	for (int i = 0; i < ConnCount; i++)

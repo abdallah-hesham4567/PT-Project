@@ -56,8 +56,8 @@ public:
 	///		It should then be overridden by each derived Statement
 	///		Decide the parameters that you should pass to each function and its return type
 
-	//virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
-	//virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
+	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
+	virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
 
 	virtual void Edit() = 0;		//Edit the Statement parameter
 

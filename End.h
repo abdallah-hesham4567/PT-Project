@@ -17,15 +17,12 @@ public:
     End(Point C);
 
     virtual void Draw(Output* pOut) const;
-
     Connector* getInputConnector() const { return pInConn; }
     void setInputConnector(Connector* c) { pInConn = c; }
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
     virtual bool IsPointInside(Point p) const;
-
-   
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
 };
