@@ -14,6 +14,7 @@ protected:
 	string Text;	//Statement text (e.g.  "X = 5" OR "salary > 3000" and so on)
 	bool Selected;	//true if the statement is selected on the folwchart
 	static int NextID;
+	Connector* pOutconn;
 
 	virtual void UpdateStatementText() = 0;	//is called when any part of the stat. is edited	
 
@@ -67,6 +68,17 @@ public:
 
 
 	///TODO: Add more functions if needed
+	void Statement::GetExpectedOutConnCount(Connector* pConn);  //update the outgoing connector for the statement
+
+	Connector* Statement::GetOutConn();  //return the outgoing connector for the statement
+
+	void Statement::AddIncomingConnector(Connector* pConn);
+
+	void Statement::RemoveIncomingConnector(Connector* pConn);
+
+	int Statement::GetIncomingCount();   // Get the number of incoming connectors
+	 
+	Connector* Statement::GetIncomingConnector(int index) //returns a specific incoming connector given it's index
 
 };
 
