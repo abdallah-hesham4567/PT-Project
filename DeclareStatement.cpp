@@ -99,6 +99,11 @@ void DeclareStatement::Edit(ApplicationManager* pManager)
 	pOut->ClearStatusBar();
 }
 
+Statement* DeclareStatement::Clone() const
+{
+	return new DeclareStatement(*this);
+}
+
 void DeclareStatement::Save(ofstream& OutFile) const
 {
     OutFile << "DECLARE\t" << ID << "\t" << pConn->getPosition().x << "\t"

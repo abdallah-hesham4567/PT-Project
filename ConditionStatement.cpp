@@ -58,6 +58,11 @@ void ConditionStatement::Edit(ApplicationManager* pManager)
 
 }
 
+Statement* ConditionStatement::Clone() const
+{
+	return new ConditionStatement(*this);
+}
+
 
 Point ConditionStatement::GetOutletPoint(int branch) const
 {

@@ -31,6 +31,7 @@ public:
     virtual void Load(ifstream& InFile);
     string getStatementType() const  { return "STRT"; }
     virtual void Edit(ApplicationManager* pManager);
+    virtual Statement* Clone() const;
 };
 
 #endif

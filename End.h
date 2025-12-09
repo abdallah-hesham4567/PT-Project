@@ -25,8 +25,10 @@ public:
     virtual bool IsPointInside(Point p) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
-    string getStatementType() const override { return "END"; }
+    string getStatementType() const;
     virtual void Edit(ApplicationManager* pManager);
+    virtual Statement* Clone() const;
+
 };
 
 #endif

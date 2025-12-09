@@ -57,6 +57,11 @@ void WhileStatement::Edit(ApplicationManager* pManager)
 	pOut->ClearStatusBar();
 }
 
+Statement* WhileStatement::Clone() const
+{
+	return new WhileStatement(*this);
+}
+
 Point WhileStatement::GetOutletPoint(int branch) const
 {
     // Diamond shape - upper point is LeftCorner

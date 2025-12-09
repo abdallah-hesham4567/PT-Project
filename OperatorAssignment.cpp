@@ -68,6 +68,11 @@ void OperatorAssignment::Edit(ApplicationManager* pManager)
 	pOut->ClearStatusBar();
 }
 
+Statement* OperatorAssignment::Clone() const
+{
+	return new OperatorAssignment(*this);
+}
+
 
 
 void OperatorAssignment::UpdateStatementText()

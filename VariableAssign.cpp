@@ -84,3 +84,8 @@ void VariableAssign::Edit(ApplicationManager* pManager)
 	setRHS(newRHS);
 	pOut->ClearStatusBar();
 }
+
+Statement* VariableAssign::Clone() const
+{
+	return new VariableAssign(*this);
+}

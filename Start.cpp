@@ -30,6 +30,13 @@ void Start::Draw(Output* pOut) const
 void Start::Edit(ApplicationManager* pManager)
 {
 	// Start statement has no editable parameters
+	Output* pOut = pManager->GetOutput();
+	pOut->PrintMessage("Start statement has no editable parameters.");
+}
+
+Statement* Start::Clone() const
+{
+    return new Start(*this);
 }
 
 

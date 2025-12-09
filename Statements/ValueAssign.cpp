@@ -74,6 +74,11 @@ void ValueAssign::Edit(ApplicationManager* pManager)
 	pOut->PrintMessage("Value Assignment Statement edited successfully.");
 }
 
+Statement* ValueAssign::Clone() const
+{
+	return new ValueAssign(*this);
+}
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()

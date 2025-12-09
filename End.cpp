@@ -56,6 +56,13 @@ bool End::IsPointInside(Point p) const
 void End::Edit(ApplicationManager* pManager)
 {
 	// No editable parameters for End statement
+	Output* pOut = pManager->GetOutput();
+	pOut->PrintMessage("End statement has no editable parameters.");
+}
+
+Statement* End::Clone() const
+{
+	return new End(*this);
 }
 
 void End::Save(ofstream& OutFile) const

@@ -47,6 +47,8 @@ public:
 	virtual void Save(ofstream& OutFile) const;
 	virtual void Load(ifstream& InFile);
 	virtual void Edit(ApplicationManager* pManager);
+	virtual string getStatementType() const;
+	virtual Statement* Clone() const;
 };
 
 #endif

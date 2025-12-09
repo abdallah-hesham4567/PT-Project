@@ -38,7 +38,7 @@ class OperatorAssignment : public Statement
 	string getStatementType() const override { return "OP_ASSIGN"; }
 
 	virtual void Edit(ApplicationManager* pManager);
-
+	virtual Statement* Clone() const;
 	
 
 

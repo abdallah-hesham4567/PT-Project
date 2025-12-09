@@ -39,5 +39,5 @@ public:
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "COND"; }
     virtual void Edit(ApplicationManager* pManager);
-
+	virtual Statement* Clone() const;
 };

@@ -83,6 +83,11 @@ void Read::Edit(ApplicationManager* pManager)
 	}
 }
 
+Statement* Read::Clone() const
+{
+	return new Read(*this);
+}
+
 void Read::Save(ofstream& OutFile) const
 {
     OutFile << "READ\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
