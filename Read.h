@@ -3,7 +3,7 @@
 
 #include "Statement.h"
 #include <string>
-
+#include "ApplicationManager.h"
 class Read : public Statement
 {
 private:
@@ -29,6 +29,7 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
+    virtual void Edit(ApplicationManager* pManager);
 };
 
 #endif

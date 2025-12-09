@@ -65,3 +65,16 @@ bool Read::IsPointInside(Point p) const
         p.y >= LeftCorner.y &&
         p.y <= LeftCorner.y + UI.READ_HI);
 }
+
+void Read::Edit(ApplicationManager* pManager)
+{
+    Input* pIn = pManager->GetInput();
+    Output* pOut = pManager->GetOutput();
+
+    pOut->PrintMessage("Enter new variable name: ");
+    string newVar = pIn->GetString(pOut);
+
+    VarName = newVar;   // Update internal variable
+
+    UpdateStatementText();   // regenerate text
+}

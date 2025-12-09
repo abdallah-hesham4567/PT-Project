@@ -2,6 +2,7 @@
 #include <sstream>
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
+#include "..\ApplicationManager.h" 
 
 using namespace std;
 
@@ -30,6 +31,18 @@ void Write::setExpr(const string& e)
 void Write::Draw(Output* pOut) const
 {
     pOut->DrawReadAndWrite(LeftCorner, UI.READ_WDTH, UI.READ_HI, Text, Selected);
+}
+
+void Write::Edit(ApplicationManager* pManager)
+{
+    Input* pIn = pManager->GetInput();
+    Output* pOut = pManager->GetOutput();
+
+    pOut->PrintMessage("Edit Write - enter variable name or message:");
+    string newContent = pIn->GetString(pOut);
+    this->Text = newContent;
+    UpdateStatementText();
+    pOut->ClearStatusBar();
 }
 
 void Write::UpdateStatementText()

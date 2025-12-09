@@ -3,6 +3,8 @@
 #include <sstream>
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
+#include "..\Actions\Action.h"
+#include "..\ApplicationManager.h"
 using namespace std;
 VariableAssign::VariableAssign(Point Lcorner, string LeftHS, string RightHS)
 {
@@ -68,4 +70,24 @@ bool VariableAssign::IsPointInside(Point p) const
 		p.x <= LeftCorner.x + UI.ASSGN_WDTH &&
 		p.y >= LeftCorner.y &&
 		p.y <= LeftCorner.y + UI.ASSGN_HI);
+}
+void VariableAssign::Edit(ApplicationManager* pManager)
+{
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+
+	// edit left-hand side variable
+	pOut->PrintMessage("Enter new LHS variable name:");
+	string newLHS = pIn->GetString(pOut);
+	// replace 'LHS' with actual member name if different
+	this->LHS = newLHS;
+
+	// edit right-hand side expression
+	pOut->PrintMessage("Enter new RHS expression:");
+	string newRHS = pIn->GetString(pOut);
+	// replace 'RHS' with actual member name if different
+	this->RHS = newRHS;
+
+	UpdateStatementText();
+	pOut->ClearStatusBar();
 }
