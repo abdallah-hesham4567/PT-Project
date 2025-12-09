@@ -42,7 +42,7 @@ void ConditionStatement::Draw(Output* pOut) const
 }
 
 
-Point ConditionalStatement::GetOutletPoint(int branch) const
+Point ConditionStatement::GetOutletPoint(int branch) const
 {
     // Diamond shape - upper point is LeftCorner
     Point center;
@@ -57,33 +57,35 @@ Point ConditionalStatement::GetOutletPoint(int branch) const
         return Point(center.x, center.y + UI.COND_HI / 2);
 }
 
-Point ConditionalStatement::GetInletPoint() const
+Point ConditionStatement::GetInletPoint() const
 {
-    return LeftCorner; // Top point of diamond
+    return Inlet.x; // Top point of diamond
 }
 
-int ConditionalStatement::GetExpectedOutConnCount() const
+int ConditionStatement::GetExpectedOutConnCount() const
 {
     return 2; // YES and NO branches
 }
 
-bool ConditionalStatement::IsConditional() const
+bool ConditionStatement::IsConditional() const
 {
     return true;
 }
 
-bool ConditionalStatement::IsPointInside(Point p) const
+bool ConditionStatement::IsPointInside(Point p) const
 {
     // Check if point is inside diamond shape
     Point center;
     center.x = LeftCorner.x;
     center.y = LeftCorner.y + UI.COND_HI / 2;
 
-    // Simple bounding box check (you can make it more precise)
-    return (p.x >= center.x - UI.COND_WDTH / 2 &&
-        p.x <= center.x + UI.COND_WDTH / 2 &&
-        p.y >= LeftCorner.y &&
-        p.y <= LeftCorner.y + UI.COND_HI);
+    float dx = abs(p.x - center.x);
+    float dy = abs(p.y - center.y);
+
+    int halfW = UI.COND_WDTH / 2;
+    int halfH = UI.COND_HI / 2;
+    // Diamond equation: dx/halfW + dy/halfH <= 1
+    return ((dx * halfH + dy * halfW) <= (halfW * halfH));
 }
 
 

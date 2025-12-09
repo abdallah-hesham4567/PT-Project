@@ -25,6 +25,16 @@ class OperatorAssignment : public Statement
 	virtual void Draw(Output* pOut) const;
 	void setOp(char O);
 	virtual void UpdateStatementText();
+
+	virtual Point GetOutletPoint(int branch = 0) const;
+	virtual Point GetInletPoint() const;
+	virtual int GetExpectedOutConnCount() const;
+	virtual bool IsPointInside(Point p) const;
+
+	virtual void Draw(Output* pOut) const;
+	virtual void Save(ofstream& OutFile) const;
+	virtual void Load(ifstream& InFile);
+
 	
 
 

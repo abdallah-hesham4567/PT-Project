@@ -58,7 +58,7 @@ Point WhileStatement::GetOutletPoint(int branch) const
 
 Point WhileStatement::GetInletPoint() const
 {
-    return LeftCorner; // Top point of diamond
+    return Inlet.x; // Top point of diamond
 }
 
 int WhileStatement::GetExpectedOutConnCount() const
@@ -78,9 +78,14 @@ bool WhileStatement::IsPointInside(Point p) const
     center.x = LeftCorner.x;
     center.y = LeftCorner.y + UI.COND_HI / 2;
 
-    // Simple bounding box check (you can make it more precise)
-    return (p.x >= center.x - UI.COND_WDTH / 2 &&
-        p.x <= center.x + UI.COND_WDTH / 2 &&
-        p.y >= LeftCorner.y &&
-        p.y <= LeftCorner.y + UI.COND_HI);
+
+
+    float dx = abs(p.x - center.x);
+    float dy = abs(p.y - center.y);
+
+
+    int halfW = UI.COND_WDTH / 2;
+    int halfH = UI.COND_HI / 2;
+    // Diamond equation: dx/halfW + dy/halfH <= 1
+    return ((dx * halfH + dy * halfW) <= (halfW * halfH));
 }

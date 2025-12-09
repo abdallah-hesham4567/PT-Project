@@ -12,11 +12,11 @@ Read::Read(Point Lcorner, const string& var)
 
     pOutConn = NULL;
 
-    Inlet.x = LeftCorner.x + UI.IO_WDTH / 2;
+    Inlet.x = LeftCorner.x + UI.READ_WDTH / 2;
     Inlet.y = LeftCorner.y;
 
     Outlet.x = Inlet.x;
-    Outlet.y = LeftCorner.y + UI.IO_HI;
+    Outlet.y = LeftCorner.y + UI.READ_HI;
 
     UpdateStatementText();
 }
@@ -29,7 +29,7 @@ void Read::setVarName(const string& v)
 
 void Read::Draw(Output* pOut) const
 {
-    pOut->DrawInputOutput(LeftCorner, UI.IO_WDTH, UI.IO_HI, Text, Selected);
+    pOut->DrawReadAndWrite(LeftCorner, UI.READ_WDTH, UI.READ_HI, Text, Selected);
 }
 
 void Read::UpdateStatementText()
@@ -40,15 +40,16 @@ void Read::UpdateStatementText()
 }
 Point Read::GetOutletPoint(int branch) const
 {
+
     // Rectangle - outlet at bottom center
-    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
-        LeftCorner.y + UI.ASSGN_HI);
+    return Point(LeftCorner.x + UI.READ_WDTH / 2,
+        LeftCorner.y + UI.READ_HI);
 }
 
 Point Read::GetInletPoint() const
 {
     // Rectangle - inlet at top center
-    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
+    return Point(LeftCorner.x + UI.READ_WDTH / 2,
         LeftCorner.y);
 }
 
@@ -60,7 +61,7 @@ int Read::GetExpectedOutConnCount() const
 bool Read::IsPointInside(Point p) const
 {
     return (p.x >= LeftCorner.x &&
-        p.x <= LeftCorner.x + UI.ASSGN_WDTH &&
+        p.x <= LeftCorner.x + UI.READ_WDTH &&
         p.y >= LeftCorner.y &&
-        p.y <= LeftCorner.y + UI.ASSGN_HI);
+        p.y <= LeftCorner.y + UI.READ_HI);
 }

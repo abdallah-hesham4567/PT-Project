@@ -25,7 +25,7 @@ public:
     virtual int GetExpectedOutConnCount() const;
     virtual bool IsPointInside(Point p) const;
 
-    virtual void Draw(Output* pOut) const;
+   
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
 };

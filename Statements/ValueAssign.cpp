@@ -62,15 +62,15 @@ void ValueAssign::UpdateStatementText()
 Point ValueAssign::GetOutletPoint(int branch) const
 {
 	// Rectangle - outlet at bottom center
-	return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
-		LeftCorner.y + UI.ASSGN_HI);
+	return Point(Outlet.x,
+		Outlet.y);
 }
 
 Point ValueAssign::GetInletPoint() const
 {
 	// Rectangle - inlet at top center
-	return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
-		LeftCorner.y);
+	return Point(Inlet.x,
+		Inlet.y);
 }
 
 int ValueAssign::GetExpectedOutConnCount() const

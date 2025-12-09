@@ -21,7 +21,6 @@ public:
     void setCondition(const string& cond);
     string getCondition() const { return Condition; }
 
-    void Draw(Output* pOut) const override;
     void UpdateStatementText();
 
     void setTrueBranch(Statement* stmt) { TrueBranch = stmt; }
