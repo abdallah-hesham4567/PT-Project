@@ -1,6 +1,7 @@
 #ifndef STATEMENT_H
 #define STATEMENT_H
-
+#include <string>
+#include <fstream>
 #include "..\defs.h"
 #include "..\Connector.h"
 //class Output;
@@ -79,8 +80,8 @@ public:
 
 	int Statement::GetIncomingCount();   // Get the number of incoming connectors
 	 
-	Connector* Statement::GetIncomingConnector(int index) //returns a specific incoming connector given it's index
-
+	Connector* Statement::GetIncomingConnector(int index);//returns a specific incoming connector given it's index
+	virtual Statement* Clone()  = 0;
 };
 
 #endif

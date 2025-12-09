@@ -57,3 +57,16 @@ bool Start::IsPointInside(Point p) const
         p.y >= Center.y - UI.START_END_HI / 2 &&
         p.y <= Center.y + UI.START_END_HI / 2);
 }
+
+void Start::Save(ofstream& OutFile) const
+{
+    OutFile << "STRT\t" << ID << "\t" << pConn->getPosition().x << "\t"
+        << pConn->getPosition().y << "\n";
+}
+
+void Start::Load(ifstream& InFile)
+{
+    int x, y;
+    InFile >> ID >> x >> y;
+    pOutconn->setPosition(Point(x, y));
+}
