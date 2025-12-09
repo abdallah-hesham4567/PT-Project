@@ -133,6 +133,7 @@
     <ClCompile Include="AddOperationAssign.cpp" />
     <ClCompile Include="AddRead.cpp" />
     <ClCompile Include="AddStart.cpp" />
+    <ClCompile Include="AddVariableAssign.cpp" />
     <ClCompile Include="AddWhile.cpp" />
     <ClCompile Include="AddWrite.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
