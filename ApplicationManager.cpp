@@ -187,19 +187,133 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case ADD_CONDITION:
 		///create AddCondition Action here
 		pAct = new AddCondition(this);
-
 		break;
 
-	case SELECT:
-		///create Select Action here
+	case ADD_START:
+			pAct = new AddStart(this);
+			break;
 
+	case ADD_END:
+		pAct = new AddEnd(this);
+		break;
+
+	case ADD_DECLARE_VARIABLE:
+		pAct = new AddDeclare(this);
+		break;
+////////////
+	case ADD_VAR_ASSIGN:
+		pAct = new AddVariableassign(this);
+		break;
+//////////////////
+
+	case ADD_OPER_ASSIGN:
+		pAct = new AddOperationAssign(this);
+		break;
+
+	case ADD_LOOP:
+		pAct = new AddWhile(this);
+		break;
+
+	case ADD_READ:
+		pAct = new AddRead(this);
+		break;
+
+	case ADD_WRITE:
+		pAct = new AddWrite(this);
+		break;
+
+	case ADD_CONNECTOR:
+		pAct = new AddConnector(this);
+		break;
+
+	case EDIT_STAT:
+		pAct = new Edit(this);
+		break;
+
+	case DEL:
+		pAct = new Delete(this);
+		break;
+
+	case COPY:
+		pAct = new Copy(this);
+		break;
+
+	case CUT:
+		pAct = new Cut(this);
+		break;
+
+	case PASTE:
+		pAct = new Paste(this);
+		break;
+
+	case SAVE:
+		pAct = new Save(this);
+		break;
+
+	case LOAD:
+		pAct = new Load(this);
+		break;
+
+	case SWITCH_DSN_MODE:
+	{
+		//// remove toolbar and switch 
+	}
+
+	case SWITCH_SIM_MODE:
+	{
+		//// remove toolbar and switch 
+	}
+
+	case UNDO:
+		pAct = new UNDO(this);
+		break;
+	case REDO:
+		pAct = new REDO(this);
+		break;
+	case VALIDATE:
+		pAct = new Validate(this);
+		break;
+
+
+
+
+
+	case RUN:
+		///create Select Action here
+		pAct = new Run(this);
 		break;
 
 	case EXIT:
 		///create Exit Action here
-
+		pAct = new Exit(this);
+		break;
+	case EXITS:
+		///create Exit Action here
+		pAct = new Exit(this);
+		break;
+	case CPP:
+		///create Exit Action here
+		pAct = new Cpp(this);
 		break;
 
+	case DRAWING_AREA:
+	{
+		//// write on status bar
+	}
+	case OUTPUT_AREA:
+	{
+		//// write on status bar
+	}
+	case DSN_TOOL:
+	{
+		//// write on status bar
+	}
+	case SIM_TOOL:
+	{
+		//// write on status bar
+	}
+
+	
 	case STATUS:
 		return;
 	}
