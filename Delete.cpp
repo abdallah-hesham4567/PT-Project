@@ -1,4 +1,5 @@
 #include "Delete.h"
+#include "Action.h"
 #include "..\ApplicationManager.h"
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
@@ -7,11 +8,6 @@ Delete::Delete(ApplicationManager* pAppManager) : Action(pAppManager)
 {
 }
 
-void Delete::ReadActionParameters()
-{
-	// No parameters to read - delete operates on already selected item
-	// The selection is already stored in ApplicationManager
-}
 
 void Delete::Execute()
 {
@@ -26,7 +22,7 @@ void Delete::Execute()
 	{
 		// Delete the selected statement
 		// This will also delete all connectors attached to it
-		pManager->DeleteStatement(pSelectedStat);
+		pManager->DeleteStatementConnectors(pSelectedStat);
 
 		// Clear the selection
 		pManager->SetSelectedStatement(nullptr);

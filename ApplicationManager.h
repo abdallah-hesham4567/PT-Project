@@ -51,6 +51,7 @@ public:
 	int GetInConnCount(Statement* pStat) const;
 	Connector** GetOutConnectors(Statement* pStat, int& count) const;
 	void DeleteStatementConnectors(Statement* pStat);
+	void DeleteStatement(Statement* statement);
 	bool ValidateConnectors(string& errorMsg) const;
 	Connector* GetSelectedConnector() const;
 	void SetSelectedConnector(Connector* pConn);

@@ -133,6 +133,47 @@ void ApplicationManager::DeleteStatementConnectors(Statement* pStat)
 		}
 	}
 }
+void ApplicationManager::DeleteStatement(Statement* statement) {
+	if (statement == nullptr) {
+		return;
+	}
+
+	// STEP A: Delete its outgoing connector
+	Connector* outgoingConn = statement->GetOutConn();
+	if (outgoingConn != nullptr) {
+		// Remove from destination statement's incoming list
+		Statement* dstStmt = outgoingConn->getDstStat();
+		if (dstStmt != nullptr) {
+			dstStmt->RemoveIncomingConnector(outgoingConn);
+		}
+
+		// Remove from manager and delete
+		DeleteConnector(outgoingConn);
+		delete outgoingConn;
+	}
+
+	// STEP B: Delete all incoming connectors
+	// Important: Create a copy of the vector because we're modifying it during iteration
+	 vector<Connector*> incomingConnectors = statement->GetIncomingConnectors();
+
+	for (Connector* incomingConn : incomingConnectors) {
+		if (incomingConn != nullptr) {
+			// Clear the source statement's outgoing connector pointer
+			Statement* srcStmt = incomingConn->getSrcStat();
+			if (srcStmt != nullptr) {
+				srcStmt->SetOutConn(nullptr);
+			}
+
+			// Remove from manager and delete
+			pAppMgr->RemoveConnector(incomingConn);
+			delete incomingConn;
+		}
+	}
+
+	// STEP C: Delete the statement itself
+	pAppMgr->RemoveStatement(statement);
+	delete statement;
+}
 
 Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 {
