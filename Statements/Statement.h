@@ -48,6 +48,7 @@ public:
     virtual void Load(ifstream& InFile) = 0;
 
     // Getters/Setters
+	void setID(int id) { ID = id; }
     int GetID() const { return ID; }
     void SetSelected(bool s) { Selected = s; }
     bool IsSelected() const { return Selected; }
@@ -61,7 +62,7 @@ public:
 	virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
 
 	virtual void Edit() = 0;		//Edit the Statement parameter
-
+	virtual string getStatementType() const = 0;
 	//virtual void Simulate();	//Execute the statement in the simulation mode
 
 	// virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file

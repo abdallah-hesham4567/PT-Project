@@ -6,6 +6,7 @@ Statement::Statement()
 	ID = NextID++;   // assign unique ID
 	Text = "";
 	Selected = false;
+	pOutconn = NULL;
 }
 
 void Statement::SetSelected(bool s)
