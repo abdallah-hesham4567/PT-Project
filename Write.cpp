@@ -50,6 +50,12 @@ void Write::Edit(ApplicationManager* pManager)
 	}
 }
 
+Statement* Write::Clone() const
+{
+    return new Write(*this);
+}
+
+
 void Write::UpdateStatementText()
 {
     ostringstream T;
