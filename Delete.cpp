@@ -2,7 +2,6 @@
 #include "..\ApplicationManager.h"
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
-#include "..\Statements\Statement.h"
 
 Delete::Delete(ApplicationManager* pAppManager) : Action(pAppManager)
 {
@@ -10,30 +9,54 @@ Delete::Delete(ApplicationManager* pAppManager) : Action(pAppManager)
 
 void Delete::ReadActionParameters()
 {
-	Output* pOut = pManager->GetOutput();
-	pOut->PrintMessage("Delete: ready to delete the selected statement...");
+	// No parameters to read - delete operates on already selected item
+	// The selection is already stored in ApplicationManager
 }
+
 void Delete::Execute()
 {
-	ReadActionParameters();
+	// Get pointers to Input/Output
 	Output* pOut = pManager->GetOutput();
+	Input* pIn = pManager->GetInput();
 
-	Statement* pState = pManager->GetSelectedStatement();
+	// Check if a statement is selected
+	Statement* pSelectedStat = pManager->GetSelectedStatement();
 
-	if (pState == nullptr)
+	if (pSelectedStat != nullptr)
 	{
-		// No item selected to delete
-		pOut->PrintMessage("Delete: No statement selected to delete.");
-		return;
+		// Delete the selected statement
+		// This will also delete all connectors attached to it
+		pManager->DeleteStatement(pSelectedStat);
+
+		// Clear the selection
+		pManager->SetSelectedStatement(nullptr);
+
+		// Show success message
+		pOut->PrintMessage("Statement deleted successfully");
 	}
-	// Delete the selected statement
-	pManager->RemoveStatement(pState);      //need to add remove statement in app manager
-	// delete the statement from memory
-	delete pState;
-	// Clear the selection
-	pManager->SetSelectedStatement(nullptr);
+	else
+	{
+		// Check if a connector is selected
+		Connector* pSelectedConn = pManager->GetSelectedConnector();
+
+		if (pSelectedConn != nullptr)
+		{
+			// Delete only the connector
+			pManager->DeleteConnector(pSelectedConn);
+
+			// Clear the selection
+			pManager->SetSelectedConnector(nullptr);
+
+			// Show success message
+			pOut->PrintMessage("Connector deleted successfully");
+		}
+		else
+		{
+			// Nothing is selected
+			pOut->PrintMessage("No statement or connector selected. Please select an item first.");
+		}
+	}
+
 	// Update the interface
 	pManager->UpdateInterface();
-
-	pOut->PrintMessage("Delete: Selected statement deleted.");
 }
