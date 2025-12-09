@@ -53,28 +53,38 @@ void ApplicationManager::AddConnector(Connector* pConn)
 
 void ApplicationManager::DeleteConnector(Connector* pConn)
 {
-	if (!pConn) return;
+	if (pConn == nullptr) {
+		return;
+	}
 
-	for (int i = 0; i < ConnCount; i++)
-	{
-		if (ConnList[i] == pConn)
-		{
-			delete ConnList[i];
+	// Step 1: Get source and destination statements
+	Statement* pSrcStat = pConn->getSrcStat();
+	Statement* pDstStat = pConn->getDstStat();
 
-			// Shift remaining connectors
-			for (int j = i; j < ConnCount - 1; j++)
-			{
+	// Step 2: Clear the source statement's outgoing connector pointer
+	if (pSrcStat != nullptr) {
+		pSrcStat->SetOutConn(nullptr);
+	}
+
+	// Step 3: Remove from destination statement's incoming connectors list
+	if (pDstStat != nullptr) {
+		pDstStat->RemoveIncomingConnector(pConn);
+	}
+
+	// Step 4: Remove connector from the ConnectorList
+	for (int i = 0; i < ConnCount; i++) {
+		if (ConnList[i] == pConn) {
+			// Shift all connectors after this one to the left
+			for (int j = i; j < ConnCount - 1; j++) {
 				ConnList[j] = ConnList[j + 1];
 			}
-			ConnList[ConnCount - 1] = nullptr;
 			ConnCount--;
-
-			if (SelectedConnector == pConn)
-				SelectedConnector = nullptr;
-
-			return;
+			break;
 		}
 	}
+
+	// Step 5: Delete the connector object
+	delete pConn;
 }
 
 int ApplicationManager::GetOutConnCount(Statement* pStat) const

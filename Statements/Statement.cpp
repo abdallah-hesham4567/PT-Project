@@ -17,3 +17,8 @@ bool Statement::IsSelected() const
 {
 	return Selected;
 }
+
+void Statement::GetExpectedOutConnCount(Connector* pConn)
+{
+
+}

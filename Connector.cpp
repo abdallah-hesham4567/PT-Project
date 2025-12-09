@@ -261,6 +261,7 @@ void Connector::Load(ifstream& InFile)
 	InFile >> OutletBranch;
 }
 
+
 bool Connector::Validate(string& errorMsg) const
 {
 	// Validate that the connector has valid source and destination
