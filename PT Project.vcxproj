@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddCondition.cpp" />
+    <ClCompile Include="AddConnector.cpp" />
     <ClCompile Include="AddDeclare.cpp" />
     <ClCompile Include="AddEnd.cpp" />
     <ClCompile Include="AddOperationAssign.cpp" />
@@ -287,10 +288,13 @@
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="End.cpp" />
+    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="GUI\Input.cpp" />
     <ClCompile Include="GUI\Output.cpp" />
     <ClCompile Include="HelperFn.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="OperatorAssignment.cpp" />
+    <ClCompile Include="Paste.cpp" />
     <ClCompile Include="Read.cpp" />
     <ClCompile Include="Run.cpp" />
     <ClCompile Include="Select.cpp" />
@@ -309,11 +313,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddCondition.h" />
+    <ClInclude Include="AddConnector.h" />
     <ClInclude Include="AddDeclare.h" />
     <ClInclude Include="AddEnd.h" />
     <ClInclude Include="AddOperationAssign.h" />
     <ClInclude Include="AddRead.h" />
     <ClInclude Include="AddStart.h" />
+    <ClInclude Include="AddVariableAssign.h" />
     <ClInclude Include="AddWhile.h" />
     <ClInclude Include="AddWrite.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
@@ -348,11 +354,14 @@
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Edit.h" />
     <ClInclude Include="End.h" />
+    <ClInclude Include="Exit.h" />
     <ClInclude Include="GUI\Input.h" />
     <ClInclude Include="GUI\Output.h" />
     <ClInclude Include="GUI\UI_Info.h" />
     <ClInclude Include="HelperFn.h" />
+    <ClInclude Include="Load.h" />
     <ClInclude Include="OperatorAssignment.h" />
+    <ClInclude Include="Paste.h" />
     <ClInclude Include="Read.h" />
     <ClInclude Include="Run.h" />
     <ClInclude Include="Select.h" />
