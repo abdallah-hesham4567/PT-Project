@@ -2,7 +2,8 @@
 #define APPLICATION_MANAGER_H
 
 #include "DEFS.h"
-
+#include <fstream>
+#include <map>
 #include "Statements\Statement.h"
 class Input;
 class Output;
@@ -81,6 +82,8 @@ public:
 	// == Simulation Functions ==
 	bool Validate() const;
 	void RunSimulation();
+
+	void LoadAll(const string& filename)
 
 };
 

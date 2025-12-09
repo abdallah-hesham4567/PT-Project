@@ -89,3 +89,17 @@ bool Write::IsPointInside(Point p) const
         p.y >= LeftCorner.y &&
         p.y <= LeftCorner.y + UI.READ_HI);
 }
+
+void Write::Save(ofstream& OutFile) const
+{
+    OutFile << "WRITE\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
+        << pOutconn->getPosition().y << "\t" << Expr << "\n";
+}
+
+void Write::Load(ifstream& InFile)
+{
+    int x, y;
+    InFile >> ID >> x >> y >> Expr;
+    pOutconn->setPosition(Point(x, y));
+}
+

@@ -165,12 +165,12 @@ Connector::Connector(Statement* Src, Statement* Dst, int outletBranch)
 
 void Connector::setOutletBranch(int branch)
 {
-	OutletBranch = branch;
+	BranchType = branch;
 }
 
 int Connector::getOutletBranch() const
 {
-	return OutletBranch;
+	return BranchType;
 }
 
 void Connector::SetSelected(bool s)
@@ -248,7 +248,7 @@ void Connector::Save(ofstream& OutFile) const
 	{
 		OutFile << SrcStat->GetID() << " "
 			<< DstStat->GetID() << " "
-			<< OutletBranch << endl;
+			<< BranchType << endl;
 	}
 }
 
@@ -258,7 +258,8 @@ void Connector::Load(ifstream& InFile)
 	// connectors are loaded in LoadAction by reading IDs and 
 	// finding the corresponding statements, then creating the connector.
 	// However, we can load the outlet branch if needed
-	InFile >> OutletBranch;
+	InFile >> BranchType;
+
 }
 
 

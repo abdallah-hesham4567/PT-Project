@@ -624,3 +624,87 @@ ApplicationManager::~ApplicationManager()
 	delete pOut;
 
 }
+
+
+
+
+void ApplicationManager::LoadAll(const string& filename)
+{
+	ifstream InFile(filename);
+	if (!InFile.is_open())
+	{
+		// Show error message
+		return;
+	}
+
+	// Clear existing statements
+	ClearAll();
+
+	// Load statement count
+	int statCount;
+	InFile >> statCount;
+
+	// Map to store statements by ID
+	map<int, Statement*> statMap;
+
+	// Load all statements
+	for (int i = 0; i < statCount; i++)
+	{
+		string type;
+		InFile >> type;
+
+		Statement* pStat = nullptr;
+
+		if (type == "STRT")
+			pStat = new Start();
+		else if (type == "DECLARE")
+			pStat = new Declare();
+		else if (type == "READ")
+			pStat = new Read();
+		else if (type == "COND")
+			pStat = new Condition();
+		else if (type == "OP_ASSIGN")
+			pStat = new OperationAssign();
+		else if (type == "WRITE")
+			pStat = new Write();
+		else if (type == "END")
+			pStat = new End();
+
+		if (pStat)
+		{
+			pStat->Load(InFile);
+			StatementList.push_back(pStat);
+			statMap[pStat->getID()] = pStat;
+		}
+	}
+
+	// Load connector count
+	int connCount;
+	InFile >> connCount;
+
+	// Load and recreate connectors
+	for (int i = 0; i < connCount; i++)
+	{
+		int srcID, dstID, branch;
+		InFile >> srcID >> dstID >> branch;
+
+		// Recreate connector between statements
+		Statement* src = statMap[srcID];
+		Statement* dst = statMap[dstID];
+
+		if (src && dst)
+		{
+			// Create connector based on branch type
+			// This depends on your connector creation logic
+		}
+	}
+
+	InFile.close();
+
+	// Update display
+	UpdateInterface();
+}
+
+
+
+
