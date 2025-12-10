@@ -70,17 +70,18 @@ public:
 
 
 	///TODO: Add more functions if needed
-	void Statement::GetExpectedOutConnCount(Connector* pConn);  //update the outgoing connector for the statement
+	void GetExpectedOutConnCount(Connector* pConn);  //update the outgoing connector for the statement
 
-	Connector* Statement::GetOutConn();  //return the outgoing connector for the statement
+	void SetOutConn(Connector* pConn);
+	Connector* GetOutConn();  //return the outgoing connector for the statement
 
-	void Statement::AddIncomingConnector(Connector* pConn);
+	void AddIncomingConnector(Connector* pConn);
 
-	void Statement::RemoveIncomingConnector(Connector* pConn);
+	void RemoveIncomingConnector(Connector* pConn);
 
-	int Statement::GetIncomingCount();   // Get the number of incoming connectors
+	int GetIncomingCount();   // Get the number of incoming connectors
 	 
-	Connector* Statement::GetIncomingConnector(int index);//returns a specific incoming connector given it's index
+	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
 	virtual Statement* Clone()  = 0;
 
 	virtual void SetOutConnector(Connector* pConn);
