@@ -87,5 +87,7 @@ void VariableAssign::Edit(ApplicationManager* pManager)
 
 Statement* VariableAssign::Clone() const
 {
-	return new VariableAssign(*this);
+	VariableAssign* newVarAssign = new VariableAssign(*this);
+	newVarAssign->SetOutConn(nullptr);
+	return newVarAssign;
 }

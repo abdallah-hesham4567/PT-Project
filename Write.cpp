@@ -52,7 +52,9 @@ void Write::Edit(ApplicationManager* pManager)
 
 Statement* Write::Clone() const
 {
-    return new Write(*this);
+    Write* newWrite = new Write(*this);
+	newWrite->SetOutConn(nullptr); // Reset outgoing connectors for the cloned statement
+    return newWrite;
 }
 
 

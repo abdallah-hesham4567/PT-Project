@@ -101,7 +101,9 @@ void DeclareStatement::Edit(ApplicationManager* pManager)
 
 Statement* DeclareStatement::Clone() const
 {
-	return new DeclareStatement(*this);
+    DeclareStatement* newDeclare = new DeclareStatement(*this);
+
+    return newDeclare;
 }
 
 void DeclareStatement::Save(ofstream& OutFile) const

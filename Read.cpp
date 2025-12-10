@@ -85,7 +85,9 @@ void Read::Edit(ApplicationManager* pManager)
 
 Statement* Read::Clone() const
 {
-	return new Read(*this);
+    Read* newRead = new Read(*this);
+    newRead->pOutConn = nullptr; // Reset outgoing connector for the cloned statement
+	return newRead;
 }
 
 void Read::Save(ofstream& OutFile) const

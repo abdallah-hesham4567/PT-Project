@@ -36,7 +36,11 @@ void Start::Edit(ApplicationManager* pManager)
 
 Statement* Start::Clone() const
 {
-    return new Start(*this);
+    //Start Statement cannot be cloned
+    ApplicationManager* pManager;
+    Output* pOut = pManager->GetOutput();
+    pOut->PrintMessage("Start statement cannot be cloned.");
+    return nullptr;
 }
 
 
