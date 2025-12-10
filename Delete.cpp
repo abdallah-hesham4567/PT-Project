@@ -22,7 +22,7 @@ void Delete::Execute()
 	{
 		// Delete the selected statement
 		// This will also delete all connectors attached to it
-		pManager->DeleteStatementConnectors(pSelectedStat);
+		pManager->DeleteStatement(pSelectedStat);
 
 		// Clear the selection
 		pManager->SetSelectedStatement(nullptr);

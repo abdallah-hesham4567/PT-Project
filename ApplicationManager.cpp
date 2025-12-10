@@ -51,42 +51,6 @@ void ApplicationManager::AddConnector(Connector* pConn)
 	}
 }
 
-void ApplicationManager::DeleteConnector(Connector* pConn)
-{
-	if (pConn == nullptr) {
-		return;
-	}
-
-	// Step 1: Get source and destination statements
-	Statement* pSrcStat = pConn->getSrcStat();
-	Statement* pDstStat = pConn->getDstStat();
-
-	// Step 2: Clear the source statement's outgoing connector pointer
-	if (pSrcStat != nullptr) {
-		pSrcStat->SetOutConn(nullptr);
-	}
-
-	// Step 3: Remove from destination statement's incoming connectors list
-	if (pDstStat != nullptr) {
-		pDstStat->RemoveIncomingConnector(pConn);
-	}
-
-	// Step 4: Remove connector from the ConnectorList
-	for (int i = 0; i < ConnCount; i++) {
-		if (ConnList[i] == pConn) {
-			// Shift all connectors after this one to the left
-			for (int j = i; j < ConnCount - 1; j++) {
-				ConnList[j] = ConnList[j + 1];
-			}
-			ConnCount--;
-			break;
-		}
-	}
-
-	// Step 5: Delete the connector object
-	delete pConn;
-}
-
 int ApplicationManager::GetOutConnCount(Statement* pStat) const
 {
 	if (!pStat) return 0;
@@ -113,67 +77,86 @@ int ApplicationManager::GetInConnCount(Statement* pStat) const
 	return count;
 }
 
-
-void ApplicationManager::DeleteStatementConnectors(Statement* pStat)
+void ApplicationManager::DeleteConnector(Connector* pConn)
 {
+	if (pConn == nullptr)
+		return;
+
+	// Find and delete the connector from ConnList
 	for (int i = 0; i < ConnCount; i++)
 	{
-		if (ConnList[i] &&
-			(ConnList[i]->getSrcStat() == pStat || ConnList[i]->getDstStat() == pStat))
+		if (ConnList[i] == pConn)
 		{
+			// Delete the connector object
 			delete ConnList[i];
 
+			// Shift remaining connectors left
 			for (int j = i; j < ConnCount - 1; j++)
 			{
 				ConnList[j] = ConnList[j + 1];
 			}
-			ConnList[ConnCount - 1] = nullptr;
+
+			// Decrease count
 			ConnCount--;
-			i--;
+			break;  // Connector found and deleted
 		}
 	}
 }
-void ApplicationManager::DeleteStatement(Statement* statement) {
+
+
+void ApplicationManager::DeleteStatementConnectors(Statement* pStat)
+{
+	if (pStat == nullptr)
+		return;
+
+	// Loop through all connectors
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] != nullptr)
+		{
+			// Check if this connector is connected to the statement
+			if (ConnList[i]->getSrcStat() == pStat || ConnList[i]->getDstStat() == pStat)
+			{
+				// Delete this connector using DeleteConnector function
+				DeleteConnector(ConnList[i]);
+
+				// Adjust index since DeleteConnector shifts the array
+				i--;
+			}
+		}
+	}
+
+}
+
+void ApplicationManager::DeleteStatement(Statement* statement) 
+{
 	if (statement == nullptr) {
 		return;
 	}
 
-	// STEP A: Delete its outgoing connector
-	Connector* outgoingConn = statement->GetOutConn();
-	if (outgoingConn != nullptr) {
-		// Remove from destination statement's incoming list
-		Statement* dstStmt = outgoingConn->getDstStat();
-		if (dstStmt != nullptr) {
-			dstStmt->RemoveIncomingConnector(outgoingConn);
-		}
+	DeleteStatementConnectors(statement);
 
-		// Remove from manager and delete
-		DeleteConnector(outgoingConn);
-		delete outgoingConn;
-	}
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (StatList[i] == statement)
+		{
+			// Delete the statement object
+			delete StatList[i];
 
-	// STEP B: Delete all incoming connectors
-	// Important: Create a copy of the vector because we're modifying it during iteration
-	 vector<Connector*> incomingConnectors = statement->GetIncomingConnectors();
-
-	for (Connector* incomingConn : incomingConnectors) {
-		if (incomingConn != nullptr) {
-			// Clear the source statement's outgoing connector pointer
-			Statement* srcStmt = incomingConn->getSrcStat();
-			if (srcStmt != nullptr) {
-				srcStmt->SetOutConn(nullptr);
+			// Shift remaining statements left
+			for (int j = i; j < StatCount - 1; j++)
+			{
+				StatList[j] = StatList[j + 1];
 			}
 
-			// Remove from manager and delete
-			pAppMgr->RemoveConnector(incomingConn);
-			delete incomingConn;
+			// Decrease count
+			StatCount--;
+			break;  // Statement found and deleted
 		}
 	}
 
-	// STEP C: Delete the statement itself
-	pAppMgr->RemoveStatement(statement);
-	delete statement;
 }
+
 
 Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 {
@@ -182,19 +165,6 @@ Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 		if (ConnList[i] && ConnList[i]->IsPointInConnector(p))
 		{
 			return ConnList[i];
-		}
-	}
-	return nullptr;
-}
-
-
-Statement* ApplicationManager::GetStatementAtPoint(Point p) const
-{
-	for (int i = StatCount - 1; i >= 0; i--)
-	{
-		if (StatList[i] && StatList[i]->IsPointInside(p))
-		{
-			return StatList[i];
 		}
 	}
 	return nullptr;

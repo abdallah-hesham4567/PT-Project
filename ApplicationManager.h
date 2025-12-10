@@ -30,7 +30,12 @@ private:
 	Output* pOut;
 
 public:
-	ApplicationManager() { Clipboard = nullptr; };
+	ApplicationManager() 
+	{
+		Clipboard = NULL;
+		SelectedStatement = NULL;
+		SelectedConnector = NULL;
+	};
 	~ApplicationManager();
 
 	// == Actions Related Functions ==
@@ -39,26 +44,33 @@ public:
 	void ExecuteAction(ActionType);  //Creates an action and executes it
 
 	// == Statements/Connector Management Functions ==
-	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart
-	Statement* GetStatement(Point P) const;	//Searches for a statement where point P belongs
+	
 	//TODO: Complete its implementation 
 	//      WITHOUT breaking class responsibilities
 
 	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
-	Connector* GetConnectorAtPoint(Point p) const;
-	//search for a Connector where point P belongs
-	void DeleteConnector(Connector* pConn);
+	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart
+	
+	
+	Connector* GetConnectorAtPoint(Point p) const; //search for a Connector where point P belongs
+	//Statement* GetStatementAtPoint(Point p) const; //search for a statement where point P belongs
+	Statement* GetStatement(Point P) const;	//Searches for a statement where point P belongs
+
+
 	int GetOutConnCount(Statement* pStat) const;
 	int GetInConnCount(Statement* pStat) const;
 	Connector** GetOutConnectors(Statement* pStat, int& count) const;
-	void DeleteStatementConnectors(Statement* pStat);
-	void DeleteStatement(Statement* statement);
+
+	void DeleteStatement(Statement* statement); // Deletes a selected statement 
+	void DeleteConnector(Connector* pConn);		// Deletes a selecetdd connector 
+	void DeleteStatementConnectors(Statement* pStat);  // Deletes all connectors connected to a statement that is being deleted uses (DeleteConnector)
+
+
 	bool ValidateConnectors(string& errorMsg) const;
 	Connector* GetSelectedConnector() const;
 	void SetSelectedConnector(Connector* pConn);
 	void UpdateAllConnectors();
 	void SetClipboard(Statement* S);
-	Statement* GetStatementAtPoint(Point p) const;
 
 	void SaveAll(ofstream& OutFile);
 
@@ -70,9 +82,13 @@ public:
 	//       in order not to break class responsibilities (especially in copy, cut and paste)
 	Statement* GetSelectedStatement() const;	 //Returns the selected Statement
 	void SetSelectedStatement(Statement* pStat); //Set the Statement selected by the user
+
 	Statement* GetClipboard() const;	         //Returns the Clipboard
 	void SetClipboard(Statement* pStat);         //Set the Clipboard
+
 	void UnselectAll();
+
+
 	// == Interface Management Functions ==
 	Input* GetInput() const;        //Return pointer to the input
 	Output* GetOutput() const;      //Return pointer to the output
@@ -85,8 +101,6 @@ public:
 
 	void LoadAll(const string& filename);
 	Statement* GetStatementWithID(int id) const;
-	void AddConnector(Connector* pConn);
-
 
 };
 

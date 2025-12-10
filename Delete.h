@@ -12,7 +12,7 @@ class Delete : public Action {
 private:
 
 public:
-    Delete(ApplicationManager* pAppMan);
+    Delete(ApplicationManager* pAppManager);
 
     // Execute the delete action
     virtual void Execute();
