@@ -27,7 +27,7 @@ void Paste::Execute()
     Point P;
     pOut->PrintMessage("Please click on the desired location to paste");
     pIn->GetPointClicked(P);
-    //newStat->SetPosition(P);
+    newStat->SetPosition(P);
 
     // Add to the application
     pManager->AddStatement(newStat);

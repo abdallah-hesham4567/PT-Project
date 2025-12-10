@@ -45,4 +45,6 @@ public:
     virtual void Edit();
 	virtual Statement* Clone() const;
 
+    virtual void SetPosition(Point p);
+
 };

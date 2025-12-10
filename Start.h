@@ -32,6 +32,8 @@ public:
     string getStatementType() const;
     virtual void Edit();
     virtual Statement* Clone() const;
+
+    virtual void SetPosition(Point p) {}
 };
 
 #endif

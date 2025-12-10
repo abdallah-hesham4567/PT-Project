@@ -22,6 +22,21 @@ Read::Read(Point Lcorner, const string& var)
     UpdateStatementText();
 }
 
+void Read::SetPosition(Point p)
+{
+    LeftCorner.x = p.x - UI.READ_WDTH / 2;
+    LeftCorner.y = p.y;
+
+    Inlet.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Inlet.y = LeftCorner.y;
+
+    Outlet.x = Inlet.x;
+    Outlet.y = LeftCorner.y + UI.READ_HI;
+
+    Center.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Center.y = LeftCorner.y + UI.READ_HI / 2;
+}
+
 void Read::setVarName(const string& v)
 {
     VarName = v;

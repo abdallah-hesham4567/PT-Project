@@ -42,8 +42,8 @@ public:
     // Check if point is inside statement (for selection)
     virtual bool IsPointInside(Point p) const = 0;
 
-	// 
-	//virtual void SetPosition(Point &p){}
+	// sets new position
+	virtual void SetPosition(Point p) = 0;
 
     // Existing virtual methods
 	virtual void Draw(Output* pOut) const = 0; 

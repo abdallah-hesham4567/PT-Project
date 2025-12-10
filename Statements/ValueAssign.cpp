@@ -44,7 +44,7 @@ void ValueAssign::setRHS(double R)
 	UpdateStatementText();
 }
 
-/*void ValueAssign::SetPosition(Point &p)
+void ValueAssign::SetPosition(Point p)
 {
 	LeftCorner.x = p.x - UI.ASSGN_WDTH / 2;
 	LeftCorner.y = p.y;
@@ -55,7 +55,7 @@ void ValueAssign::setRHS(double R)
 	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
 	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
-}*/
+}
 
 void ValueAssign::Draw(Output* pOut) const
 {

@@ -20,6 +20,7 @@ class OperatorAssignment : public Statement
 	Point Outlet;
 	Point LeftCorner;
 	Point Center;
+
 	public:
 
 	OperatorAssignment(Point Lcorner, string LeftHS, char Oper, string RHS1 , string RHS2 );
@@ -43,7 +44,7 @@ class OperatorAssignment : public Statement
 	virtual void Edit();
 	virtual Statement* Clone() const;
 	
-
+	virtual void SetPosition(Point p) override;
 
 };
 

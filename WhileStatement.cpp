@@ -26,6 +26,26 @@ WhileStatement::WhileStatement(Point Lcorner, const string& cond)
     UpdateStatementText();
 }
 
+void WhileStatement::SetPosition(Point p)
+{
+    // Center the diamond around the clicked point
+    LeftCorner.x = p.x - UI.COND_WDTH / 2;
+    LeftCorner.y = p.y;
+
+    // Recalculate all dependent points
+    Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
+    Inlet.y = LeftCorner.y;
+
+    OutletTrue.x = LeftCorner.x;
+    OutletTrue.y = LeftCorner.y + UI.COND_HI;
+
+    OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
+    OutletFalse.y = LeftCorner.y + UI.COND_HI;
+
+    Center.x = LeftCorner.x + UI.COND_WDTH / 2;
+    Center.y = LeftCorner.y + UI.COND_HI / 2;
+}
+
 void WhileStatement::setCondition(const string& cond)
 {
     Condition = cond;

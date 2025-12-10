@@ -33,6 +33,8 @@ public:
 	virtual void Edit();
 	virtual string getStatementType() const { return "WRITE"; }
     virtual Statement* Clone() const;
+
+    virtual void SetPosition(Point p);
 };
 
 #endif
