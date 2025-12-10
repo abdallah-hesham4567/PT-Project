@@ -12,7 +12,7 @@ private:
     Point Inlet;
     Point Outlet;
     Point LeftCorner;
-
+    Point Center;
     virtual void UpdateStatementText();
 
 public:

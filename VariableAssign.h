@@ -20,6 +20,7 @@ private:
 	Point Outlet;	//A point a connection leaves this statement
 	//It's used as the (Start) point of the (Output) connector
 	Point LeftCorner;	//left corenr of the statement block.
+	Point Center;
 	virtual void UpdateStatementText();
 public:
 	VariableAssign(Point Lcorner, string LeftHS = "", string RightHS = "");

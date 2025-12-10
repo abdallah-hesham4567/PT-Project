@@ -77,7 +77,7 @@ void Start::Save(ofstream& OutFile) const
 
 void Start::Load(ifstream& InFile)
 {
-    int x, y;
+    
     InFile >> ID >> Center.x >> Center.y;
     UpdateBoundingBox();
 }
