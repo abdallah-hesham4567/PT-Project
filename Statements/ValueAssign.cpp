@@ -26,6 +26,8 @@ ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS)
 
 	Outlet.x = Inlet.x;
 	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
 
 
@@ -76,7 +78,9 @@ void ValueAssign::Edit(ApplicationManager* pManager)
 
 Statement* ValueAssign::Clone() const
 {
-	return new ValueAssign(*this);
+	ValueAssign* copy = new ValueAssign(*this);
+	copy->SetOutConn(nullptr); // Reset the outgoing connector for the cloned statement
+	return copy;
 }
 
 
@@ -114,5 +118,20 @@ bool ValueAssign::IsPointInside(Point p) const
 		p.x <= LeftCorner.x + UI.ASSGN_WDTH &&
 		p.y >= LeftCorner.y &&
 		p.y <= LeftCorner.y + UI.ASSGN_HI);
+}
+
+
+void ValueAssign::Save(ofstream& OutFile) const
+{
+	OutFile << "DECLARE\t" << ID << "\t"
+		<< Center.x << "\t" << Center.y << "\t"
+		<< LHS << endl;
+}
+
+void ValueAssign::Load(ifstream& InFile)
+{
+
+	InFile >> ID >>  Center.x >>Center.y >> LHS;
+	UpdateBoundingBox(); 
 }
 

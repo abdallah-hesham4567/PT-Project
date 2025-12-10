@@ -12,6 +12,7 @@ class DeclareStatement : public Statement
     Point LeftCorner;
     Point Inlet;
     Point Outlet;
+	Point Center;
 
 public:
     DeclareStatement(Point Lcorner, const string& var, bool hasVal = false, double val = 0);

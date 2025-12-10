@@ -17,6 +17,7 @@ class OperatorAssignment : public Statement
 	Point Inlet;
 	Point Outlet;
 	Point LeftCorner;
+	Point Center;
 	public:
 
 	OperatorAssignment(Point Lcorner, string LeftHS, string Oper, string RHS1 , string RHS2 );

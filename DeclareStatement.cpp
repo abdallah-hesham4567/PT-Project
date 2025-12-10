@@ -16,7 +16,8 @@ DeclareStatement::DeclareStatement(Point Lcorner, const string& var, bool hasVal
 
     Outlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
     Outlet.y = LeftCorner.y + UI.ASSGN_HI;
-
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
     UpdateStatementText();
 }
 
@@ -106,26 +107,15 @@ Statement* DeclareStatement::Clone() const
 
 void DeclareStatement::Save(ofstream& OutFile) const
 {
-    OutFile << "DECLARE\t" << ID << "\t" << pConn->getPosition().x << "\t"
-        << pConn->getPosition().y << "\t" << VarName << "\n";
+    OutFile << "DECLARE\t" << ID << "\t" << Center.x << "\t"
+        << Center.y << "\t" << VariableName << "\n";
 }
-//void DeclareStatement::Load(ifstream& InFile)
-//{
-//    int x, y;
-//    InFile >> ID >> x >> y >> VariableName;
-//    LeftCorner = Point(x, y);
-//    Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
-//    Inlet.y = LeftCorner.y;
-//    Outlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
-//    Outlet.y = LeftCorner.y + UI.ASSGN_HI;
-//    UpdateStatementText();
-//}
+
 
 void DeclareStatement::Load(ifstream& InFile)
 {
-    int x, y;
-    InFile >> ID >> x >> y >> VariableName;
-    pOutconn->setPosition(Point(x, y));
+    InFile >> ID >> Center.x >> Center.y >> VariableName;
+    UpdateBoundingBox();
 }
 
 
