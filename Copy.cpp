@@ -5,28 +5,39 @@
 
 Copy::Copy(ApplicationManager* pApp) : Action(pApp) {}
 
-void Copy::ReadActionParameters()
+bool Copy::CopyToClipboard(Statement* pStat)
 {
-    // No parameters to read
+    //core copying logic without any UI messages
+
+    if (pStat == nullptr)
+    {
+        return false;  // Nothing to copy
+    }
+
+    // Clone the selected statement
+    Statement* pClonedStat = pStat->Clone();
+
+    // Store the cloned statement in clipboard
+    pManager->SetClipboard(pClonedStat);
+
+    return true;  // Copy successful
 }
 
 void Copy::Execute()
 {
     Output* pOut = pManager->GetOutput();
 
-    Statement* selected = pManager->GetSelectedStatement();
+	Statement* SelectedStat = pManager->GetSelectedStatement();
 
-    if (!selected)
-    {
-        pOut->PrintMessage("No statement selected to copy!");
-        return;
-    }
+	if (CopyToClipboard(SelectedStat))
+	{
+		pOut->PrintMessage("Statement copied.");
+	}
+	else
+	{
+		pOut->PrintMessage("No Statement is selected, please select a statement to copy");
+	}
 
-    // Clone the statement (WITHOUT connectors as required)
-    Statement* copied = selected->Clone();
+    pManager->UpdateInterface();
 
-    // Store in clipboard
-    pManager->SetClipboard(copied);
-
-    pOut->PrintMessage("Statement copied.");
 }

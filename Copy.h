@@ -6,8 +6,9 @@
 class Copy : public Action
 {
 public:
+    virtual void ReadActionParameters() override {}
     Copy(ApplicationManager* pApp);
-    virtual void ReadActionParameters();
+    bool CopyToClipboard(Statement* pStat);
     virtual void Execute();
 };
 
