@@ -32,5 +32,3 @@ Connector* Statement::GetIncomingConnector(int index)
 
 
 
-
-

@@ -34,7 +34,7 @@ public:
 
 	void setLHS(const string& L);
 	void setRHS(double R);
-	virtual void SetPosition(Point p) override;
+	//virtual void SetPosition(Point &p);
 
 	
 	virtual void UpdateStatementText();

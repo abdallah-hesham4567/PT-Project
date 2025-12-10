@@ -43,7 +43,7 @@ public:
     virtual bool IsPointInside(Point p) const = 0;
 
 	// 
-	virtual void SetPosition(Point p) = 0;
+	//virtual void SetPosition(Point &p){}
 
     // Existing virtual methods
 	virtual void Draw(Output* pOut) const = 0; 
