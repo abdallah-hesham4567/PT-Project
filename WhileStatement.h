@@ -26,7 +26,7 @@ public:
     string getCondition() const { return Condition; }
 
     void UpdateStatementText();
-    virtual void Draw(Output* pOut) const;
+  
 
     void setTrueBranch(Connector* conn) { TrueBranch = conn; }
     void setFalseBranch(Connector* conn) { FalseBranch = conn; }
@@ -42,7 +42,7 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "COND"; }
-    virtual void Edit(ApplicationManager* pManager);
+    virtual void Edit();
     virtual Statement* Clone() const ;
 
 };

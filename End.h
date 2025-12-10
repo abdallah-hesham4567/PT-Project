@@ -25,8 +25,8 @@ public:
     virtual bool IsPointInside(Point p) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
-    string getStatementType() const;
-    virtual void Edit(ApplicationManager* pManager);
+    string getStatementType() const { return "END"; }
+    virtual void Edit();
     virtual Statement* Clone() const;
 
 };

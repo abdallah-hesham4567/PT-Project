@@ -42,10 +42,12 @@ void WhileStatement::UpdateStatementText()
 void WhileStatement::Draw(Output* pOut) const
 {
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
+
 }
 
-void WhileStatement::Edit(ApplicationManager* pManager)
+void WhileStatement::Edit()
 {
+    ApplicationManager* pManager;
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Edit While Statement Condition: Enter new LHS:");
@@ -55,7 +57,7 @@ void WhileStatement::Edit(ApplicationManager* pManager)
     pOut->PrintMessage("Enter new RHS:");
     string RHS = pIn->GetVariableOrVal(pOut);
     string newCondition = LHS + " " + op + " " + RHS;
-    setCondition(newCondition);
+    this->setCondition(newCondition);
 	pOut->ClearStatusBar();
 }
 
@@ -66,6 +68,7 @@ Statement* WhileStatement::Clone() const
     newWhile->setTrueBranch(nullptr);
 	newWhile->setFalseBranch(nullptr);
 	return newWhile;
+
 }
 
 Point WhileStatement::GetOutletPoint(int branch) const

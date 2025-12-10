@@ -25,5 +25,5 @@ void Edit::Execute()
     ReadActionParameters();
 
     if (SelectedStat)
-        SelectedStat->Edit();    // Call the overridden Edit in the statement
+        SelectedStat->Edit(pManager);    // Call the overridden Edit in the statement
 }

@@ -53,8 +53,9 @@ bool End::IsPointInside(Point p) const
         p.y <= Center.y + UI.START_END_HI / 2);
 }
 
-void End::Edit(ApplicationManager* pManager)
+void End::Edit()
 {
+    ApplicationManager* pManager;
 	// No editable parameters 
     Output* pOut;
 	pOut->PrintMessage("End statement has no editable parameters.");
@@ -80,6 +81,6 @@ void End::Load(ifstream& InFile)
 {
     int x, y;
     InFile >> ID >> Center.x >> Center.y;
-    UpdateBoundingBox(); // Calculate the drawing area
+    
 }
 

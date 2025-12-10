@@ -2,7 +2,7 @@
 #define ADD_READ_H
 
 #include "Action.h"
-#include "..\Statements\Read.h"
+#include "Read.h"
 
 class AddRead : public Action
 {

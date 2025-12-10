@@ -73,8 +73,9 @@ bool VariableAssign::IsPointInside(Point p) const
 		p.y >= LeftCorner.y &&
 		p.y <= LeftCorner.y + UI.ASSGN_HI);
 }
-void VariableAssign::Edit(ApplicationManager* pManager)
+void VariableAssign::Edit()
 {
+	ApplicationManager* pManager;
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Editing Variable Assignment Statement: Enter new LHS variable name:");
@@ -82,15 +83,15 @@ void VariableAssign::Edit(ApplicationManager* pManager)
 	pOut->PrintMessage("Editing Variable Assignment Statement: Enter new RHS variable name:");
 	string newRHS = pIn->GetVariable(pOut);
 	// Update LHS and RHS
-	setLHS(newLHS);
-	setRHS(newRHS);
+	LHS = newLHS;
+	RHS = newRHS;
 	pOut->ClearStatusBar();
 }
 
 Statement* VariableAssign::Clone() const
 {
 	VariableAssign* newVarAssign = new VariableAssign(*this);
-	newVarAssign->SetOutConn(nullptr);
+	//newVarAssign->SetOutConn(nullptr);
 	return newVarAssign;
 }
 
@@ -107,3 +108,7 @@ void VariableAssign::Load(ifstream& InFile)
 	InFile >> ID >> Center.x >> Center.y >> LHS;
 }
 
+string VariableAssign::getStatementType() const
+{
+	return "VALASSIGN";
+}

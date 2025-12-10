@@ -26,7 +26,6 @@ public:
 	VariableAssign(Point Lcorner, string LeftHS = "", string RightHS = "");
 	void setLHS(const string& L);
 	void setRHS(const string& R);
-	virtual void Draw(Output* pOut) const;
 
 	virtual Point GetOutletPoint(int branch = 0) const;
 	virtual Point GetInletPoint() const;
@@ -36,8 +35,8 @@ public:
 	virtual void Draw(Output* pOut) const;
 	virtual void Save(ofstream& OutFile) const;
 	virtual void Load(ifstream& InFile);
-	virtual void Edit(ApplicationManager* pManager);
-	virtual string getStatementType() const;
+	virtual void Edit();
+	virtual string getStatementType()const;
 	virtual Statement* Clone() const;
 
 };

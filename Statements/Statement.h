@@ -6,7 +6,7 @@
 #include "..\Connector.h"
 //class Output;
 #include "..\GUI\Output.h"
-
+#include "..\ApplicationManager.h"
 //Base class for all Statements
 class Statement
 {
@@ -23,10 +23,9 @@ protected:
 
 public:
 	Statement();
-	//void SetSelected(bool s);
-	//bool IsSelected() const;
+	
 
-	virtual void Draw(Output* pOut) const = 0;	//Draw the statement
+	
 
     // Get outlet point for connectors (branch: 0=default, 1=YES, 2=NO)
     virtual Point GetOutletPoint(int branch = 0) const = 0;
@@ -35,7 +34,7 @@ public:
     virtual Point GetInletPoint() const = 0;
 
     // Get expected number of output connectors
-    virtual int GetExpectedOutConnCount() const = 0;
+	virtual int GetExpectedOutConnCount() const = 0;
 
     // Check if this is a conditional statement
     virtual bool IsConditional() const { return false; }
@@ -45,7 +44,7 @@ public:
 
     // Existing virtual methods
 	virtual void Draw(Output* pOut) const = 0; 
-	virtual void Save(ofstream& OutFile) {};
+	virtual void Save(ofstream& OutFile) const =0;
     virtual void Load(ifstream& InFile) = 0;
 
     // Getters/Setters
@@ -59,10 +58,8 @@ public:
 	///		It should then be overridden by each derived Statement
 	///		Decide the parameters that you should pass to each function and its return type
 
-	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
-	virtual void Load(ifstream& Infile) = 0;	//Load the Statement parameters from a file
 
-	virtual void Edit() {};		//Edit the Statement parameter
+	virtual void Edit() = 0;		//Edit the Statement parameter
 	virtual string getStatementType() const = 0;
 	//virtual void Simulate();	//Execute the statement in the simulation mode
 
@@ -70,27 +67,16 @@ public:
 
 
 	///TODO: Add more functions if needed
-	void GetExpectedOutConnCount(Connector* pConn);  //update the outgoing connector for the statement
 
-	void SetOutConn(Connector* pConn);
+	virtual void SetOutConn(Connector* pConn);
 	Connector* GetOutConn();  //return the outgoing connector for the statement
-
-	void AddIncomingConnector(Connector* pConn);
-
-	void RemoveIncomingConnector(Connector* pConn);
+	
+	
 
 	int GetIncomingCount();   // Get the number of incoming connectors
 	 
 	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
-	virtual Statement* Clone() {};
-
-	virtual void SetOutConnector(Connector* pConn);
-
-	
-
-
-
-
+	virtual Statement* Clone() const =0 ;
 
 };
 

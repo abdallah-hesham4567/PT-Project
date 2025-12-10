@@ -27,7 +27,7 @@ void AddRead::Execute()
     ReadActionParameters();
 
     Point Corner;
-    Corner.x = Position.x - UI.IO_WDTH / 2;
+    Corner.x = Position.x - UI.READ_WDTH / 2;
     Corner.y = Position.y;
 
     Read* pRead = new Read(Corner, VarName);

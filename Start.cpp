@@ -27,8 +27,9 @@ void Start::Draw(Output* pOut) const
     pOut->DrawStart(Center, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
 }
 
-void Start::Edit(ApplicationManager* pManager)
+void Start::Edit()
 {
+    ApplicationManager* pManager;
 	// Start statement has no editable parameters
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Start statement has no editable parameters.");
@@ -79,5 +80,11 @@ void Start::Load(ifstream& InFile)
 {
     
     InFile >> ID >> Center.x >> Center.y;
-    UpdateBoundingBox();
+    
 }
+
+string Start::getStatementType() const
+{
+    return "STRT";
+}
+

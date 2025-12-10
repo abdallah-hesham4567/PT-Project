@@ -30,12 +30,8 @@ private:
 	Output* pOut;
 
 public:
-	ApplicationManager() 
-	{
-		Clipboard = NULL;
-		SelectedStatement = NULL;
-		SelectedConnector = NULL;
-	};
+	ApplicationManager();
+	
 	~ApplicationManager();
 
 	// == Actions Related Functions ==
@@ -59,18 +55,21 @@ public:
 
 	int GetOutConnCount(Statement* pStat) const;
 	int GetInConnCount(Statement* pStat) const;
-	Connector** GetOutConnectors(Statement* pStat, int& count) const;
+	//Connector** GetOutConnectors(Statement* pStat, int& count) const;
 
 	void DeleteStatement(Statement* statement); // Deletes a selected statement 
 	void DeleteConnector(Connector* pConn);		// Deletes a selecetdd connector 
 	void DeleteStatementConnectors(Statement* pStat);  // Deletes all connectors connected to a statement that is being deleted uses (DeleteConnector)
 
 
-	bool ValidateConnectors(string& errorMsg) const;
-	Connector* GetSelectedConnector() const;
-	void SetSelectedConnector(Connector* pConn);
+	//bool ValidateConnectors(string& errorMsg) const;
+	Connector* GetSelectedConnector() {
+		return SelectedConnector
+			;
+	} const
+		void SetSelectedConnector(Connector* pConn) { SelectedConnector = pConn; }
 	void UpdateAllConnectors();
-	void SetClipboard(Statement* S);
+;
 
 	void SaveAll(ofstream& OutFile);
 

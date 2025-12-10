@@ -144,25 +144,25 @@ Statement* Connector::getDstStat()
 	return DstStat;
 }
 
-void Connector::setStartPoint(Point P)
-{
-	Start = P;
-}
-
-Point Connector::getStartPoint()
-{
-	return Start;
-}
-
-void Connector::setEndPoint(Point P)
-{
-	End = P;
-}
-
-Point Connector::getEndPoint()
-{
-	return End;
-}
+//void Connector::setStartPoint(Point P)
+//{
+//	Start = P;
+//}
+//
+//Point Connector::getStartPoint()
+//{
+//	return Start;
+//}
+//
+//void Connector::setEndPoint(Point P)
+//{
+//	End = P;
+//}
+//
+//Point Connector::getEndPoint()
+//{
+//	return End;
+//}
 
 
 void Connector::setOutletBranch(int branch)

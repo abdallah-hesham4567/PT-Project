@@ -9,11 +9,11 @@
 #include "AddOperationAssign.h"
 #include "AddVariableAssign.h"
 #include "AddWhile.h"
-
-
 #include "GUI\Input.h"
 #include "GUI\Output.h"
-
+#include "Action.h"
+#include "ActionSelect.h"
+#include "Delete.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -27,15 +27,13 @@ ApplicationManager::ApplicationManager()
 	SelectedStatement = NULL;	//no Statement is selected yet
 	Clipboard = NULL;
 	SelectedConnector = NULL;
-
 	//Create an array of Statement pointers and set them to NULL		
 	for (int i = 0; i < MaxCount; i++)
 	{
 		StatList[i] = NULL;
 		ConnList[i] = NULL;
 	}
-	pOut = new Output();
-	pIn = pOut->CreateInput();
+	
 }
 
 
@@ -172,8 +170,9 @@ Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 
 void ApplicationManager::UnselectAll()
 {
-	for (auto s : StatList)
-		s->SetSelected(false);
+	for (int i=0 ; i< StatCount ;i++)
+		if(StatList[i])
+			StatList[i]->SetSelected(false);
 }
 
 
@@ -187,7 +186,6 @@ void ApplicationManager::UpdateAllConnectors()
 		}
 	}
 }
-
 
 
 
@@ -230,7 +228,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 ////////////
 	case ADD_VAR_ASSIGN:
-		pAct = new AddVariableassign(this);
+		pAct = new AddVariableAssign(this);
 		break;
 //////////////////
 
@@ -250,12 +248,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new AddWrite(this);
 		break;
 
-	case ADD_CONNECTOR:
-		pAct = new AddConnector(this);
-		break;
+	//case ADD_CONNECTOR:
+		//pAct = new Connector(this);
+		//break;
 
-	case EDIT_STAT:
-		pAct = new Edit(this);
+	case SELECT:
+		pAct = new ActionSelect(this);
 		break;
 
 	case DEL:
@@ -280,7 +278,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case LOAD:
 		pAct = new Load(this);
-		break;
+		break;*/
 
 	case SWITCH_DSN_MODE:
 	{
@@ -292,7 +290,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		//// remove toolbar and switch 
 	}
 
-	case UNDO:
+	/*case UNDO:
 		pAct = new UNDO(this);
 		break;
 	case REDO:
@@ -300,18 +298,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 	case VALIDATE:
 		pAct = new Validate(this);
-		break;
+		break;*/
 
 
 
 
 
-	case RUN:
-		///create Select Action here
-		pAct = new Run(this);
-		break;
+	//case RUN:
+	//	///create Select Action here
+	//	pAct = new Run(this);
+	//	break;*/
 
-	case EXIT:
+	/*case EXIT:
 		///create Exit Action here
 		pAct = new Exit(this);
 		break;
@@ -322,7 +320,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case CPP:
 		///create Exit Action here
 		pAct = new Cpp(this);
-		break;
+		break;*/
 
 	case DRAWING_AREA:
 	{
@@ -369,18 +367,34 @@ void ApplicationManager::AddStatement(Statement* pStat)
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//Statement* ApplicationManager::GetStatement(Point P) const
+//{
+//	//If this point P(x,y) belongs to a statement return a pointer to it.
+//	//otherwise, return NULL
+//
+//
+//	///Add your code here to search for a statement given a point P(x,y)	
+//	///WITHOUT breaking class responsibilities
+//
+//	return NULL;
+//}
+
 Statement* ApplicationManager::GetStatement(Point P) const
 {
-	//If this point P(x,y) belongs to a statement return a pointer to it.
-	//otherwise, return NULL
+	// Loop through all statements
+	for (int i = 0; i < StatCount; i++) // Assuming StatCount is the number of statements
+	{
+		Statement* stat = StatList[i]; // Assuming StatementsList is an array of Statement*
+		// Use the virtual function implemented in each statement
+		if (stat->IsPointInside(P))
+			return stat; // Return the statement containing the poin
+	}
 
-
-	///Add your code here to search for a statement given a point P(x,y)	
-	///WITHOUT breaking class responsibilities
-
-	return NULL;
+	// If no statement contains the point
+	return nullptr;
 }
+
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the selected statement
 Statement* ApplicationManager::GetSelectedStatement() const
@@ -406,6 +420,7 @@ Statement* ApplicationManager::GetClipboard() const
 //Set the Clipboard
 void ApplicationManager::SetClipboard(Statement* pStat)
 {
+	if (Clipboard) delete Clipboard;
 	Clipboard = pStat;
 }
 
@@ -461,111 +476,6 @@ void ApplicationManager::SaveAll(ofstream& OutFile)
 bool ApplicationManager::Validate() const
 {
 
-	// ==============================================
-	///		 Ensure single Start and End         
-	// ==============================================
-	int startCount = 0;
-	int endCount = 0;
-
-	// Loop through all statements
-	for (int i = 0; i < StatCount; i++)
-	{
-		// Check if this statement is StartEnd
-
-		StartEnd* SE = dynamic_cast<StartEnd*>(StatList[i]);
-		if (SE)
-		{
-			if (SE->IsStart())
-				startCount++;
-			else
-				endCount++;
-		}
-	}
-
-	// Check results
-	if (startCount != 1)
-	{
-		pOut->PrintMessage("Error: Flowchart must have exactly ONE Start Statement.");
-		return false;
-	}
-
-	if (endCount != 1)
-	{
-		pOut->PrintMessage("Error: Flowchart must have exactly ONE End Statement.");
-		return false;
-	}
-
-	// ==============================================
-	///		 Validate outgoing connectors            
-	// ==============================================
-
-	for (int i = 0; i < StatCount; i++)
-	{
-		Statement* S = StatList[i];
-
-		// 1) Check for Conditional statement (needs 2 connectors)
-		Conditional* C = dynamic_cast<Conditional*>(S);
-		if (C)
-		{
-			if (!(C->GetYesConn()) || !(C->GetNoConn()))
-			{
-				pOut->PrintMessage("Error: Conditional statement must have YES and NO connectors.");
-				return false;
-			}
-
-			if (C->GetYesConn()->GetDstStat() == nullptr || C->GetNoConn()->GetDstStat() == nullptr) //cheking that both connectors have destination
-			{
-				pOut->PrintMessage("Error: Conditional connector has no destination.");
-				return false;
-			}
-			continue;
-		}
-
-		// 2) Check for Start (needs 1 connector)
-		StartEnd* SE = dynamic_cast<StartEnd*>(S);
-		if (SE && SE->IsStart())
-		{
-			if (!(SE->GetConnector()))
-			{
-				pOut->PrintMessage("Error: Start must have exactly one outgoing connector.");
-				return false;
-			}
-			if (SE->GetConnector()->GetDstStat() == nullptr) //checking that the start connector has destination
-			{
-				pOut->PrintMessage("Error: Start connector has no destination.");
-				return false;
-			}
-
-			continue;
-		}
-
-		// 3) Check for End (must have 0 connectors)
-		if (SE && !SE->IsStart())
-		{
-			// End must NOT have connector
-			if (SE->GetConnector())
-			{
-				pOut->PrintMessage("Error: End must NOT have an outgoing connector.");
-				return false;
-			}
-			continue;
-		}
-
-		// 4) Normal statements (Assignment, Read, Write): must have 1 connector
-		if (!(S->GetOutConn()))
-		{
-			pOut->PrintMessage("Error: Statement is missing an outgoing connector.");
-			return false;
-
-		}
-		if (S->GetOutConn()->GetDstStat() == nullptr) //checking that the connector has destination
-		{
-			pOut->PrintMessage("Error: Connector has no destination.");
-			return false;
-		}
-	}
-
-
 	return true;
 }
 
@@ -609,7 +519,7 @@ void ApplicationManager::LoadAll(const string& filename)
 	}
 
 	// Clear existing statements
-	ClearAll();
+	pOut->ClearDrawArea();
 	
 	// Load statement count
 	int statCount;
@@ -618,40 +528,40 @@ void ApplicationManager::LoadAll(const string& filename)
 	// Map to store statements by ID
 	//map<int, Statement*> statMap;
 
-	// Load all statements
-	for (int i = 0; i < statCount; i++)
-	{
-		string Type;
-		InFile >> Type;
+	//// Load all statements
+	//for (int i = 0; i < statCount; i++)
+	//{
+	//	string Type;
+	//	InFile >> Type;
 
-		Statement* S = nullptr;
+	//	Statement* S = nullptr;
 
-		if (Type == "STRT")
-			S = new StartStatement(InFile);
+	//	if (Type == "STRT")
+	//		S = new Start(InFile);
 
-		else if (Type == "READ")
-			S = new ReadStatement(InFile);
+	//	else if (Type == "READ")
+	//		S = new Read(InFile);
 
-		else if (Type == "WRITE")
-			S = new WriteStatement(InFile);
+	//	else if (Type == "WRITE")
+	//		S = new Write(InFile);
 
-		else if (Type == "DECLARE")
-			S = new DeclareStatement(InFile);
+	//	else if (Type == "DECLARE")
+	//		S = new DeclareStatement(InFile);
 
-		else if (Type == "OP_ASSIGN")
-			S = new OperatorAssignment(InFile);
+	//	else if (Type == "OP_ASSIGN")
+	//		S = new OperatorAssignment(InFile);
 
-		else if (Type == "COND")
-			S = new ConditionStatement(InFile);
+	//	else if (Type == "COND")
+	//		S = new ConditionStatement(InFile);
 
-		else if (Type == "END")
-			S = new EndStatement(InFile);
+	//	else if (Type == "END")
+	//		S = new End(InFile);
 
-		if (S)
-		{
-			AddStatement(S);
-		}
-	}
+	//	if (S)
+	//	{
+	//		AddStatement(S);
+	//	}
+	//}
 	// Load connector count
 	int ConnCount;
 	InFile >> ConnCount;
@@ -672,11 +582,11 @@ void ApplicationManager::LoadAll(const string& filename)
 			ConditionStatement* cond = dynamic_cast<ConditionStatement*>(s);
 			if (cond)
 			{
-				cond->SetBranchConnector(pConn, branch);
+				//cond->SetBranchConnector(pConn, branch);
 			}
 			else
 			{
-				s->SetOutConnector(pConn);
+				//s->SetOutConn(pConn);
 			}
 
 			AddConnector(pConn);
@@ -689,10 +599,10 @@ void ApplicationManager::LoadAll(const string& filename)
 	UpdateInterface();
 }
 
-void ApplicationManager::AddConnector(Connector* pConn)
-{
-	ConnList.push_back(pConn);
-}
+//void ApplicationManager::AddConnector(Connector* pConn)
+//{
+//	ConnList.push_back(pConn);
+//}
 
 
 

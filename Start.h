@@ -16,11 +16,11 @@ private:
 public:
     Start(Point C);
 
-    virtual void Draw(Output* pOut) const;
+    
 
     // connectors helpers
     Connector* getOutputConnector() const { return pOutConn; }
-    void setOutputConnector(Connector* c) { pOutConn = c; }
+    //void setOutputConnector(Connector* c) { pOutConn = c; }
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
@@ -29,8 +29,8 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
-    string getStatementType() const  { return "STRT"; }
-    virtual void Edit(ApplicationManager* pManager);
+    string getStatementType() const;
+    virtual void Edit();
     virtual Statement* Clone() const;
 };
 
