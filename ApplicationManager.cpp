@@ -181,9 +181,20 @@ Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 
 void ApplicationManager::UnselectAll()
 {
+	
 	for (int i=0 ; i< StatCount ;i++)
-		if(StatList[i])
+	{ 
+		if (StatList[i])
 			StatList[i]->SetSelected(false);
+	}
+		
+
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i])
+			ConnList[i]->SetSelected(false);
+	}
+	
 }
 
 
