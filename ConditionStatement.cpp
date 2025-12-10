@@ -71,7 +71,7 @@ void ConditionStatement::SetBranchConnector(Connector* pConn, int branch)
 
 Statement* ConditionStatement::Clone() const
 {
-	return new ConditionStatement(*this);
+	
 }
 
 

@@ -59,7 +59,11 @@ void WhileStatement::Edit(ApplicationManager* pManager)
 
 Statement* WhileStatement::Clone() const
 {
-	return new WhileStatement(*this);
+    WhileStatement* newWhile = new WhileStatement(*this);
+	//while has two outgoing connectors, reset them for the cloned statement
+    newWhile->setTrueBranch(nullptr);
+	newWhile->setFalseBranch(nullptr);
+	return newWhile;
 }
 
 Point WhileStatement::GetOutletPoint(int branch) const

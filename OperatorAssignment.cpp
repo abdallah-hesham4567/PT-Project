@@ -70,7 +70,9 @@ void OperatorAssignment::Edit(ApplicationManager* pManager)
 
 Statement* OperatorAssignment::Clone() const
 {
-	return new OperatorAssignment(*this);
+    OperatorAssignment* newOppAssign = new OperatorAssignment(*this);
+    newOppAssign->SetOutConn(nullptr);
+    return newOppAssign;
 }
 
 
