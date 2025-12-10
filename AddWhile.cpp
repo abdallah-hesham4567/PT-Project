@@ -14,7 +14,7 @@ void AddWhile::ReadActionParameters()
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
 
-    // 1️⃣ Click position
+    
     pOut->PrintMessage("While Statement: Click to add the statement");
     pIn->GetPointClicked(Position);
     while (!InDrawingArea(Position))
@@ -24,7 +24,7 @@ void AddWhile::ReadActionParameters()
     }
     pOut->ClearStatusBar();
 
-    // 2️⃣ Get condition text from user
+   
     pOut->PrintMessage("Enter the LHS:");
     LHS = pIn->GetVariableOrVal(pOut);   // GetVariable يضمن اسم متغير صالح
     pOut->PrintMessage("Enter the comparison operator (==, !=, <, <=, >, >=):");

@@ -28,14 +28,8 @@ Connector* Statement::GetIncomingConnector(int index)
 	return nullptr;
 }
 
-void Statement::SetPoint(Point &P)
-{
-	Input* pIn;
-
-	pIn->GetPointClicked(P);
 
 
-}
 
 
 
