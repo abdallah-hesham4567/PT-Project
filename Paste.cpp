@@ -11,10 +11,6 @@ void Paste::Execute()
 {
     Output* pOut = pManager->GetOutput();
     Input* pIn = pManager->GetInput();
-    Point P;
-
-    pOut->PrintMessage("Please click on the desired location to paste");
-    pIn->GetPointClicked(P);
 
     // Get the clipboard content
     Statement* clipboard = pManager->GetClipboard();
@@ -28,7 +24,9 @@ void Paste::Execute()
     // Clone the clipboard statement
     Statement* newStat = clipboard->Clone();
 
-    ReadActionParameters();
+    Point P;
+    pOut->PrintMessage("Please click on the desired location to paste");
+    pIn->GetPointClicked(P);
 
     // Add to the application
     pManager->AddStatement(newStat);

@@ -30,12 +30,13 @@ void AddConnector::ReadActionParameters()
 		return;
 	}
 
+
 	// Step 2: Determine outlet branch if needed
 	// Check how many outlets the source statement has
 	int outletCount = pManager->GetOutConnCount(SrcStat);
 
 	// If source is a conditional statement (has 2 outlets), ask which branch
-	if (outletCount == 2)
+	if (SrcStat->IsConditional())
 	{
 		pOut->PrintMessage("Source is conditional. Select outlet branch: 0 for TRUE, 1 for FALSE");
 

@@ -65,6 +65,14 @@ int ApplicationManager::GetOutConnCount(Statement* pStat) const
 	return count;
 }
 
+//int ApplicationManager::GetOutConnCount(Statement* pStat) const
+//{
+//	if (pStat->IsConditional())
+//		return 2;
+//	if (!pStat) return 0;
+//	return 1;
+//}
+
 int ApplicationManager::GetInConnCount(Statement* pStat) const
 {
 	if (!pStat) return 0;
@@ -251,15 +259,15 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new AddWrite(this);
 		break;
 
-	//case ADD_CONNECTOR:
-		//pAct = new Connector(this);
-		//break;
+	case ADD_CONNECTOR:
+		pAct = new ::AddConnector(this);
+		break;
 
 	case SELECT:
 		pAct = new ActionSelect(this);
 		break;
 
-	/*case DEL:
+	case DEL:
 		pAct = new Delete(this);
 		break;
 
