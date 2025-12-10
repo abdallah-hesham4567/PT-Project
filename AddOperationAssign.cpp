@@ -44,7 +44,7 @@ void AddOperationAssign::Execute()
 	Point Corner;
 	Corner.x = Position.x - UI.ASSGN_WDTH / 2;
 	Corner.y = Position.y;
-	OperatorAssignment* pAssign = new OperatorAssignment(Corner, LHS, RHS1, op, RHS2);
+	OperatorAssignment* pAssign = new OperatorAssignment(Corner, LHS, op, RHS1, RHS2);
 	pManager->AddStatement(pAssign);
 	// Adds the created statement to application manger's statement list
 }

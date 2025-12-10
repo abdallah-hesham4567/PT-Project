@@ -95,22 +95,21 @@ string Input::GetVariable(Output* pO) const
 }
 string Input::GetVariableOrVal(Output* pO) const
 {
-
-	pO->PrintMessage("Please enter a variable or value name");        //prompt user to enter a variable name
-	string Variable = GetString(pO);
-	while (!IsVariable(Variable) && !IsValue (Variable)  )                          //asks user for a valid input
+	pO->PrintMessage("Please enter a variable name or a value");        //prompt user to enter a variable name or a value
+	string VarOrVal = GetString(pO);
+	while (!(IsVariable(VarOrVal) || IsValue(VarOrVal)))            //asks user for a valid input
 	{
-		pO->PrintMessage("Please enter a variable or value name");
-		Variable = GetString(pO);
+		pO->PrintMessage("Please enter a variable name or a value");
+		VarOrVal = GetString(pO);
 	}
-	return Variable;                                        //return a valid variable name
+	return VarOrVal;                                        //return a valid variable name or a value
 }
 
-//TODO: Add the function Input::c 
-// to read an arithmetic operator (+, -, * or /) from the user. 
+//TODO: Add the function Input::GetArithOperator
+// to read an arithmetic operator (+, -, * or /) from the user.
 // It does not return before taking a valid arithmetic operator.
 
-string Input::GetArithOperator(Output* pO) const
+char Input::GetArithOperator(Output* pO) const
 {
 	pO->PrintMessage("Enter Arithmetic Operator:");          // prompt user to enter an arithmetic operator
 	string Operator = GetString(pO);
@@ -120,7 +119,7 @@ string Input::GetArithOperator(Output* pO) const
 		pO->PrintMessage("Enter Arithmetic Operator:");
 		Operator = GetString(pO);
 	}
-	return Operator;                                                  //return a valid arithmetic operator
+	return char(Operator[0]);                                                  //return a valid arithmetic operator
 }
 
 //TODO: Add the function Input::GetCompOperator

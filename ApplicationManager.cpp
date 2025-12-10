@@ -259,7 +259,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new ActionSelect(this);
 		break;
 
-	case DEL:
+	/*case DEL:
 		pAct = new Delete(this);
 		break;
 
