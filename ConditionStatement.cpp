@@ -60,13 +60,13 @@ void ConditionStatement::Edit(ApplicationManager* pManager)
     
 
 }
-void ConditionStatement::SetBranchConnector(Connector* pConn, int branch)
-{
-    if (branch == 1)      // True branch
-        TrueBranch = pConn;
-    else if (branch == 2) // False branch
-        FalseBranch = pConn;
-}
+//void ConditionStatement::SetBranchConnector(Connector* pConn, int branch)
+//{
+//    if (branch == 1)      // True branch
+//        TrueBranch = pConn;
+//    else if (branch == 2) // False branch
+//        FalseBranch = pConn;
+//}
 
 Statement* ConditionStatement::Clone() const
 {

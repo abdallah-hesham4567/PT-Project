@@ -93,7 +93,7 @@ bool Write::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.READ_HI);
 }
 
-void Write::Save(ofstream& OutFile) const
+void Write::Save(ofstream& OutFile) const 
 {
     OutFile << "WRITE\t" << ID << "\t" << Center.x << "\t"
         << Center.y << "\t" << Expr << "\n";
@@ -101,8 +101,6 @@ void Write::Save(ofstream& OutFile) const
 
 void Write::Load(ifstream& InFile)
 {
-    
     InFile >> ID >> Center.x >> Center.y >> Expr;
-    UpdateBoundingBox();
 }
 

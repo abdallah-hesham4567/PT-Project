@@ -117,7 +117,7 @@ void DeclareStatement::Save(ofstream& OutFile) const
 void DeclareStatement::Load(ifstream& InFile)
 {
     InFile >> ID >> Center.x >> Center.y >> VariableName;
-    UpdateBoundingBox();
+    
 }
 
 

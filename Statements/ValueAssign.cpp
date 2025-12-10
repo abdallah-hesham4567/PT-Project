@@ -132,6 +132,6 @@ void ValueAssign::Load(ifstream& InFile)
 {
 
 	InFile >> ID >>  Center.x >>Center.y >> LHS;
-	UpdateBoundingBox(); 
+	
 }
 

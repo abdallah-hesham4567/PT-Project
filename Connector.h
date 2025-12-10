@@ -53,7 +53,7 @@ public:
 	// Load connector from file
 	void Load(ifstream& InFile);
 
-	int getBranchType() const { return BranchType; }
+	int getBranchType() const { return OutletBranch; }
 
 	// Validate the connector (check if it's properly connected)
 	bool Validate(string& errorMsg) const;

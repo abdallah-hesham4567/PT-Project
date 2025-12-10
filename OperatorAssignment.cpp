@@ -1,5 +1,6 @@
 ﻿#include "OperatorAssignment.h"
 
+
 OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, string Oper, string R1, string R2)
 {
     LHS = LeftHS;
@@ -113,6 +114,7 @@ bool OperatorAssignment::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.ASSGN_HI);
 }
 
+
 void OperatorAssignment::Save(ofstream& OutFile) const
 {
     // Convert ENUM to STRING
@@ -150,7 +152,7 @@ void OperatorAssignment::Load(ifstream& InFile)
     else if (operatorStr == "DIV")
         Opp = DIV_OP;
 
-    //UPDATE CORNER
+   
 }
 
 

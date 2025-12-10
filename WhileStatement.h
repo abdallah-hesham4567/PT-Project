@@ -14,6 +14,10 @@ class WhileStatement : public Statement
     Point OutletTrue;
     Point OutletFalse;
     Point LeftCorner;
+    CompOperator Comp;
+    string RHS;
+    string LHS;
+    Point Center;
 
 public:
     WhileStatement(Point Lcorner, const string& cond);

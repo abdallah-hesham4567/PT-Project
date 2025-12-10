@@ -44,8 +44,8 @@ public:
     virtual bool IsPointInside(Point p) const = 0;
 
     // Existing virtual methods
-    virtual void Draw(Output* pOut) const = 0;
-    virtual void Save(ofstream& OutFile) const = 0;
+	virtual void Draw(Output* pOut) const = 0; 
+	virtual void Save(ofstream& OutFile) {};
     virtual void Load(ifstream& InFile) = 0;
 
     // Getters/Setters
@@ -60,9 +60,9 @@ public:
 	///		Decide the parameters that you should pass to each function and its return type
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
-	virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
+	virtual void Load(ifstream& Infile) = 0;	//Load the Statement parameters from a file
 
-	virtual void Edit() = 0;		//Edit the Statement parameter
+	virtual void Edit() {};		//Edit the Statement parameter
 	virtual string getStatementType() const = 0;
 	//virtual void Simulate();	//Execute the statement in the simulation mode
 
@@ -82,7 +82,7 @@ public:
 	int GetIncomingCount();   // Get the number of incoming connectors
 	 
 	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
-	virtual Statement* Clone()  = 0;
+	virtual Statement* Clone() {};
 
 	virtual void SetOutConnector(Connector* pConn);
 

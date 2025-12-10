@@ -2,7 +2,7 @@
 #define ADD_WRITE_H
 
 #include "Action.h"
-#include "..\Statements\Write.h"
+#include "Write.h"
 
 class AddWrite : public Action
 {

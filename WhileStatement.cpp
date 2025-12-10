@@ -20,6 +20,8 @@ WhileStatement::WhileStatement(Point Lcorner, const string& cond)
 
     OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
     OutletFalse.y = LeftCorner.y + UI.COND_HI;
+    Center.x = LeftCorner.x + UI.COND_WDTH / 2;
+    Center.y = LeftCorner.y + UI.COND_HI/2;
 
     UpdateStatementText();
 }
@@ -117,15 +119,48 @@ bool WhileStatement::IsPointInside(Point p) const
 
 void WhileStatement::Save(ofstream& OutFile) const
 {
-    OutFile << "COND\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
-        << pOutconn->getPosition().y << "\t" << Condition << "\n";
+    // Convert ENUM to STRING
+    string comparisonStr;
+    if (Comp == EQUAL)
+        comparisonStr = "EQL";
+    else if (Comp == NOT_EQUAL)
+        comparisonStr = "NOTEQL";
+    else if (Comp == GREATER)
+        comparisonStr = "GRT";
+    else if (Comp == LESS)
+        comparisonStr = "LSS";
+    else if (Comp == GREATER_OR_EQUAL)
+        comparisonStr = "GRTEQL";
+    else if (Comp == LESS_OR_EQUAL)
+        comparisonStr = "LSSEQL";
+
+    OutFile << "COND\t" << ID << "\t"
+        << Center.x << "\t" << Center.y << "\t"
+        << LHS << "\t" << comparisonStr << "\t" << RHS;
 }
 
 
 void WhileStatement::Load(ifstream& InFile)
 {
-    int x, y;
-    InFile >> ID >> x >> y >> Condition;
-    pOutconn->setPosition(Point(x, y));
+    string comparisonStr;
+    InFile >> ID >> Center.x >> Center.y
+        >> LHS >> comparisonStr >> RHS;
+
+    // Convert STRING to ENUM
+    if (comparisonStr == "EQL")
+        Comp = EQUAL;
+    else if (comparisonStr == "NOTEQL")
+        Comp = NOT_EQUAL;
+    else if (comparisonStr == "GRT")
+        Comp = GREATER;
+    else if (comparisonStr == "LSS")
+        Comp = LESS;
+    else if (comparisonStr == "GRTEQL")
+        Comp = GREATER_OR_EQUAL;
+    else if (comparisonStr == "LSSEQL")
+        Comp = LESS_OR_EQUAL; 
+
+
+    
 }
 

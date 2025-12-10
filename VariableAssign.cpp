@@ -104,8 +104,6 @@ void VariableAssign::Save(ofstream& OutFile) const
 
 void VariableAssign::Load(ifstream& InFile)
 {
-
 	InFile >> ID >> Center.x >> Center.y >> LHS;
-	UpdateBoundingBox();
 }
 

@@ -9,15 +9,6 @@ Statement::Statement()
 	pOutconn = NULL;
 }
 
-void Statement::SetSelected(bool s)
-{
-	Selected = s;
-}
-
-bool Statement::IsSelected() const
-{
-	return Selected;
-}
 
 void Statement::GetExpectedOutConnCount(Connector* pConn)
 {
