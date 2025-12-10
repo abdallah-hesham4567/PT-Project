@@ -44,6 +44,10 @@ void ValueAssign::setRHS(double R)
 	UpdateStatementText();
 }
 
+void ValueAssign::SetPosition(Point p)
+{
+}
+
 void ValueAssign::Draw(Output* pOut) const
 {
 	//Call Output::DrawAssign function to draw assignment statement 	

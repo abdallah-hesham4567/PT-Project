@@ -42,6 +42,9 @@ public:
     // Check if point is inside statement (for selection)
     virtual bool IsPointInside(Point p) const = 0;
 
+	// 
+	virtual void SetPosition(Point p) = 0;
+
     // Existing virtual methods
 	virtual void Draw(Output* pOut) const = 0; 
 	virtual void Save(ofstream& OutFile) const =0;
@@ -78,7 +81,6 @@ public:
 	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
 	virtual Statement* Clone() const =0 ;
 
-	void SetPoint(Point &P);
 };
 
 #endif
