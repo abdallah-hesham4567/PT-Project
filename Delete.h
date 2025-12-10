@@ -16,7 +16,7 @@ public:
 
     // Execute the delete action
     virtual void Execute();
-
+    virtual void ReadActionParameters() override {};
     // Undo the delete action (optional - for undo/redo support)
     //virtual void Undo();
 };

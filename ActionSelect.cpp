@@ -7,6 +7,8 @@ void ActionSelect::Execute()
     Output* pOut = pManager->GetOutput();
     Input* pIn = pManager->GetInput();
 
+    pOut->PrintMessage("Ready to select.");
+
     Point P;
     pIn->GetPointClicked(P);
 
@@ -18,11 +20,13 @@ void ActionSelect::Execute()
     if (pClicked)
     {
         pClicked->SetSelected(true);
+        pManager->SetSelectedStatement(pClicked);
         pOut->PrintMessage("Statement selected.");
     }
-    if (pClick)
+    else if (pClick)
     {
         pClicked->SetSelected(true);
+        pManager->SetSelectedConnector(pClick);
         pOut->PrintMessage("connector selected.");
     }
 
