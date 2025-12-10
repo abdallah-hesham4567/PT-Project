@@ -6,9 +6,9 @@
 #include "..\Actions\Action.h"
 AddConnector::AddConnector(ApplicationManager* pAppManager) : Action(pAppManager)
 {
-	/*SrcStat = nullptr;
+	SrcStat = nullptr;
 	DstStat = nullptr;
-	OutletBranch = 0;*/
+	OutletBranch = 0;
 }
 
 void AddConnector::ReadActionParameters()
@@ -30,6 +30,8 @@ void AddConnector::ReadActionParameters()
 		return;
 	}
 
+	int currentOutlets = pManager->GetOutConnCount(SrcStat);
+
 
 	// Step 2: Determine outlet branch if needed
 	// Check how many outlets the source statement has
@@ -38,7 +40,12 @@ void AddConnector::ReadActionParameters()
 	// If source is a conditional statement (has 2 outlets), ask which branch
 	if (SrcStat->IsConditional())
 	{
-		if (pManager->GetOutConnCount(SrcStat) != 2)
+		if (pManager->GetOutConnCount(SrcStat) >= 2) {
+			pOut->PrintMessage("Error: Conditional statement already has 2 connectors!");
+			SrcStat = nullptr;
+			return;
+		}
+
 		{
 			pOut->PrintMessage("Source is conditional. Select outlet branch: 0 for TRUE, 1 for FALSE");
 
@@ -50,20 +57,28 @@ void AddConnector::ReadActionParameters()
 			{
 				OutletBranch = stoi(branchStr);
 			}
+
 			else
 			{
 				pOut->PrintMessage("Invalid branch number. Using default (0).");
 				OutletBranch = 0;
 			}
 		}
-		else
-			pOut->PrintMessage("already have 2 branches");
+
+		
 	}
+
 	else
 	{
-		// Single outlet (normal statement)
+		if (currentOutlets >= 1)
+		{
+			pOut->PrintMessage("Error: Statement already has a connector!");
+			SrcStat = nullptr;
+			return;
+		}
 		OutletBranch = 0;
 	}
+	
 
 	// Step 3: Get the destination statement
 	pOut->PrintMessage("Add Connector: Click on the DESTINATION statement");
@@ -84,6 +99,7 @@ void AddConnector::ReadActionParameters()
 	{
 		pOut->PrintMessage("Error: Source and destination cannot be the same. Action cancelled.");
 		DstStat = nullptr;
+		SrcStat = nullptr;
 		return;
 	}
 
@@ -101,22 +117,22 @@ void AddConnector::Execute()
 		Output* pOut = pManager->GetOutput();
 
 		// Check if a connector already exists at this outlet
-		Connector** existingConns = pManager->GetOutConnectors(SrcStat, OutletBranch);
-		if (existingConns != nullptr)
-		{
-			// Check if any existing connector uses this specific branch
-			int existingCount = pManager->GetOutConnCount(SrcStat);
-			for (int i = 0; i < existingCount; i++)
-			{
-				if (existingConns[i]->getOutletBranch() == OutletBranch)
-				{
-					pOut->PrintMessage("Error: This outlet already has a connector. Delete it first.");
-					delete[] existingConns;
-					return;
-				}
-			}
-			delete[] existingConns;
-		}
+		//Connector** existingConns = pManager->GetOutConnectors(SrcStat, OutletBranch);
+		//if (existingConns != nullptr)
+		//{
+		//	// Check if any existing connector uses this specific branch
+		//	int existingCount = pManager->GetOutConnCount(SrcStat);
+		//	for (int i = 0; i < existingCount; i++)
+		//	{
+		//		if (existingConns[i]->getOutletBranch() == OutletBranch)
+		//		{
+		//			pOut->PrintMessage("Error: This outlet already has a connector. Delete it first.");
+		//			delete[] existingConns;
+		//			return;
+		//		}
+		//	}
+		//	delete[] existingConns;
+		//}
 
 		// Create a new connector
 		Connector* pConn = new Connector(SrcStat, DstStat, OutletBranch);
@@ -132,6 +148,7 @@ void AddConnector::Execute()
 	}
 	else
 	{
+
 		// Parameters are invalid, action was already cancelled in ReadActionParameters
 		// No need to show additional error message
 	}
