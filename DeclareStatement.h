@@ -27,7 +27,6 @@ public:
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
-    virtual bool IsConditional() const;
     virtual bool IsPointInside(Point p) const;
 
     virtual void Draw(Output* pOut) const;

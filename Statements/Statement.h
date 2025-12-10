@@ -78,14 +78,6 @@ public:
 	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
 	virtual Statement* Clone() const =0 ;
 
-	
-
-	
-
-
-
-
-
 };
 
 #endif

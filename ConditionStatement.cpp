@@ -169,3 +169,11 @@ void ConditionStatement::Load(ifstream& InFile)
 }
 
 
+
+
+string ConditionStatement::getStatementType() const
+{
+    return "COND";
+}
+
+

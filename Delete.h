@@ -18,7 +18,7 @@ public:
     virtual void Execute();
 
     // Undo the delete action (optional - for undo/redo support)
-    virtual void Undo();
+    //virtual void Undo();
 };
 
 #endif

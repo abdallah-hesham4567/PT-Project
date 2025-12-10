@@ -55,7 +55,7 @@ void Write::Edit()
 Statement* Write::Clone() const
 {
     Write* newWrite = new Write(*this);
-	newWrite->SetOutConn(nullptr); // Reset outgoing connectors for the cloned statement
+	//newWrite->SetOutConn(nullptr); // Reset outgoing connectors for the cloned statement
     return newWrite;
 }
 

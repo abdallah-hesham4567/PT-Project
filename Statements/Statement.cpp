@@ -9,10 +9,7 @@ Statement::Statement()
 	pOutconn = NULL;
 }
 
-
-
-
-void Statement::SetOutConn(Connector* pConn)
+ void Statement::SetOutConn(Connector* pConn)
 {
 	pOutconn = pConn;
 }

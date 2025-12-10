@@ -36,7 +36,7 @@ public:
 	virtual void Save(ofstream& OutFile) const;
 	virtual void Load(ifstream& InFile);
 	virtual void Edit();
-	virtual string getStatementType() const;
+	virtual string getStatementType()const;
 	virtual Statement* Clone() const;
 
 };

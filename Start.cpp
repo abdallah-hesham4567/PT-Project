@@ -82,3 +82,9 @@ void Start::Load(ifstream& InFile)
     InFile >> ID >> Center.x >> Center.y;
     
 }
+
+string Start::getStatementType() const
+{
+    return "STRT";
+}
+

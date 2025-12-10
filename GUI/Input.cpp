@@ -95,9 +95,10 @@ string Input::GetVariable(Output* pO) const
 }
 string Input::GetVariableOrVal(Output* pO) const
 {
+
 	pO->PrintMessage("Please enter a variable or value name");        //prompt user to enter a variable name
 	string Variable = GetString(pO);
-	while (!IsVariable(Variable)|| !IsValue (Variable)  )                          //asks user for a valid input
+	while (!IsVariable(Variable) && !IsValue (Variable)  )                          //asks user for a valid input
 	{
 		pO->PrintMessage("Please enter a variable or value name");
 		Variable = GetString(pO);

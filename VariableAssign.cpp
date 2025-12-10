@@ -91,7 +91,7 @@ void VariableAssign::Edit()
 Statement* VariableAssign::Clone() const
 {
 	VariableAssign* newVarAssign = new VariableAssign(*this);
-	newVarAssign->SetOutConn(nullptr);
+	//newVarAssign->SetOutConn(nullptr);
 	return newVarAssign;
 }
 
@@ -108,3 +108,7 @@ void VariableAssign::Load(ifstream& InFile)
 	InFile >> ID >> Center.x >> Center.y >> LHS;
 }
 
+string VariableAssign::getStatementType() const
+{
+	return "VALASSIGN";
+}

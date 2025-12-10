@@ -83,7 +83,7 @@ void ValueAssign::Edit()
 Statement* ValueAssign::Clone() const
 {
 	ValueAssign* copy = new ValueAssign(*this);
-	copy->SetOutConn(nullptr); // Reset the outgoing connector for the cloned statement
+	//copy->SetOutConn(nullptr); // Reset the outgoing connector for the cloned statement
 	return copy;
 }
 
@@ -139,3 +139,9 @@ void ValueAssign::Load(ifstream& InFile)
 	
 }
 
+
+
+string ValueAssign::getStatementType() const
+{
+	 return "VALASSIGN"; 
+}

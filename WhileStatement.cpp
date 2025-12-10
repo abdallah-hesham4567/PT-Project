@@ -68,6 +68,7 @@ Statement* WhileStatement::Clone() const
     newWhile->setTrueBranch(nullptr);
 	newWhile->setFalseBranch(nullptr);
 	return newWhile;
+
 }
 
 Point WhileStatement::GetOutletPoint(int branch) const

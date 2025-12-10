@@ -11,7 +11,9 @@
 #include "AddWhile.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
-
+#include "Action.h"
+#include "ActionSelect.h"
+#include "Delete.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -25,16 +27,13 @@ ApplicationManager::ApplicationManager()
 	SelectedStatement = NULL;	//no Statement is selected yet
 	Clipboard = NULL;
 	SelectedConnector = NULL;
-	
-
 	//Create an array of Statement pointers and set them to NULL		
 	for (int i = 0; i < MaxCount; i++)
 	{
 		StatList[i] = NULL;
 		ConnList[i] = NULL;
 	}
-	pOut = new Output();
-	pIn = pOut->CreateInput();
+	
 }
 
 
@@ -171,8 +170,9 @@ Connector* ApplicationManager::GetConnectorAtPoint(Point p) const
 
 void ApplicationManager::UnselectAll()
 {
-	for (auto s : StatList)
-		s->SetSelected(false);
+	for (int i=0 ; i< StatCount ;i++)
+		if(StatList[i])
+			StatList[i]->SetSelected(false);
 }
 
 
@@ -186,7 +186,6 @@ void ApplicationManager::UpdateAllConnectors()
 		}
 	}
 }
-
 
 
 
@@ -249,12 +248,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new AddWrite(this);
 		break;
 
-	/*case ADD_CONNECTOR:
-		pAct = new Connector(this);
-		break;*/
+	//case ADD_CONNECTOR:
+		//pAct = new Connector(this);
+		//break;
 
-	/*case EDIT_STAT:
-		pAct = new Edit(this);
+	case SELECT:
+		pAct = new ActionSelect(this);
 		break;
 
 	case DEL:
@@ -587,7 +586,7 @@ void ApplicationManager::LoadAll(const string& filename)
 			}
 			else
 			{
-				s->SetOutConnector(pConn);
+				//s->SetOutConn(pConn);
 			}
 
 			AddConnector(pConn);
