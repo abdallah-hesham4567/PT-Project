@@ -1,46 +1,32 @@
 #include "Copy.h"
-#include "..\ApplicationManager.h"
-#include "..\GUI\Input.h"
-#include "..\GUI\Output.h"
+#include "ApplicationManager.h"
+#include "GUI/Input.h"
+#include "GUI/Output.h"
 
-Copy::Copy(ApplicationManager* pAppManager) : Action(pAppManager)
-{
-}
+Copy::Copy(ApplicationManager* pApp) : Action(pApp) {}
 
 void Copy::ReadActionParameters()
 {
-	// No parameters to read - copy operates on already selected statement
+    // No parameters to read
 }
 
 void Copy::Execute()
 {
-	// Get pointers to Output
-	Output* pOut = pManager->GetOutput();
+    Output* pOut = pManager->GetOutput();
 
-	// Get the currently selected statement
-	Statement* pSelectedStat = pManager->GetSelectedStatement();
+    Statement* selected = pManager->GetSelectedStatement();
 
-	if (pSelectedStat != nullptr)
-	{
-		// Clone the selected statement
-		Statement* pClonedStat = pSelectedStat->Clone();
+    if (!selected)
+    {
+        pOut->PrintMessage("No statement selected to copy!");
+        return;
+    }
 
-		// Delete old clipboard content if it exists
-		Statement* pOldClipboard = pManager->GetClipboard();
-		if (pOldClipboard != nullptr)
-		{
-			delete pOldClipboard;
-		}
+    // Clone the statement (WITHOUT connectors as required)
+    Statement* copied = selected->Clone();
 
-		// Store the cloned statement in clipboard
-		pManager->SetClipboard(pClonedStat);
+    // Store in clipboard
+    pManager->SetClipboard(copied);
 
-		// Show success message
-		pOut->PrintMessage("Statement copied to clipboard");
-	}
-	else
-	{
-		// No statement is selected
-		pOut->PrintMessage("No statement selected. Please select a statement first.");
-	}
+    pOut->PrintMessage("Statement copied.");
 }
