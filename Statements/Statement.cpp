@@ -23,3 +23,31 @@ void Statement::GetExpectedOutConnCount(Connector* pConn)
 {
 
 }
+
+Connector* Statement::GetOutConn()
+{
+	return pOutconn;
+}
+void Statement::AddIncomingConnector(Connector* pConn)
+{
+
+}
+void Statement::RemoveIncomingConnector(Connector* pConn)
+{
+
+}
+int Statement::GetIncomingCount()
+{
+	
+}
+Connector* Statement::GetIncomingConnector(int index)
+{
+	return nullptr;
+}
+
+
+void Statement::SetOutConnector(Connector* pConn)
+{
+	pOutconn = pConn;
+}
+

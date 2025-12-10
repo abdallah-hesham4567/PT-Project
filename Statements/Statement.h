@@ -82,6 +82,12 @@ public:
 	 
 	Connector* Statement::GetIncomingConnector(int index);//returns a specific incoming connector given it's index
 	virtual Statement* Clone()  = 0;
+
+	virtual void SetOutConnector(Connector* pConn);
+
+
+
+
 };
 
 #endif

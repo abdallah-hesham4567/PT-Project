@@ -67,13 +67,13 @@ bool Start::IsPointInside(Point p) const
 
 void Start::Save(ofstream& OutFile) const
 {
-    OutFile << "STRT\t" << ID << "\t" << pConn->getPosition().x << "\t"
-        << pConn->getPosition().y << "\n";
+    OutFile << "STRT\t" << ID << "\t" << Center.x << "\t"
+        << Center.y << "\n";
 }
 
 void Start::Load(ifstream& InFile)
 {
     int x, y;
-    InFile >> ID >> x >> y;
-    pOutconn->setPosition(Point(x, y));
+    InFile >> ID >> Center.x >> Center.y;
+    UpdateBoundingBox();
 }

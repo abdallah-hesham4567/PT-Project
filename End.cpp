@@ -67,14 +67,14 @@ Statement* End::Clone() const
 
 void End::Save(ofstream& OutFile) const
 {
-    OutFile << "END\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
-        << pOutconn->getPosition().y << "\n";
+    OutFile << "END\t" << ID << "\t" << Center.x << "\t"
+        << Center.y  << "\n";
 }
 
 void End::Load(ifstream& InFile)
 {
     int x, y;
-    InFile >> ID >> x >> y;
-    pOutconn->setPosition(Point(x, y));
+    InFile >> ID >> Center.x >> Center.y;
+    UpdateBoundingBox(); // Calculate the drawing area
 }
 

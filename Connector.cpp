@@ -110,7 +110,8 @@
 // ==================== Connector.cpp ====================
 #include "Connector.h"
 #include "Statement.h"
-
+#include "GUI/Output.h"
+#include <cmath>
 Connector::Connector(Statement* Src, Statement* Dst, int outletBranch)
 {
 	SrcStat = Src;
@@ -121,56 +122,57 @@ Connector::Connector(Statement* Src, Statement* Dst, int outletBranch)
 	UpdateConnectionPoints();
 }
 //
-//void Connector::setSrcStat(Statement* Src)
-//{
-//	SrcStat = Src;
-//	UpdateConnectionPoints();
-//}
-//
-//Statement* Connector::getSrcStat()
-//{
-//	return SrcStat;
-//}
-//
-//void Connector::setDstStat(Statement* Dst)
-//{
-//	DstStat = Dst;
-//	UpdateConnectionPoints();
-//}
-//
-//Statement* Connector::getDstStat()
-//{
-//	return DstStat;
-//}
-//
-//void Connector::setStartPoint(Point P)
-//{
-//	Start = P;
-//}
-//
-//Point Connector::getStartPoint()
-//{
-//	return Start;
-//}
-//
-//void Connector::setEndPoint(Point P)
-//{
-//	End = P;
-//}
-//
-//Point Connector::getEndPoint()
-//{
-//	return End;
+void Connector::setSrcStat(Statement* Src)
+{
+	SrcStat = Src;
+	UpdateConnectionPoints();
+}
+
+Statement* Connector::getSrcStat()
+{
+	return SrcStat;
+}
+
+void Connector::setDstStat(Statement* Dst)
+{
+	DstStat = Dst;
+	UpdateConnectionPoints();
+}
+
+Statement* Connector::getDstStat()
+{
+	return DstStat;
+}
+
+void Connector::setStartPoint(Point P)
+{
+	Start = P;
+}
+
+Point Connector::getStartPoint()
+{
+	return Start;
+}
+
+void Connector::setEndPoint(Point P)
+{
+	End = P;
+}
+
+Point Connector::getEndPoint()
+{
+	return End;
+}
 
 
 void Connector::setOutletBranch(int branch)
 {
-	BranchType = branch;
+	OutletBranch = branch;
 }
 
 int Connector::getOutletBranch() const
 {
-	return BranchType;
+	return OutletBranch;
 }
 
 void Connector::SetSelected(bool s)
@@ -202,6 +204,7 @@ void Connector::Draw(Output* pOut) const
 	// The connector should be drawn highlighted if selected
 	if (pOut)
 	{
+		
 		pOut->DrawConnector(Start, End, Selected);
 	}
 }
@@ -240,6 +243,7 @@ bool Connector::IsPointInConnector(Point p) const
 	return distance <= TOLERANCE;
 }
 
+
 void Connector::Save(ofstream& OutFile) const
 {
 	// Save connector information to file
@@ -248,7 +252,7 @@ void Connector::Save(ofstream& OutFile) const
 	{
 		OutFile << SrcStat->GetID() << " "
 			<< DstStat->GetID() << " "
-			<< BranchType << endl;
+			<< OutletBranch << endl;
 	}
 }
 
@@ -258,8 +262,8 @@ void Connector::Load(ifstream& InFile)
 	// connectors are loaded in LoadAction by reading IDs and 
 	// finding the corresponding statements, then creating the connector.
 	// However, we can load the outlet branch if needed
-	InFile >> BranchType;
-
+	InFile >> OutletBranch;
+	
 }
 
 

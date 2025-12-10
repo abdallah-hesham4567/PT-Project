@@ -83,7 +83,10 @@ public:
 	bool Validate() const;
 	void RunSimulation();
 
-	void LoadAll(const string& filename)
+	void LoadAll(const string& filename);
+	Statement* GetStatementWithID(int id) const;
+	void AddConnector(Connector* pConn);
+
 
 };
 

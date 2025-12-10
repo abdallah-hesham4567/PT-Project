@@ -9,6 +9,10 @@ ConditionStatement::ConditionStatement(Point Lcorner, const string& cond)
     TrueBranch = nullptr;
     FalseBranch = nullptr;
 
+    Point center;
+    center.x = LeftCorner.x + UI.COND_WDTH / 2;
+    center.y = LeftCorner.y + UI.COND_HI;
+
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
     Inlet.y = LeftCorner.y;
 
@@ -57,6 +61,13 @@ void ConditionStatement::Edit(ApplicationManager* pManager)
     
 
 }
+void ConditionStatement::SetBranchConnector(Connector* pConn, int branch)
+{
+    if (branch == 1)      // True branch
+        TrueBranch = pConn;
+    else if (branch == 2) // False branch
+        FalseBranch = pConn;
+}
 
 Statement* ConditionStatement::Clone() const
 {
@@ -68,7 +79,7 @@ Point ConditionStatement::GetOutletPoint(int branch) const
 {
     // Diamond shape - upper point is LeftCorner
     Point center;
-    center.x = LeftCorner.x;
+    center.x = LeftCorner.x + UI.COND_WDTH /2;
     center.y = LeftCorner.y + UI.COND_HI / 2;
 
     if (branch == 1) // YES - right side
@@ -81,7 +92,10 @@ Point ConditionStatement::GetOutletPoint(int branch) const
 
 Point ConditionStatement::GetInletPoint() const
 {
-    return Inlet.x; // Top point of diamond
+    Point inlet;
+    inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
+    inlet.y = LeftCorner.y;
+    return inlet; // Top point of diamond
 }
 
 int ConditionStatement::GetExpectedOutConnCount() const
@@ -98,7 +112,7 @@ bool ConditionStatement::IsPointInside(Point p) const
 {
     // Check if point is inside diamond shape
     Point center;
-    center.x = LeftCorner.x;
+    center.x = LeftCorner.x + UI.COND_WDTH /2;
     center.y = LeftCorner.y + UI.COND_HI / 2;
 
     float dx = abs(p.x - center.x);
@@ -112,15 +126,23 @@ bool ConditionStatement::IsPointInside(Point p) const
 
 void ConditionStatement::Save(ofstream& OutFile) const
 {
-    OutFile << "COND\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
-        << pOutconn->getPosition().y << "\t" << Condition << "\n";
+    OutFile << "COND\t" << ID << "\t" << LeftCorner.x << "\t"
+        << LeftCorner.y << "\t" << Condition << "\n";
 }
 
 void ConditionStatement::Load(ifstream& InFile)
 {
-    int x, y;
-    InFile >> ID >> x >> y >> Condition;
-    pOutconn->setPosition(Point(x, y));
+    int x, y , trueID = -1, falseID = -1;;
+    InFile >> ID >> x >> y >> trueID >> falseID;
+	InFile.ignore(); // Ignore tab
+	getline(InFile, Condition);
+	LeftCorner.x = x;
+	LeftCorner.y = y;
+	// Set position of the output connector
+   
+    TrueBranch = trueID;
+    FalseBranch = falseID;
+
 }
 
 

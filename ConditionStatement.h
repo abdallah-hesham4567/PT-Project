@@ -40,4 +40,6 @@ public:
     string getStatementType() const override { return "COND"; }
     virtual void Edit(ApplicationManager* pManager);
 	virtual Statement* Clone() const;
+    void SetBranchConnector(Connector* pConn, int branch);
+
 };

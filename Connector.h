@@ -13,7 +13,7 @@ private:
 	Point Start;	//Start point of the connector
 	Point End;		//End point of the connector
 	bool Selected;       // True if connector is selected
-	int BranchType;    // 0 for normal, 1 for YES branch, 2 for NO branch (for conditional statements)
+	int OutletBranch;    // 0 for normal, 1 for YES branch, 2 for NO branch (for conditional statements)
 
 public:
 	// Constructor: creates a connector between two statements

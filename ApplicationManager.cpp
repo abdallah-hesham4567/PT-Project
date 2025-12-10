@@ -634,68 +634,82 @@ void ApplicationManager::LoadAll(const string& filename)
 	if (!InFile.is_open())
 	{
 		// Show error message
+		pOut->PrintMessage("Error: Could not open file " + filename);
 		return;
 	}
 
 	// Clear existing statements
 	ClearAll();
-
+	
 	// Load statement count
 	int statCount;
 	InFile >> statCount;
 
 	// Map to store statements by ID
-	map<int, Statement*> statMap;
+	//map<int, Statement*> statMap;
 
 	// Load all statements
 	for (int i = 0; i < statCount; i++)
 	{
-		string type;
-		InFile >> type;
+		string Type;
+		InFile >> Type;
 
-		Statement* pStat = nullptr;
+		Statement* S = nullptr;
 
-		if (type == "STRT")
-			pStat = new Start();
-		else if (type == "DECLARE")
-			pStat = new Declare();
-		else if (type == "READ")
-			pStat = new Read();
-		else if (type == "COND")
-			pStat = new Condition();
-		else if (type == "OP_ASSIGN")
-			pStat = new OperationAssign();
-		else if (type == "WRITE")
-			pStat = new Write();
-		else if (type == "END")
-			pStat = new End();
+		if (Type == "STRT")
+			S = new StartStatement(InFile);
 
-		if (pStat)
+		else if (Type == "READ")
+			S = new ReadStatement(InFile);
+
+		else if (Type == "WRITE")
+			S = new WriteStatement(InFile);
+
+		else if (Type == "DECLARE")
+			S = new DeclareStatement(InFile);
+
+		else if (Type == "OP_ASSIGN")
+			S = new OperatorAssignment(InFile);
+
+		else if (Type == "COND")
+			S = new ConditionStatement(InFile);
+
+		else if (Type == "END")
+			S = new EndStatement(InFile);
+
+		if (S)
 		{
-			pStat->Load(InFile);
-			StatementList.push_back(pStat);
-			statMap[pStat->getID()] = pStat;
+			AddStatement(S);
 		}
 	}
-
 	// Load connector count
-	int connCount;
-	InFile >> connCount;
+	int ConnCount;
+	InFile >> ConnCount;
 
-	// Load and recreate connectors
-	for (int i = 0; i < connCount; i++)
+	for (int i = 0; i < ConnCount; i++)
 	{
 		int srcID, dstID, branch;
 		InFile >> srcID >> dstID >> branch;
 
-		// Recreate connector between statements
-		Statement* src = statMap[srcID];
-		Statement* dst = statMap[dstID];
+		Statement* s = GetStatementWithID(srcID);
+		Statement* d = GetStatementWithID(dstID);
 
-		if (src && dst)
+		if (s && d)
 		{
-			// Create connector based on branch type
-			// This depends on your connector creation logic
+			Connector* pConn = new Connector(s, d, branch);
+
+			// Set output connector according to branch
+			ConditionStatement* cond = dynamic_cast<ConditionStatement*>(s);
+			if (cond)
+			{
+				cond->SetBranchConnector(pConn, branch);
+			}
+			else
+			{
+				s->SetOutConnector(pConn);
+			}
+
+			AddConnector(pConn);
 		}
 	}
 
@@ -703,6 +717,40 @@ void ApplicationManager::LoadAll(const string& filename)
 
 	// Update display
 	UpdateInterface();
+}
+
+void ApplicationManager::AddConnector(Connector* pConn)
+{
+	ConnList.push_back(pConn);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Statement* ApplicationManager::GetStatementWithID(int id) const
+{
+	for (auto s : StatList)
+	{
+		if (s->GetID() == id)
+			return s;
+	}
+	return nullptr;
 }
 
 
