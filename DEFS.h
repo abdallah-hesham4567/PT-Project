@@ -106,7 +106,24 @@ enum SimMenuItem //The items of the simulation menu
 	SIM_ITM_CNT		//no. of simulation menu items ==> This should be the last line in this enum
 
 };
+enum ArithOperator
+{
+	ADD_OP,     // Addition (+)
+	SUB_OP,     // Subtraction (-)
+	MUL_OP,     // Multiplication (*)
+	DIV_OP      // Division (/)
+};
 
+// Comparison operators for Conditional
+enum CompOperator
+{
+	EQUAL,              // ==
+	NOT_EQUAL,          // !=
+	GREATER,            // >
+	LESS,               // <
+	GREATER_OR_EQUAL,   // >=
+	LESS_OR_EQUAL       // <=
+};
 
 
 

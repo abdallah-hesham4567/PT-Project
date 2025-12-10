@@ -9,9 +9,7 @@ ConditionStatement::ConditionStatement(Point Lcorner, const string& cond)
     TrueBranch = nullptr;
     FalseBranch = nullptr;
 
-    Point center;
-    center.x = LeftCorner.x + UI.COND_WDTH / 2;
-    center.y = LeftCorner.y + UI.COND_HI;
+    
 
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
     Inlet.y = LeftCorner.y;
@@ -21,7 +19,8 @@ ConditionStatement::ConditionStatement(Point Lcorner, const string& cond)
 
     OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
     OutletFalse.y = LeftCorner.y + UI.COND_HI;
-
+    Center.x = LeftCorner.x + UI.COND_WDTH / 2;
+    Center.y = LeftCorner.y + UI.COND_HI/2;
     UpdateStatementText();
 }
 
@@ -78,16 +77,14 @@ Statement* ConditionStatement::Clone() const
 Point ConditionStatement::GetOutletPoint(int branch) const
 {
     // Diamond shape - upper point is LeftCorner
-    Point center;
-    center.x = LeftCorner.x + UI.COND_WDTH /2;
-    center.y = LeftCorner.y + UI.COND_HI / 2;
+    
 
     if (branch == 1) // YES - right side
-        return Point(center.x + UI.COND_WDTH / 2, center.y);
+        return Point(Center.x + UI.COND_WDTH / 2, Center.y);
     else if (branch == 2) // NO - left side
-        return Point(center.x - UI.COND_WDTH / 2, center.y);
+        return Point(Center.x - UI.COND_WDTH / 2, Center.y);
     else // Default - bottom
-        return Point(center.x, center.y + UI.COND_HI / 2);
+        return Point(Center.x, Center.y + UI.COND_HI / 2);
 }
 
 Point ConditionStatement::GetInletPoint() const
@@ -110,13 +107,10 @@ bool ConditionStatement::IsConditional() const
 
 bool ConditionStatement::IsPointInside(Point p) const
 {
-    // Check if point is inside diamond shape
-    Point center;
-    center.x = LeftCorner.x + UI.COND_WDTH /2;
-    center.y = LeftCorner.y + UI.COND_HI / 2;
+   
 
-    float dx = abs(p.x - center.x);
-    float dy = abs(p.y - center.y);
+    float dx = abs(p.x - Center.x);
+    float dy = abs(p.y - Center.y);
 
     int halfW = UI.COND_WDTH / 2;
     int halfH = UI.COND_HI / 2;
@@ -126,22 +120,50 @@ bool ConditionStatement::IsPointInside(Point p) const
 
 void ConditionStatement::Save(ofstream& OutFile) const
 {
-    OutFile << "COND\t" << ID << "\t" << LeftCorner.x << "\t"
-        << LeftCorner.y << "\t" << Condition << "\n";
+    // Convert ENUM to STRING
+        string comparisonStr;
+    if (Comp == EQUAL)
+        comparisonStr = "EQL";
+    else if (Comp == NOT_EQUAL)
+        comparisonStr = "NOTEQL";
+    else if (Comp == GREATER)
+        comparisonStr = "GRT";
+    else if (Comp == LESS)
+        comparisonStr = "LSS";
+    else if (Comp == GREATER_OR_EQUAL)
+        comparisonStr = "GRTEQL";
+    else if (Comp == LESS_OR_EQUAL)
+        comparisonStr = "LSSEQL";
+
+    OutFile << "COND\t" << ID << "\t"
+        << Center.x << "\t" << Center.y << "\t"
+        << LHS << "\t" << comparisonStr << "\t"<<RHS;
+
 }
+
 
 void ConditionStatement::Load(ifstream& InFile)
 {
-    int x, y , trueID = -1, falseID = -1;;
-    InFile >> ID >> x >> y >> trueID >> falseID;
-	InFile.ignore(); // Ignore tab
-	getline(InFile, Condition);
-	LeftCorner.x = x;
-	LeftCorner.y = y;
-	// Set position of the output connector
    
-    TrueBranch = trueID;
-    FalseBranch = falseID;
+        string comparisonStr;
+        InFile >> ID >> Center.x >> Center.y
+            >> LHS >> comparisonStr >> RHS;
+
+        // Convert STRING to ENUM
+        if (comparisonStr == "EQL")
+            Comp = EQUAL;
+        else if (comparisonStr == "NOTEQL")
+            Comp = NOT_EQUAL;
+        else if (comparisonStr == "GRT")
+            Comp = GREATER;
+        else if (comparisonStr == "LSS")
+            Comp = LESS;
+        else if (comparisonStr == "GRTEQL")
+            Comp = GREATER_OR_EQUAL;
+        else if (comparisonStr == "LSSEQL")
+            Comp = LESS_OR_EQUAL;
+
+
 
 }
 

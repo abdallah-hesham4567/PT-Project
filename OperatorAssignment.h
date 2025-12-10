@@ -9,6 +9,7 @@
 using namespace std;
 class OperatorAssignment : public Statement
 {
+	ArithOperator Opp;
 	string LHS;
 	string RHS1;
 	string RHS2;

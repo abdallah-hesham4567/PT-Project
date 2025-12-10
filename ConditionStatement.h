@@ -14,6 +14,10 @@ class ConditionStatement : public Statement
     Point Inlet;
     Point OutletTrue;
     Point OutletFalse;
+    Point Center;
+    CompOperator Comp;
+    string RHS;
+    string LHS;
 
 public:
     ConditionStatement(Point Lcorner, const string& cond);

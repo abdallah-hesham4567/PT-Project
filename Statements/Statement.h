@@ -86,6 +86,9 @@ public:
 
 	virtual void SetOutConnector(Connector* pConn);
 
+	
+
+
 
 
 

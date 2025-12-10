@@ -115,26 +115,43 @@ bool OperatorAssignment::IsPointInside(Point p) const
 
 void OperatorAssignment::Save(ofstream& OutFile) const
 {
-    OutFile << "OP_ASSIGN\t" << ID << "\t" << Center.x << "\t"
-        << Center.y << "\t" << LHS << "\t"
-        << RHS1 << "\t" << Op << "\t" << RHS2 << "\n";
+    // Convert ENUM to STRING
+    string operatorStr;
+    if (Opp == ADD_OP)
+        operatorStr = "ADD";
+    else if (Opp == SUB_OP)
+        operatorStr = "SUB";
+    else if (Opp == MUL_OP)
+        operatorStr = "MUL";
+    else if (Opp == DIV_OP)
+        operatorStr = "DIV";
+
+    OutFile << "OP_ASSIGN\t" << ID << "\t"
+        << Center.x << "\t" << Center.y << "\t"
+        << LHS << "\t" << RHS1 << "\t" << operatorStr << "\t"<<RHS2;
+
+   
 }
+
 
 void OperatorAssignment::Load(ifstream& InFile)
 {
-    
-    InFile >> ID >> Center.x >> Center.y >> LHS >> RHS1 >> Op >> RHS2;
+    string operatorStr;
+    InFile >> ID >> Center.x >> Center.y
+        >> LHS >> RHS1 >> operatorStr >> RHS2;
 
-    if (Op == "ADD") Operator = ADD_OP;
-    else if (Op == "SUB") Operator = SUB_OP;
-    else if (Op == "MUL") Operator = MUL_OP;
-    else if (Op == "DIV") Operator = DIV_OP;
+    // Convert STRING to ENUM
+    if (operatorStr == "ADD")
+        Opp = ADD_OP;
+    else if (operatorStr == "SUB")
+        Opp = SUB_OP;
+    else if (operatorStr == "MUL")
+        Opp = MUL_OP;
+    else if (operatorStr == "DIV")
+        Opp = DIV_OP;
 
-
-
-    UpdateBoundingBox();
+    //UPDATE CORNER
 }
-
 
 
 
