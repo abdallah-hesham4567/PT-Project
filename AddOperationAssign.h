@@ -10,7 +10,7 @@
 		string LHS;    //Left Hand Side of the assignment
 		string RHS1;    //Right Hand Side of the assignment
 		string RHS2;    //Right Hand Side of the assignment
-		string op;     //operator of the assignment
+		char op;     //operator of the assignment
 	public:
 		AddOperationAssign(ApplicationManager* pAppManager);
 		//Read Assignemt statements position

@@ -1,15 +1,18 @@
 ﻿#include "OperatorAssignment.h"
+#include <sstream>
 
 
-OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, string Oper, string R1, string R2)
+OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, char Oper, string R1, string R2)
+
 {
-    LHS = LeftHS;
-    Op = Oper;
-    RHS1 = R1;
-    RHS2 = R2;
+	LHS = LeftHS;
+	RHS1 = R1;
+	Op = Oper;
+	RHS2 = R2;
+	
+
 
     UpdateStatementText();
-
     LeftCorner = Lcorner;
     pOutConn = NULL;
 
@@ -27,23 +30,20 @@ void OperatorAssignment::setLHS(const string& L)
     LHS = L;
     UpdateStatementText();
 }
-
-void OperatorAssignment::setOp(char O)
-{
-    Op = O;
-    UpdateStatementText();
-}
-
 void OperatorAssignment::setRHS1(string R)
 {
     RHS1 = R;
     UpdateStatementText();
 }
-
+void OperatorAssignment::setOp(char O)
+{
+    Op = O;
+    UpdateStatementText();
+}
 void OperatorAssignment::setRHS2(string R)
 {
     RHS2 = R;
-    UpdateStatementText();
+	UpdateStatementText();
 }
 
 void OperatorAssignment::Draw(Output* pOut) const
@@ -64,8 +64,8 @@ void OperatorAssignment::Edit()
     string newRHS1 = pIn->GetVariableOrVal(pOut);
     setRHS1(newRHS1);
     pOut->PrintMessage("Enter new operator (+, -, *, /):");
-    string newOp = pIn->GetArithOperator(pOut);
-    setOp(newOp[0]);
+    char newOp = pIn->GetArithOperator(pOut);
+    setOp(newOp);
     pOut->PrintMessage("Enter new second operand (RHS2):");
     string newRHS2 = pIn->GetVariableOrVal(pOut);
     setRHS2(newRHS2);
@@ -84,8 +84,8 @@ Statement* OperatorAssignment::Clone() const
 void OperatorAssignment::UpdateStatementText()
 {
     ostringstream T;
-    T << LHS << " = " <<RHS1<<" " << Op << " " << RHS2;
-    Text = T.str();
+    T << LHS << " = " << RHS1 << " " << Op << " " << RHS2;
+	Text = T.str();
 }
 
 Point OperatorAssignment::GetOutletPoint(int branch) const

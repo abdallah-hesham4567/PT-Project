@@ -35,7 +35,7 @@ public:
 	// to read an arithmetic operator (+, -, * or /) from the user. 
 	// It does not return before taking a valid arithmetic operator.
 
-	string GetArithOperator(Output* pO) const;
+	char GetArithOperator(Output* pO) const;
 
 
 	//TODO: Add the function Input::GetCompOperator

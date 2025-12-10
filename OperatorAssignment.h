@@ -11,9 +11,10 @@ class OperatorAssignment : public Statement
 {
 	ArithOperator Opp;
 	string LHS;
+	char Op;
 	string RHS1;
 	string RHS2;
-	string Op;
+	
 	Connector* pOutConn;
 	Point Inlet;
 	Point Outlet;
@@ -21,7 +22,7 @@ class OperatorAssignment : public Statement
 	Point Center;
 	public:
 
-	OperatorAssignment(Point Lcorner, string LeftHS, string Oper, string RHS1 , string RHS2 );
+	OperatorAssignment(Point Lcorner, string LeftHS, char Oper, string RHS1 , string RHS2 );
 	void setLHS(const string& L);
 	void setRHS1(const string R);
 	void setRHS2(const string R);
