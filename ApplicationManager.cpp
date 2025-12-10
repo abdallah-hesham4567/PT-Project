@@ -278,7 +278,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	case LOAD:
 		pAct = new Load(this);
-		break;*/
+		break;
 
 	case SWITCH_DSN_MODE:
 	{
@@ -634,5 +634,90 @@ Statement* ApplicationManager::GetStatementWithID(int id) const
 }
 
 
+Connector** ApplicationManager::GetOutConnectors(Statement* pStat, int& count) const
+{
+	if (pStat == nullptr)
+	{
+		count = 0;
+		return nullptr;
+	}
+
+	// First, count how many output connectors this statement has
+	count = 0;
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] != nullptr && ConnList[i]->getSrcStat() == pStat)
+		{
+			count++;
+		}
+	}
+
+	// If no connectors found, return nullptr
+	if (count == 0)
+	{
+		return nullptr;
+	}
+
+	// Allocate array to hold the connector pointers
+	Connector** outConnectors = new Connector * [count];
+
+	// Fill the array with the connectors
+	int index = 0;
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] != nullptr && ConnList[i]->getSrcStat() == pStat)
+		{
+			outConnectors[index] = ConnList[i];
+			index++;
+		}
+	}
+
+	return outConnectors;
+}
+
+
+// Get all input connectors to a statement
+Connector** ApplicationManager::GetInConnectors(Statement* pStat, int& count) const
+{
+	if (pStat == nullptr)
+	{
+		count = 0;
+		return nullptr;
+	}
+
+	// First, count how many input connectors this statement has
+	count = 0;
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] != nullptr && ConnList[i]->getDstStat() == pStat)
+		{
+			count++;
+		}
+	}
+
+	// If no connectors found, return nullptr
+	if (count == 0)
+	{
+		return nullptr;
+	}
+
+	// Allocate array to hold the connector pointers
+	Connector** inConnectors = new Connector * [count];
+
+	// Fill the array with the connectors
+	int index = 0;
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i] != nullptr && ConnList[i]->getDstStat() == pStat)
+		{
+			inConnectors[index] = ConnList[i];
+			index++;
+		}
+	}
+
+	return inConnectors;
+}
+
+// Get count of input connectors to a statement
 
 

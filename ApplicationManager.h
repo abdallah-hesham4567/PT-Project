@@ -1,6 +1,6 @@
 #ifndef APPLICATION_MANAGER_H
 #define APPLICATION_MANAGER_H
-
+#include "AddConnector.h"
 #include "DEFS.h"
 #include <fstream>
 #include <map>
@@ -100,6 +100,28 @@ public:
 
 	void LoadAll(const string& filename);
 	Statement* GetStatementWithID(int id) const;
+
+
+
+
+
+
+
+
+	// Returns all output connectors from a statement
+	// count will be set to the number of connectors found
+	// Returns dynamically allocated array (caller must delete[])
+	Connector** GetOutConnectors(Statement* pStat, int& count) const;
+
+
+
+	// Returns all input connectors to a statement
+	// count will be set to the number of connectors found
+	// Returns dynamically allocated array (caller must delete[])
+	Connector** GetInConnectors(Statement* pStat, int& count) const;
+
+
+
 
 };
 

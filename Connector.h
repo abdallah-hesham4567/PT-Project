@@ -26,11 +26,11 @@ public:
 	void setDstStat(Statement* Dst);
 	Statement* getDstStat();
 
-	/*void setStartPoint(Point P);
+	void setStartPoint(Point P);
 	Point getStartPoint();
 
 	void setEndPoint(Point P);
-	Point getEndPoint();*/
+	Point getEndPoint();
 
 	void setOutletBranch(int branch);
 	int getOutletBranch() const;
