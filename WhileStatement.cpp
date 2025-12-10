@@ -71,19 +71,15 @@ Statement* WhileStatement::Clone() const
 
 }
 
+
 Point WhileStatement::GetOutletPoint(int branch) const
 {
-    // Diamond shape - upper point is LeftCorner
-    Point center;
-    center.x = LeftCorner.x;
-    center.y = LeftCorner.y + UI.COND_HI / 2;
-
     if (branch == 1) // YES - right side
-        return Point(center.x + UI.COND_WDTH / 2, center.y);
+        return Point(Center.x + UI.COND_WDTH / 2, Center.y);
     else if (branch == 2) // NO - left side
-        return Point(center.x - UI.COND_WDTH / 2, center.y);
+        return Point(Center.x - UI.COND_WDTH / 2, Center.y);
     else // Default - bottom
-        return Point(center.x, center.y + UI.COND_HI / 2);
+        return Point(Center.x, Center.y + UI.COND_HI / 2);
 }
 
 Point WhileStatement::GetInletPoint() const
@@ -103,16 +99,10 @@ bool WhileStatement::IsConditional() const
 
 bool WhileStatement::IsPointInside(Point p) const
 {
-    // Check if point is inside diamond shape
-    Point center;
-    center.x = LeftCorner.x;
-    center.y = LeftCorner.y + UI.COND_HI / 2;
 
 
-
-    float dx = abs(p.x - center.x);
-    float dy = abs(p.y - center.y);
-
+    float dx = abs(p.x - Center.x);
+    float dy = abs(p.y - Center.y);
 
     int halfW = UI.COND_WDTH / 2;
     int halfH = UI.COND_HI / 2;
@@ -165,5 +155,11 @@ void WhileStatement::Load(ifstream& InFile)
 
 
     
+}
+
+
+string WhileStatement::getStatementType() const
+{
+    return "COND";
 }
 

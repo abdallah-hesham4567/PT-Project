@@ -647,6 +647,7 @@ Statement* ApplicationManager::GetStatementWithID(int id) const
 
 Connector** ApplicationManager::GetOutConnectors(Statement* pStat, int& count) const
 {
+
 	if (pStat == nullptr)
 	{
 		count = 0;

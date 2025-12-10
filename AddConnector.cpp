@@ -38,21 +38,26 @@ void AddConnector::ReadActionParameters()
 	// If source is a conditional statement (has 2 outlets), ask which branch
 	if (SrcStat->IsConditional())
 	{
-		pOut->PrintMessage("Source is conditional. Select outlet branch: 0 for TRUE, 1 for FALSE");
-
-		// Read branch number from user
-		string branchStr = pIn->GetString(pOut);
-
-		// Validate branch number
-		if (branchStr == "0" || branchStr == "1")
+		if (pManager->GetOutConnCount(SrcStat) != 2)
 		{
-			OutletBranch = stoi(branchStr);
+			pOut->PrintMessage("Source is conditional. Select outlet branch: 0 for TRUE, 1 for FALSE");
+
+			// Read branch number from user
+			string branchStr = pIn->GetString(pOut);
+
+			// Validate branch number
+			if (branchStr == "0" || branchStr == "1")
+			{
+				OutletBranch = stoi(branchStr);
+			}
+			else
+			{
+				pOut->PrintMessage("Invalid branch number. Using default (0).");
+				OutletBranch = 0;
+			}
 		}
 		else
-		{
-			pOut->PrintMessage("Invalid branch number. Using default (0).");
-			OutletBranch = 0;
-		}
+			pOut->PrintMessage("already have 2 branches");
 	}
 	else
 	{

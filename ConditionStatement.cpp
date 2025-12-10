@@ -71,7 +71,11 @@ void ConditionStatement::Edit()
 
 Statement* ConditionStatement::Clone() const
 {
-    return nullptr;
+    ConditionStatement* newCond = new ConditionStatement(*this);
+    //while has two outgoing connectors, reset them for the cloned statement
+    newCond->setTrueBranch(nullptr);
+    newCond->setFalseBranch(nullptr);
+    return newCond;
 }
 
 

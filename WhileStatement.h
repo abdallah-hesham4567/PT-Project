@@ -41,7 +41,7 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
-    string getStatementType() const override { return "COND"; }
+    string getStatementType() const override;
     virtual void Edit();
     virtual Statement* Clone() const ;
 
