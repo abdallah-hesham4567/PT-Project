@@ -14,6 +14,9 @@
 #include "Action.h"
 #include "ActionSelect.h"
 #include "Delete.h"
+#include "Copy.h"
+#include "Cut.h"
+#include "Paste.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -272,13 +275,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new Paste(this);
 		break;
 
-	case SAVE:
-		pAct = new Save(this);
-		break;
+	//case SAVE:
+	//	pAct = new Save(this);
+	//	break;
 
-	case LOAD:
-		pAct = new Load(this);
-		break;
+	//case LOAD:
+	//	pAct = new Load(this);
+	//	break;
 
 	case SWITCH_DSN_MODE:
 	{

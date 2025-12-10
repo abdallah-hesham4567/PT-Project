@@ -3,12 +3,12 @@
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
 #include "..\Connector.h"
-
+#include "..\Actions\Action.h"
 AddConnector::AddConnector(ApplicationManager* pAppManager) : Action(pAppManager)
 {
-	SrcStat = nullptr;
+	/*SrcStat = nullptr;
 	DstStat = nullptr;
-	OutletBranch = 0;
+	OutletBranch = 0;*/
 }
 
 void AddConnector::ReadActionParameters()

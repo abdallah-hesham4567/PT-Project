@@ -14,7 +14,7 @@ class Cut : public Action
 {
 public:
 	Cut(ApplicationManager* pAppManager);
-
+	virtual void ReadActionParameters() override {};
 	// Execute the cut operation (copy + delete)
 	virtual void Execute();
 };

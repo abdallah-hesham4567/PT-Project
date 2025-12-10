@@ -70,7 +70,6 @@ public:
 		void SetSelectedConnector(Connector* pConn) { SelectedConnector = pConn; }
 	void UpdateAllConnectors();
 ;
-
 	void SaveAll(ofstream& OutFile);
 
 
