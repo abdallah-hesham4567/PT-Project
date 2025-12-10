@@ -15,6 +15,12 @@ void AddDeclare::ReadActionParameters()
     // Click position
     pOut->PrintMessage("Click to add variable declaration");
     pIn->GetPointClicked(Position);
+	//checking if the position is in the drawing area
+    while (!InDrawingArea(Position))
+    {
+        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pIn->GetPointClicked(Position);
+    }
     pOut->ClearStatusBar();
 
     // Get variable name

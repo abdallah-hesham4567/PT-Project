@@ -15,6 +15,11 @@ void AddWrite::ReadActionParameters()
 
     pOut->PrintMessage("Write: Click where to place the statement.");
     pIn->GetPointClicked(Position);
+    while (!InDrawingArea(Position))
+    {
+        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pIn->GetPointClicked(Position);
+	}
     pOut->ClearStatusBar();
 
     pOut->PrintMessage("Enter expression or text to write:");

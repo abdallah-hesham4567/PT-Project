@@ -27,6 +27,12 @@ public:
 	
 	//Execute action (code depends on action type)
 	virtual void Execute() =0;
+
+	//cheking if the point is in the drawing area
+	virtual bool InDrawingArea(Point P) const
+	{
+		return (P.y >= UI.ToolBarHeight+UI.COND_HI && P.y < UI.height - UI.StatusBarHeight-UI.COND_HI && P.x >= UI.COND_WDTH && P.x <= UI.DrawingAreaWidth-UI.COND_WDTH);
+	}
 };
 
 #endif

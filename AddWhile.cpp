@@ -17,6 +17,11 @@ void AddWhile::ReadActionParameters()
     // 1️⃣ Click position
     pOut->PrintMessage("While Statement: Click to add the statement");
     pIn->GetPointClicked(Position);
+    while (!InDrawingArea(Position))
+    {
+        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pIn->GetPointClicked(Position);
+    }
     pOut->ClearStatusBar();
 
     // 2️⃣ Get condition text from user

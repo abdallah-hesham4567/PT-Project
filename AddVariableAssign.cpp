@@ -19,6 +19,11 @@ void AddVariableAssign::ReadActionParameters()
 	// 1️⃣ اقرأ موقع النقر
 	pOut->PrintMessage("Variable Assignment Statement: Click to add the statement");
 	pIn->GetPointClicked(Position);
+	while (!InDrawingArea(Position))
+	{
+		pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+		pIn->GetPointClicked(Position);
+	}
 	pOut->ClearStatusBar();
 	// 2️⃣ اقرأ LHS من المستخدم وتحقق من صحته
 	pOut->PrintMessage("Enter the variable name for LHS:");

@@ -14,6 +14,11 @@ void AddRead::ReadActionParameters()
 
     pOut->PrintMessage("Read: Click where to place the statement.");
     pIn->GetPointClicked(Position);
+    while (!InDrawingArea(Position))
+    {
+        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pIn->GetPointClicked(Position);
+    }
     pOut->ClearStatusBar();
 
     pOut->PrintMessage("Enter variable name to read into:");

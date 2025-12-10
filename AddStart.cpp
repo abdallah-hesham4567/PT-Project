@@ -12,6 +12,11 @@ void AddStart::ReadActionParameters()
 
     pOut->PrintMessage("Click where you want to place the Start.");
     pIn->GetPointClicked(Position);
+    while (!InDrawingArea(Position))
+    {
+        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pIn->GetPointClicked(Position);
+    }
     pOut->ClearStatusBar();
 }
 

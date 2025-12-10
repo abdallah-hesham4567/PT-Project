@@ -20,6 +20,11 @@ void AddOperationAssign::ReadActionParameters()
 	// 1️⃣ اقرأ موقع النقر
 	pOut->PrintMessage("Operator Assignment Statement: Click to add the statement");
 	pIn->GetPointClicked(Position);
+	while (!InDrawingArea(Position))
+	{
+		pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+		pIn->GetPointClicked(Position);
+	}
 	pOut->ClearStatusBar();
 
 	// 2️⃣ اقرأ LHS من المستخدم وتحقق من صحته
