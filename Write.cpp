@@ -18,7 +18,8 @@ Write::Write(Point Lcorner, const string& expr)
 
     Outlet.x = Inlet.x;
     Outlet.y = LeftCorner.y + UI.READ_HI;
-
+    Center.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Center.y = LeftCorner.y + UI.READ_HI / 2;
     UpdateStatementText();
 }
 
@@ -94,14 +95,14 @@ bool Write::IsPointInside(Point p) const
 
 void Write::Save(ofstream& OutFile) const
 {
-    OutFile << "WRITE\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
-        << pOutconn->getPosition().y << "\t" << Expr << "\n";
+    OutFile << "WRITE\t" << ID << "\t" << Center.x << "\t"
+        << Center.y << "\t" << Expr << "\n";
 }
 
 void Write::Load(ifstream& InFile)
 {
-    int x, y;
-    InFile >> ID >> x >> y >> Expr;
-    pOutconn->setPosition(Point(x, y));
+    
+    InFile >> ID >> Center.x >> Center.y >> Expr;
+    UpdateBoundingBox();
 }
 

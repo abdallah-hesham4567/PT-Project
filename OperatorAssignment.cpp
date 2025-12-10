@@ -17,6 +17,8 @@ OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, string Oper
 
     Outlet.x = Inlet.x;
     Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
 
 void OperatorAssignment::setLHS(const string& L)
@@ -113,16 +115,24 @@ bool OperatorAssignment::IsPointInside(Point p) const
 
 void OperatorAssignment::Save(ofstream& OutFile) const
 {
-    OutFile << "OP_ASSIGN\t" << ID << "\t" << pOutconn->getPosition().x << "\t"
-        << pOutconn->getPosition().y << "\t" << LHS << "\t"
+    OutFile << "OP_ASSIGN\t" << ID << "\t" << Center.x << "\t"
+        << Center.y << "\t" << LHS << "\t"
         << RHS1 << "\t" << Op << "\t" << RHS2 << "\n";
 }
 
 void OperatorAssignment::Load(ifstream& InFile)
 {
-    int x, y;
-    InFile >> ID >> x >> y >> LHS >> RHS1 >> Op >> RHS2;
-    pOutconn->setPosition(Point(x, y));
+    
+    InFile >> ID >> Center.x >> Center.y >> LHS >> RHS1 >> Op >> RHS2;
+
+    if (Op == "ADD") Operator = ADD_OP;
+    else if (Op == "SUB") Operator = SUB_OP;
+    else if (Op == "MUL") Operator = MUL_OP;
+    else if (Op == "DIV") Operator = DIV_OP;
+
+
+
+    UpdateBoundingBox();
 }
 
 

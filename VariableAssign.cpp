@@ -19,6 +19,8 @@ VariableAssign::VariableAssign(Point Lcorner, string LeftHS, string RightHS)
 	Inlet.y = LeftCorner.y;
 	Outlet.x = Inlet.x;
 	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
 void VariableAssign::setLHS(const string& L)
 {
@@ -91,3 +93,19 @@ Statement* VariableAssign::Clone() const
 	newVarAssign->SetOutConn(nullptr);
 	return newVarAssign;
 }
+
+
+void VariableAssign::Save(ofstream& OutFile) const
+{
+	OutFile << "DECLARE\t" << ID << "\t"
+		<< Center.x << "\t" << Center.y << "\t"
+		<< LHS << endl;
+}
+
+void VariableAssign::Load(ifstream& InFile)
+{
+
+	InFile >> ID >> Center.x >> Center.y >> LHS;
+	UpdateBoundingBox();
+}
+
