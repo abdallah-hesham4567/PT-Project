@@ -30,9 +30,8 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const ;
     virtual void Load(ifstream& InFile);
-	virtual void Edit(ApplicationManager* pManager);
-	virtual string getStatementType() const;
-    string getStatementType() const override { return "WRITE"; }
+	virtual void Edit();
+	virtual string getStatementType() const { return "WRITE"; }
     virtual Statement* Clone() const;
 };
 

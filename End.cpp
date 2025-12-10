@@ -80,6 +80,6 @@ void End::Load(ifstream& InFile)
 {
     int x, y;
     InFile >> ID >> Center.x >> Center.y;
-    UpdateBoundingBox(); // Calculate the drawing area
+    
 }
 

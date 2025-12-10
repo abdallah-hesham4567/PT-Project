@@ -25,7 +25,7 @@ class OperatorAssignment : public Statement
 	void setLHS(const string& L);
 	void setRHS1(const string R);
 	void setRHS2(const string R);
-	virtual void Draw(Output* pOut) const;
+	
 	void setOp(char O);
 	virtual void UpdateStatementText();
 
@@ -39,7 +39,7 @@ class OperatorAssignment : public Statement
 	virtual void Load(ifstream& InFile);
 	string getStatementType() const override { return "OP_ASSIGN"; }
 
-	virtual void Edit(ApplicationManager* pManager);
+	virtual void Edit();
 	virtual Statement* Clone() const;
 	
 

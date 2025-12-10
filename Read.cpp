@@ -67,8 +67,9 @@ bool Read::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.READ_HI);
 }
 
-void Read::Edit(ApplicationManager* pManager)
+void Read::Edit()
 {
+    ApplicationManager* pManager;
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Editing Read Statement: Enter variable name: ");
@@ -101,7 +102,7 @@ void Read::Load(ifstream& InFile)
 {
     int x, y;
     InFile >> ID >> Center.x >> Center.y >> VarName;
-    UpdateBoundingBox();
+    
 }
 
 

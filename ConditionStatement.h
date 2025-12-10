@@ -42,8 +42,7 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "COND"; }
-    virtual void Edit(ApplicationManager* pManager);
+    virtual void Edit();
 	virtual Statement* Clone() const;
-    void SetBranchConnector(Connector* pConn, int branch);
 
 };

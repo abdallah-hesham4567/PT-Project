@@ -13,7 +13,7 @@ void ActionSelect::Execute()
     // Remove old selection
     pManager->UnselectAll();
 
-    Statement* pClicked = pManager->GetStatementAtPoint(P);
+    Statement* pClicked = pManager->GetStatement(P);
     Connector *pClick = pManager->GetConnectorAtPoint(P);
     if (pClicked)
     {

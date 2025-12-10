@@ -44,8 +44,9 @@ void ConditionStatement::Draw(Output* pOut) const
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
 }
 
-void ConditionStatement::Edit(ApplicationManager* pManager)
+void ConditionStatement::Edit()
 {
+    ApplicationManager* pManager;
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Editing Condition Statement: Enter the LHS:");
@@ -55,7 +56,7 @@ void ConditionStatement::Edit(ApplicationManager* pManager)
     pOut->PrintMessage("Enter the RHS:");
     string RHS = pIn->GetVariableOrVal(pOut);      
     string ConditionText = LHS + " " + op + " " + RHS;
-    setCondition(ConditionText);
+    Condition = ConditionText;
 	pOut->ClearStatusBar();
     
 
@@ -70,7 +71,7 @@ void ConditionStatement::Edit(ApplicationManager* pManager)
 
 Statement* ConditionStatement::Clone() const
 {
-	
+    return nullptr;
 }
 
 

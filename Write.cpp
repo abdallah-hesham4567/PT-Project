@@ -34,15 +34,16 @@ void Write::Draw(Output* pOut) const
     pOut->DrawReadAndWrite(LeftCorner, UI.READ_WDTH, UI.READ_HI, Text, Selected);
 }
 
-void Write::Edit(ApplicationManager* pManager)
+void Write::Edit()
 {
+    ApplicationManager* pManager;
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Edit Write Statement: Enter new expression:");
     string newExpr = pIn->GetString(pOut);
     if (!newExpr.empty())
     {
-        setExpr(newExpr);
+        this->setExpr(newExpr);
         pOut->PrintMessage("Write statement updated.");
     }
     else

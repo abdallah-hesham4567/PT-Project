@@ -35,7 +35,7 @@ public:
 	void setLHS(const string& L);
 	void setRHS(double R);
 
-	virtual void Draw(Output* pOut) const;
+	
 	virtual void UpdateStatementText();
 
 	virtual Point GetOutletPoint(int branch = 0) const;
@@ -44,9 +44,9 @@ public:
 	virtual bool IsPointInside(Point p) const;
 
 	virtual void Draw(Output* pOut) const;
-	virtual void Save(ofstream& OutFile) const;
+	virtual void Save(ofstream& OutFile) const ;
 	virtual void Load(ifstream& InFile);
-	virtual void Edit(ApplicationManager* pManager);
+	virtual void Edit();
 	virtual string getStatementType() const;
 	virtual Statement* Clone() const;
 };

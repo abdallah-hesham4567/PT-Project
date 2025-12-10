@@ -20,7 +20,7 @@ public:
 
     void setVarName(const std::string& v);
 
-    virtual void Draw(Output* pOut) const;
+  
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
@@ -30,7 +30,7 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "READ"; }
-    virtual void Edit(ApplicationManager* pManager);
+    virtual void Edit();
     virtual Statement* Clone() const;
 };
 

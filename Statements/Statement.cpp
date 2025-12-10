@@ -10,37 +10,27 @@ Statement::Statement()
 }
 
 
-void Statement::GetExpectedOutConnCount(Connector* pConn)
-{
 
+
+void Statement::SetOutConn(Connector* pConn)
+{
+	pOutconn = pConn;
 }
 
 Connector* Statement::GetOutConn()
 {
 	return pOutconn;
 }
-void Statement::AddIncomingConnector(Connector* pConn)
-{
 
-}
-void Statement::RemoveIncomingConnector(Connector* pConn)
-{
-
-}
 int Statement::GetIncomingCount()
 {
-	
+	return 1;
 }
 Connector* Statement::GetIncomingConnector(int index)
 {
 	return nullptr;
 }
 
-
-void Statement::SetOutConnector(Connector* pConn)
-{
-	pOutconn = pConn;
-}
 
 
 

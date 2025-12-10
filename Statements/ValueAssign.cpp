@@ -44,15 +44,16 @@ void ValueAssign::setRHS(double R)
 	UpdateStatementText();
 }
 
-
 void ValueAssign::Draw(Output* pOut) const
 {
 	//Call Output::DrawAssign function to draw assignment statement 	
 	pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
-void ValueAssign::Edit(ApplicationManager* pManager)
+void ValueAssign::Edit()
+
 {
+	ApplicationManager* pManager;
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Editing Value Assignment Statement: Enter new LHS variable name:");
@@ -71,10 +72,13 @@ void ValueAssign::Edit(ApplicationManager* pManager)
 		pOut->PrintMessage("Edit cancelled or invalid RHS value.");
 		return;
 	}
-	setLHS(newLHS);
-	setRHS(newRHS);
+	LHS = newLHS;
+	RHS=newRHS;
+	UpdateStatementText();
 	pOut->PrintMessage("Value Assignment Statement edited successfully.");
 }
+
+
 
 Statement* ValueAssign::Clone() const
 {
