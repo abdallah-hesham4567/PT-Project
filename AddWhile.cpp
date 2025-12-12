@@ -42,7 +42,7 @@ void AddWhile::Execute()
 
     Point Corner;
     Corner.x = Position.x - UI.COND_WDTH / 2;
-    Corner.y = Position.y;
+    Corner.y = Position.y - UI.COND_HI / 2;
     WhileStatement* pCond = new WhileStatement(Corner, ConditionText);
     pManager->AddStatement(pCond);
 }

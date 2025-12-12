@@ -52,7 +52,7 @@ void AddValueAssign::Execute()
 	//Calculating left corner of assignement statement block
 	Point Corner;
 	Corner.x = Position.x - UI.ASSGN_WDTH / 2;
-	Corner.y = Position.y;
+	Corner.y = Position.y - UI.ASSGN_HI / 2;
 
 	ValueAssign* pAssign = new ValueAssign(Corner, LHS, RHS);
 	//TODO: should set the LHS and RHS of pAssign statement

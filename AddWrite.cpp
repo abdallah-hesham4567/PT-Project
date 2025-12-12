@@ -33,8 +33,8 @@ void AddWrite::Execute()
     ReadActionParameters();
 
     Point Corner;
-    Corner.x = Position.x - UI.START_END_WDTH / 2;
-    Corner.y = Position.y;
+    Corner.x = Position.x - UI.WRITE_WDTH / 2;
+    Corner.y = Position.y - UI.WRITE_HI /2 ;
 
     Write* pWrite = new Write(Corner, Expr);
 

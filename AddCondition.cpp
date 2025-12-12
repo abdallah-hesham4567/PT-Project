@@ -43,7 +43,7 @@ void AddCondition::Execute()
 
     Point Corner;
     Corner.x = Position.x - UI.COND_WDTH / 2;
-    Corner.y = Position.y;
+    Corner.y = Position.y - UI.COND_HI/2;
 
     ConditionStatement* pCond = new ConditionStatement(Corner, ConditionText);
     pManager->AddStatement(pCond);

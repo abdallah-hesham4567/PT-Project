@@ -130,8 +130,10 @@
     <ClCompile Include="AddConnector.cpp" />
     <ClCompile Include="AddDeclare.cpp" />
     <ClCompile Include="AddEnd.cpp" />
+    <ClCompile Include="AddLoad.cpp" />
     <ClCompile Include="AddOperationAssign.cpp" />
     <ClCompile Include="AddRead.cpp" />
+    <ClCompile Include="AddSave.cpp" />
     <ClCompile Include="AddStart.cpp" />
     <ClCompile Include="AddVariableAssign.cpp" />
     <ClCompile Include="AddWhile.cpp" />
@@ -318,8 +320,10 @@
     <ClInclude Include="AddConnector.h" />
     <ClInclude Include="AddDeclare.h" />
     <ClInclude Include="AddEnd.h" />
+    <ClInclude Include="AddLoad.h" />
     <ClInclude Include="AddOperationAssign.h" />
     <ClInclude Include="AddRead.h" />
+    <ClInclude Include="AddSave.h" />
     <ClInclude Include="AddStart.h" />
     <ClInclude Include="AddVariableAssign.h" />
     <ClInclude Include="AddWhile.h" />

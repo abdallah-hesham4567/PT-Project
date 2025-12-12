@@ -21,7 +21,8 @@ void AddStart::ReadActionParameters()
 }
 
 void AddStart::Execute()
-{
+{ 
+
     ReadActionParameters();
     Start* pStart = new Start(Position);
     pManager->AddStatement(pStart);

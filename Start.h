@@ -2,6 +2,7 @@
 #define START_STATEMENT_H
 
 #include "Statement.h"
+#include "ApplicationManager.h"
 
 class Start : public Statement
 {
@@ -10,7 +11,7 @@ private:
     Point Inlet;
     Point Outlet;
     Point Center;
-
+    Point LCorner;
     virtual void UpdateStatementText();
 
 public:
@@ -19,7 +20,7 @@ public:
     
 
     // connectors helpers
-    Connector* getOutputConnector() const { return pOutConn; }
+    //Connector* getOutputConnector() const { return pOutConn; }
     //void setOutputConnector(Connector* c) { pOutConn = c; }
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;

@@ -88,7 +88,7 @@ string Input::GetVariable(Output* pO) const
 	string Variable = GetString(pO);
 	while (!IsVariable(Variable))                            //asks user for a valid input
 	{
-		pO->PrintMessage("Please enter a variable name");
+		pO->PrintMessage("Please enter a true variable name");
 		Variable = GetString(pO);
 	}
 	return Variable;                                        //return a valid variable name

@@ -5,10 +5,11 @@
 #include <sstream>
 using namespace std;
 
-AddDeclare::AddDeclare(ApplicationManager* pApp) : Action(pApp) {}
+AddDeclare::AddDeclare(ApplicationManager* pApp) : Action(pApp) { }
 
 void AddDeclare::ReadActionParameters()
 {
+    HasValue = false;
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
 
@@ -22,14 +23,13 @@ void AddDeclare::ReadActionParameters()
         pIn->GetPointClicked(Position);
     }
     pOut->ClearStatusBar();
-
+    string choice;
     // Get variable name
-    pOut->PrintMessage("Enter variable name:");
+   // pOut->PrintMessage("Enter variable name:");
     VariableName = pIn->GetVariable(pOut); // your function to ensure valid name
-
     // Ask if initialized
     pOut->PrintMessage("Do you want to assign a value? (y/n)");
-    string choice = pIn->GetVariable(pOut);
+    choice = pIn->GetVariable(pOut);
     if (choice == "y" || choice == "Y")
     {
         HasValue = true;
@@ -49,7 +49,7 @@ void AddDeclare::Execute()
 
     Point Corner;
     Corner.x = Position.x - UI.ASSGN_WDTH / 2;
-    Corner.y = Position.y;
+    Corner.y = Position.y - UI.ASSGN_HI /2;
 
     DeclareStatement* pDecl = new DeclareStatement(Corner, VariableName, HasValue, Value);
     pManager->AddStatement(pDecl);

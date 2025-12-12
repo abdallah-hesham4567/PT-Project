@@ -48,7 +48,7 @@ void AddOperationAssign::Execute()
 	//Calculating left corner of assignement statement block
 	Point Corner;
 	Corner.x = Position.x - UI.ASSGN_WDTH / 2;
-	Corner.y = Position.y;
+	Corner.y = Position.y - UI.ASSGN_HI /2 ;
 	OperatorAssignment* pAssign = new OperatorAssignment(Corner, LHS, op, RHS1, RHS2);
 	pManager->AddStatement(pAssign);
 	// Adds the created statement to application manger's statement list

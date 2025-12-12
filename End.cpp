@@ -12,6 +12,8 @@ End::End(Point C)
 
     Outlet.x = Center.x;
     Outlet.y = Center.y + UI.START_END_HI / 2;
+    LCorner.x = Center.x - UI.START_END_WDTH / 2;
+    LCorner.y = Center.y - UI.START_END_HI / 2;
 
     UpdateStatementText();
 }
@@ -23,13 +25,13 @@ void End::UpdateStatementText()
 
 void End::Draw(Output* pOut) const
 {
-    pOut->DrawEnd(Center, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
+    pOut->DrawEnd(LCorner, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
 }
 
 Point End::GetOutletPoint(int branch) const
 {
     
-    return Point(Center.x,
+    return Point(Outlet.x,
         Outlet.y);
 }
 
@@ -47,10 +49,10 @@ int End::GetExpectedOutConnCount() const
 
 bool End::IsPointInside(Point p) const
 {
-    return (p.x >= Center.x - UI.START_END_HI / 2 &&
-        p.x <= Center.x + UI.START_END_HI / 2 &&
-        p.y >= Center.y - UI.START_END_HI / 2 &&
-        p.y <= Center.y + UI.START_END_HI / 2);
+    return (p.x >= LCorner.x &&
+        p.x <= LCorner.x + UI.START_END_WDTH &&
+        p.y >= LCorner.y &&
+        p.y <= LCorner.y + UI.START_END_HI);
 }
 
 void End::Edit()

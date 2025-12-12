@@ -7,9 +7,10 @@ Start::Start(Point C)
     pOutConn = NULL;
 
     // set inlet (top) and outlet (bottom) of the oval
+   LCorner.x = Center.x - UI.START_END_WDTH /2;
+   LCorner.y = Center.y - UI.START_END_HI / 2;
     Inlet.x = Center.x;
     Inlet.y = Center.y - UI.START_END_HI / 2;
-
     Outlet.x = Center.x;
     Outlet.y = Center.y + UI.START_END_HI / 2;
 
@@ -24,7 +25,7 @@ void Start::UpdateStatementText()
 void Start::Draw(Output* pOut) const
 {
     // DrawStart expects center point, width, height, text, selected
-    pOut->DrawStart(Center, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
+    pOut->DrawStart(LCorner, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
 }
 
 void Start::Edit()
@@ -47,7 +48,7 @@ Statement* Start::Clone() const
 
 Point Start::GetOutletPoint(int branch) const
 {
-    return Point(Center.x,
+    return Point(Outlet.x,
         Outlet.y);
 }
 
@@ -64,11 +65,12 @@ int Start::GetExpectedOutConnCount() const
 
 bool Start::IsPointInside(Point p) const
 {
-    return (p.x >= Center.x - UI.START_END_HI / 2 &&
-        p.x <= Center.x + UI.START_END_HI / 2 &&
-        p.y >= Center.y - UI.START_END_HI / 2 &&
-        p.y <= Center.y + UI.START_END_HI / 2);
+    return (p.x >= LCorner.x &&
+        p.x <= LCorner.x + UI.START_END_WDTH &&
+        p.y >= LCorner.y &&
+        p.y <= LCorner.y + UI.START_END_HI );
 }
+
 
 void Start::Save(ofstream& OutFile) const
 {

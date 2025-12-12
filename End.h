@@ -2,7 +2,7 @@
 #define END_STATEMENT_H
 
 #include "Statement.h"
-
+#include "ApplicationManager.h"
 class End : public Statement
 {
 private:
@@ -10,7 +10,7 @@ private:
     Point Inlet;
     Point Outlet;
     Point Center;
-
+    Point LCorner;
     virtual void UpdateStatementText();
 
 public:
