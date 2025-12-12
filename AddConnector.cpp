@@ -1,4 +1,4 @@
-#include "AddConnector.h"
+﻿#include "AddConnector.h"
 #include "..\ApplicationManager.h"
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
@@ -30,7 +30,7 @@ void AddConnector::ReadActionParameters()
 		return;
 	}
 
-	int currentOutlets = pManager->GetOutConnCount(SrcStat);
+	
 
 
 	// Step 2: Determine outlet branch if needed
@@ -40,37 +40,48 @@ void AddConnector::ReadActionParameters()
 	// If source is a conditional statement (has 2 outlets), ask which branch
 	if (SrcStat->IsConditional())
 	{
-		if (pManager->GetOutConnCount(SrcStat) >= 2) {
+		int currentOutlets = pManager->GetOutConnCount(SrcStat);
+
+		if (currentOutlets >= 2) {
 			pOut->PrintMessage("Error: Conditional statement already has 2 connectors!");
 			SrcStat = nullptr;
 			return;
 		}
 
+		// If this is the second connector → assign automatically
+		if (currentOutlets == 1)
 		{
-			pOut->PrintMessage("Source is conditional. Select outlet branch: 0 for TRUE, 1 for FALSE");
+			// Get the existing connector to know which branch is already used
+			int usedBranch = pManager->GetUsedBranch(SrcStat); // YOU WILL IMPLEMENT THIS
 
-			// Read branch number from user
+			// The other branch = 3 - usedBranch   (1 ↔ 2)
+			OutletBranch = 3 - usedBranch;
+
+			pOut->PrintMessage(
+				string("Second branch detected. Automatically assigning branch ") +
+				to_string(OutletBranch)
+			);
+		}
+		else
+		{
+			// First connector → ask user
+			pOut->PrintMessage("Source is conditional. Select outlet branch: 1 for TRUE, 2 for FALSE");
+
 			string branchStr = pIn->GetString(pOut);
 
-			// Validate branch number
-			if (branchStr == "0" || branchStr == "1")
-			{
+			if (branchStr == "1" || branchStr == "2")
 				OutletBranch = stoi(branchStr);
-			}
-
 			else
 			{
-				pOut->PrintMessage("Invalid branch number. Using default (0).");
-				OutletBranch = 0;
+				pOut->PrintMessage("Invalid branch number. Using default (1).");
+				OutletBranch = 1;
 			}
 		}
-
-		
 	}
 
 	else
 	{
-		if (currentOutlets >= 1)
+		if (outletCount >= 1)
 		{
 			pOut->PrintMessage("Error: Statement already has a connector!");
 			SrcStat = nullptr;

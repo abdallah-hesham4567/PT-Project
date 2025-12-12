@@ -110,7 +110,7 @@ public:
 	// Returns all output connectors from a statement
 	// count will be set to the number of connectors found
 	// Returns dynamically allocated array (caller must delete[])
-	Connector** GetOutConnectors(Statement* pStat, int& count) const;
+	Connector** GetOutConnectors(Statement* pStat) const;
 
 
 
@@ -118,7 +118,7 @@ public:
 	// count will be set to the number of connectors found
 	// Returns dynamically allocated array (caller must delete[])
 	Connector** GetInConnectors(Statement* pStat, int& count) const;
-
+	int GetUsedBranch(Statement* src);
 
 
 

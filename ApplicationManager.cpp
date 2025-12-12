@@ -656,9 +656,9 @@ Statement* ApplicationManager::GetStatementWithID(int id) const
 }
 
 
-Connector** ApplicationManager::GetOutConnectors(Statement* pStat, int& count) const
+Connector** ApplicationManager::GetOutConnectors(Statement* pStat) const
 {
-
+	int count;
 	if (pStat == nullptr)
 	{
 		count = 0;
@@ -741,6 +741,18 @@ Connector** ApplicationManager::GetInConnectors(Statement* pStat, int& count) co
 	return inConnectors;
 }
 
-// Get count of input connectors to a statement
+int ApplicationManager::GetUsedBranch(Statement* src)
+{
+	int count = GetOutConnCount(src);
+	Connector** conns = GetOutConnectors(src);
+
+	for (int i = 0; i < count; i++)
+	{
+		if (conns[i] != nullptr)
+			return conns[i]->getOutletBranch(); // 1 or 2
+	}
+
+	return 0;
+}
 
 
