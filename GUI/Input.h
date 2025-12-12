@@ -5,7 +5,7 @@
 #include "UI_Info.h"
 #include "..\HelperFn.h"
 #include "..\CMUgraphicsLib\CMUgraphics.h"
-
+#include "..\ApplicationManager.h"
 class Output;   //Class forward declaration
 class Input		//The application manager should have a pointer to this class
 {

@@ -1,7 +1,8 @@
-#include<string>
+﻿#include<string>
 #include<iostream>
 #include "Input.h"
 #include "Output.h"
+#include "..\ApplicationManager.h"
 using namespace std;
 
 Input::Input(window* pW)
@@ -142,10 +143,22 @@ string Input::GetCompOperator(Output* pO) const
 //TODO: Complete the implementation of the following function
 ActionType Input::GetUserAction() const
 {
+	int x, y;
+	pWind->WaitMouseClick(x, y);
+	static bool selectionMode = false;
+	if (selectionMode)
+	{
+		
+		
+		
+		// Click inside drawing area = always SELECT
+		if (y > UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+			return SELECT;
+	}
+
 	//This function reads the position where the user clicks to determine the desired action
 
-	int x, y;
-	pWind->WaitMouseClick(x, y);	//Get the coordinates of the user click
+
 
 	if (UI.AppMode == DESIGN)	//application is in design mode
 	{
@@ -174,7 +187,9 @@ ActionType Input::GetUserAction() const
 			case ITM_COPY:					  return COPY;             // copy
 			case ITM_CUT:					  return CUT;              // cut
 			case ITM_PASTE:					  return PASTE;            // paste
-			case ITM_SELECT:				  return SELECT;           // select 
+			case ITM_SELECT:
+				selectionMode = true; 
+				return SELECT;           // select 
 			case ITM_EDIT:					  return EDIT_STAT;            // edit selected 
 			case ITM_SAVE:					  return SAVE;                  // save
 			case ITM_LOAD:					  return LOAD;                  // restore 

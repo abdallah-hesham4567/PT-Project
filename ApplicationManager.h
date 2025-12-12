@@ -28,6 +28,7 @@ private:
 //Pointers to Input and Output classes
 	Input* pIn;
 	Output* pOut;
+	bool SelectionMode;
 
 public:
 	ApplicationManager();
@@ -119,6 +120,8 @@ public:
 	// Returns dynamically allocated array (caller must delete[])
 	Connector** GetInConnectors(Statement* pStat, int& count) const;
 	int GetUsedBranch(Statement* src);
+	void SetSelectionMode(bool m) { SelectionMode = m; }
+	bool IsSelectionModeOn() const { return SelectionMode; }
 
 
 

@@ -1,9 +1,12 @@
 ﻿#include "ActionSelect.h"
 
-ActionSelect::ActionSelect(ApplicationManager* pApp) : Action(pApp) {}
+ActionSelect::ActionSelect(ApplicationManager* pApp) : Action(pApp) {pManager->SetSelectionMode(true);
+}
 
 void ActionSelect::Execute()
 {
+    pManager->SetSelectionMode(true);
+
     Output* pOut = pManager->GetOutput();
     Input* pIn = pManager->GetInput();
 
