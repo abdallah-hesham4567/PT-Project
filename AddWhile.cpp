@@ -15,12 +15,20 @@ void AddWhile::ReadActionParameters()
     Output* pOut = pManager->GetOutput();
 
     
-    pOut->PrintMessage("While Statement: Click to add the statement");
+    pOut->PrintMessage("Write: Click where to place the statement.");
     pIn->GetPointClicked(Position);
-    while (!InDrawingArea(Position))
+
+    Point Corner;
+    Corner.x = Position.x - UI.COND_WDTH / 2;
+    Corner.y = Position.y - UI.COND_HI / 2;
+
+    while (!pManager->CanPlaceStatement(Corner, UI.COND_WDTH, UI.COND_HI))
     {
-        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pOut->PrintMessage("Invalid position! Click in empty drawing area.");
         pIn->GetPointClicked(Position);
+
+        Corner.x = Position.x - UI.COND_WDTH / 2;
+        Corner.y = Position.y - UI.COND_HI / 2;
     }
     pOut->ClearStatusBar();
 

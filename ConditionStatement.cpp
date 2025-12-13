@@ -44,6 +44,21 @@ void ConditionStatement::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.COND_HI / 2;
 }
 
+Point ConditionStatement::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int ConditionStatement::GetWidth() const
+{
+	return UI.COND_WDTH;
+}
+
+int ConditionStatement::GetHeight() const
+{  
+	return UI.COND_HI;
+}
+
 
 void ConditionStatement::setCondition(const string& cond)
 {

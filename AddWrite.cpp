@@ -15,11 +15,20 @@ void AddWrite::ReadActionParameters()
 
     pOut->PrintMessage("Write: Click where to place the statement.");
     pIn->GetPointClicked(Position);
-    while (!InDrawingArea(Position))
+
+    Point Corner;
+    Corner.x = Position.x - UI.WRITE_WDTH / 2;
+    Corner.y = Position.y - UI.WRITE_HI / 2;
+
+    while (!pManager->CanPlaceStatement(Corner, UI.WRITE_WDTH, UI.WRITE_HI))
     {
-        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pOut->PrintMessage("Invalid position! Click in empty drawing area.");
         pIn->GetPointClicked(Position);
-	}
+
+        Corner.x = Position.x - UI.WRITE_WDTH / 2;
+        Corner.y = Position.y - UI.WRITE_HI / 2;
+    }
+    
     pOut->ClearStatusBar();
 
     pOut->PrintMessage("Enter expression or text to write:");

@@ -43,6 +43,21 @@ Statement* Start::Clone() const
     return nullptr;
 }
 
+Point Start::GetPosition() const
+{
+	return LCorner;
+}
+
+int Start::GetWidth() const
+{
+	return UI.START_END_WDTH;
+}
+
+int Start::GetHeight() const
+{
+	return UI.START_END_HI;
+}
+
 
 Point Start::GetOutletPoint(int branch) const
 {

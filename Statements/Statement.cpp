@@ -28,6 +28,24 @@ Connector* Statement::GetIncomingConnector(int index)
 	return nullptr;
 }
 
+bool Statement::IsOverlapping(Point p, int w, int h) const
+{
+	// Check for overlap between this statement and the rectangle defined by (p, w, h)
+	Point thisPos = GetPosition();
+	int thisW = GetWidth();
+	int thisH = GetHeight();
+	// Check if rectangles overlap
+	if (thisPos.x < p.x + w &&
+		thisPos.x + thisW > p.x &&
+		thisPos.y < p.y + h &&
+		thisPos.y + thisH > p.y)
+	{
+		return true; // Overlapping
+	}
+	return false; // Not overlapping
+}
+
+
 
 
 

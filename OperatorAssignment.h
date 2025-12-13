@@ -46,5 +46,9 @@ class OperatorAssignment : public Statement
 	
 	virtual void SetPosition(Point p) override;
 
+	virtual Point GetPosition() const override;
+	virtual int GetWidth() const override;
+	virtual int GetHeight() const override;
+
 };
 

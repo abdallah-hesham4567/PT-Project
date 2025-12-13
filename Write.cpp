@@ -38,6 +38,21 @@ void Write::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.READ_HI / 2;
 }
 
+Point Write::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int Write::GetWidth() const
+{
+	return UI.WRITE_WDTH;
+}
+
+int Write::GetHeight() const
+{
+    return UI.WRITE_HI;
+}
+
 void Write::setExpr(const string& e)
 {
     Expr = e;
@@ -116,4 +131,5 @@ void Write::Load(ifstream& InFile)
 {
     InFile >> ID >> Center.x >> Center.y >> Expr;
 }
+
 

@@ -100,6 +100,10 @@ public:
 
 	void LoadAll(const string& filename);
 	Statement* GetStatementWithID(int id) const;
+	bool ApplicationManager::InDrawingArea(Point p, int w, int h) const
+	{
+		return (p.x >= 0 && p.x + w <= UI.DrawingAreaWidth && p.y >= UI.ToolBarHeight && p.y + h <= UI.height - UI.StatusBarHeight);
+	}
 
 
 
@@ -122,6 +126,7 @@ public:
 	int GetUsedBranch(Statement* src);
 	void SetSelectionMode(bool m) { SelectionMode = m; }
 	bool IsSelectionModeOn() const { return SelectionMode; }
+	bool CanPlaceStatement(Point p, int w, int h) const;
 
 
 

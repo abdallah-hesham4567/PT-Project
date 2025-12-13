@@ -45,6 +45,10 @@ public:
 	// sets new position
 	virtual void SetPosition(Point p) = 0;
 
+	virtual Point GetPosition() const = 0;
+	virtual int GetWidth() const = 0;
+	virtual int GetHeight() const = 0;
+
     // Existing virtual methods
 	virtual void Draw(Output* pOut) const = 0; 
 	virtual void Save(ofstream& OutFile) const =0;
@@ -80,6 +84,7 @@ public:
 	 
 	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
 	virtual Statement* Clone() const =0 ;
+	bool IsOverlapping(Point p, int w, int h) const;
 
 };
 

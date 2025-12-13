@@ -47,4 +47,8 @@ public:
 
     virtual void SetPosition(Point p);
 
+	virtual Point GetPosition() const;
+	virtual int GetWidth() const;
+	virtual int GetHeight() const;
+
 };

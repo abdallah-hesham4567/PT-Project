@@ -14,13 +14,20 @@ void AddDeclare::ReadActionParameters()
     Output* pOut = pManager->GetOutput();
 
     // Click position
-    pOut->PrintMessage("Click to add variable declaration");
+    pOut->PrintMessage("Write: Click where to place the statement.");
     pIn->GetPointClicked(Position);
-	//checking if the position is in the drawing area
-    while (!InDrawingArea(Position))
+
+    Point Corner;
+    Corner.x = Position.x - UI.ASSGN_WDTH / 2;
+    Corner.y = Position.y - UI.ASSGN_HI / 2;
+
+    while (!pManager->CanPlaceStatement(Corner, UI.ASSGN_WDTH, UI.ASSGN_HI))
     {
-        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pOut->PrintMessage("Invalid position! Click in empty drawing area.");
         pIn->GetPointClicked(Position);
+
+        Corner.x = Position.x - UI.ASSGN_WDTH   / 2;
+        Corner.y = Position.y - UI.ASSGN_HI / 2;
     }
     pOut->ClearStatusBar();
     string choice;

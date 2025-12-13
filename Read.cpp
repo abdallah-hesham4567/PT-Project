@@ -37,6 +37,21 @@ void Read::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.READ_HI / 2;
 }
 
+Point Read::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int Read::GetWidth() const
+{
+	return UI.READ_WDTH;
+}
+
+int Read::GetHeight() const
+{
+	return UI.READ_HI;
+}
+
 void Read::setVarName(const string& v)
 {
     VarName = v;

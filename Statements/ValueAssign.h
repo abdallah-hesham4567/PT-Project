@@ -50,6 +50,9 @@ public:
 	virtual void Edit(Input* pIn, Output* pOut);
 	virtual string getStatementType() const;
 	virtual Statement* Clone() const;
+	virtual Point GetPosition() const;
+	virtual int GetWidth() const;
+	virtual int GetHeight() const;
 };
 
 #endif

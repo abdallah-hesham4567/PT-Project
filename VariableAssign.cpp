@@ -93,6 +93,22 @@ Statement* VariableAssign::Clone() const
 	return newVarAssign;
 }
 
+Point VariableAssign::GetPosition() const
+{
+	return LeftCorner;
+}
+
+
+int VariableAssign::GetWidth() const
+{
+	return UI.ASSGN_WDTH;
+}
+
+int VariableAssign::GetHeight() const
+{
+	return UI.ASSGN_HI;
+}
+
 
 void VariableAssign::Save(ofstream& OutFile) const
 {

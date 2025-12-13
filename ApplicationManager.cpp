@@ -576,7 +576,7 @@ bool ApplicationManager::Validate() const
 
 				// Check that one is branch 0 and one is branch 1
 				int count = 0;
-				Connector** outConns = GetOutConnectors(pStat, count);
+				Connector** outConns = GetOutConnectors(pStat);
 				bool hasBranch0 = false;
 				bool hasBranch1 = false;
 
@@ -898,5 +898,19 @@ int ApplicationManager::GetUsedBranch(Statement* src)
 
 	return 0;
 }
+bool ApplicationManager::CanPlaceStatement(Point p, int w, int h) const
+{
+	if (!InDrawingArea(p, w, h))
+		return false;
+
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (StatList[i]->IsOverlapping(p, w, h))
+			return false;
+	}
+
+	return true;
+}
+
 
 

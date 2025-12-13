@@ -38,6 +38,22 @@ void OperatorAssignment::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
 
+Point OperatorAssignment::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int OperatorAssignment::GetWidth() const
+{
+	return UI.ASSGN_WDTH;
+}
+
+int OperatorAssignment::GetHeight() const
+{
+	return UI.ASSGN_HI;
+
+}
+
 
 void OperatorAssignment::setLHS(const string& L)
 {

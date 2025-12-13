@@ -70,6 +70,21 @@ Statement* End::Clone() const
     return nullptr;
 }
 
+Point End::GetPosition() const
+{
+	return LCorner;
+}
+
+int End::GetWidth() const
+{
+    return UI.START_END_WDTH;
+}
+
+int End::GetHeight() const
+{
+    return UI.START_END_HI;
+}
+
 void End::Save(ofstream& OutFile) const
 {
     OutFile << "END\t" << ID << "\t" << Center.x << "\t"

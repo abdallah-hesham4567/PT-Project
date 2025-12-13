@@ -46,6 +46,20 @@ void WhileStatement::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.COND_HI / 2;
 }
 
+Point WhileStatement::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int WhileStatement::GetWidth() const
+{
+    return UI.COND_WDTH;
+}
+
+int WhileStatement::GetHeight() const
+{
+    return UI.COND_HI;
+}   
 void WhileStatement::setCondition(const string& cond)
 {
     Condition = cond;

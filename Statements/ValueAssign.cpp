@@ -89,6 +89,21 @@ Statement* ValueAssign::Clone() const
 	return copy;
 }
 
+Point ValueAssign::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int ValueAssign::GetWidth() const
+{
+	return UI.ASSGN_WDTH;
+}
+
+int ValueAssign::GetHeight() const
+{
+	return UI.ASSGN_HI;
+}
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()
