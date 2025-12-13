@@ -28,8 +28,7 @@ void AddDeclare::ReadActionParameters()
    // pOut->PrintMessage("Enter variable name:");
     VariableName = pIn->GetVariable(pOut); // your function to ensure valid name
     // Ask if initialized
-    pOut->PrintMessage("Do you want to assign a value? (y/n)");
-    choice = pIn->GetVariable(pOut);
+    choice = pIn->GetChoice(pOut);
     if (choice == "y" || choice == "Y")
     {
         HasValue = true;

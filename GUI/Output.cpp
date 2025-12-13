@@ -20,8 +20,8 @@ Output::Output()
 	UI.HighlightColor = YELLOW;            // color for highlighted shapes
 	UI.MsgColor = BLACK;                  // color for messages
 
-	UI.ASSGN_WDTH = 160;                 // width rectangle 
-	UI.ASSGN_HI = 60;                    // hight rectangle 
+	UI.ASSGN_WDTH = 200;                 // width rectangle 
+	UI.ASSGN_HI = 45;                    // hight rectangle 
 
 	UI.COND_WDTH = 160;                  // width diamond
 	UI.COND_HI = 100;                    // hight diamond

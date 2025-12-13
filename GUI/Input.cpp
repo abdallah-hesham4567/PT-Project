@@ -106,6 +106,18 @@ string Input::GetVariableOrVal(Output* pO) const
 	return VarOrVal;                                        //return a valid variable name or a value
 }
 
+char Input::GetChoice(Output* p0) const
+{
+	string choice;
+	do
+	{
+		p0->PrintMessage("Do you want to assign a value? (y/n)");
+		choice = GetString(p0);
+	} while ((choice == "y" || choice == "Y") && (choice == "n" || choice == "N"));
+
+	return choice[0];
+}
+
 //TODO: Add the function Input::GetArithOperator
 // to read an arithmetic operator (+, -, * or /) from the user.
 // It does not return before taking a valid arithmetic operator.

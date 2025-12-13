@@ -50,17 +50,20 @@ void DeclareStatement::setValue(double val)
 void DeclareStatement::UpdateStatementText()
 {
     if (HasValue)
-        Text = VariableName + " = " + to_string(Value);
+    {
+        ostringstream oss;
+        oss << Value;
+        Text = "Declare " + VariableName + " = " + oss.str();
+    }
     else
-        Text = VariableName;
+        Text = "Declare " + VariableName;
 }
+
 
 void DeclareStatement::Draw(Output* pOut) const
 {
     pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
-
-
 
 
 Point DeclareStatement::GetOutletPoint(int branch) const
