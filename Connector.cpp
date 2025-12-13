@@ -249,12 +249,11 @@ void Connector::Save(ofstream& OutFile) const
 {
 	// Save connector information to file
 	// Format: Source_Statement_ID Target_Statement_ID Outlet_branch
-	if (SrcStat && DstStat)
-	{
+	
 		OutFile << SrcStat->GetID() << " "
 			<< DstStat->GetID() << " "
 			<< OutletBranch << endl;
-	}
+	
 }
 
 void Connector::Load(ifstream& InFile)

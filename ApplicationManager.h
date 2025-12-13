@@ -122,6 +122,7 @@ public:
 	int GetUsedBranch(Statement* src);
 	void SetSelectionMode(bool m) { SelectionMode = m; }
 	bool IsSelectionModeOn() const { return SelectionMode; }
+	void ClearAll(); // Clear all statements and connectors
 
 
 
