@@ -65,11 +65,8 @@ void WhileStatement::Draw(Output* pOut) const
 
 }
 
-void WhileStatement::Edit()
+void WhileStatement::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Edit While Statement Condition: Enter new LHS:");
     string LHS = pIn->GetVariableOrVal(pOut);
     pOut->PrintMessage("Enter new comparison operator (==, !=, <, <=, >, >=):");

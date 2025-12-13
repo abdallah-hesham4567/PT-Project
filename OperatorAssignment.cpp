@@ -65,12 +65,8 @@ void OperatorAssignment::Draw(Output* pOut) const
     pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
-void OperatorAssignment::Edit()
+void OperatorAssignment::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
-    pOut->PrintMessage("Edit Operator Assignment Statement:");
     pOut->PrintMessage("Enter new LHS variable name:");
     string newLHS = pIn->GetVariable(pOut);
     setLHS(newLHS);

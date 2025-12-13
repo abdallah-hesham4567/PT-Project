@@ -30,7 +30,7 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "READ"; }
-    virtual void Edit();
+    virtual void Edit(Input* pIn, Output* pOut);
     virtual Statement* Clone() const;
 
     virtual void SetPosition(Point p);

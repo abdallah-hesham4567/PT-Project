@@ -41,7 +41,7 @@ class OperatorAssignment : public Statement
 	virtual void Load(ifstream& InFile);
 	string getStatementType() const override { return "OP_ASSIGN"; }
 
-	virtual void Edit();
+	virtual void Edit(Input* pIn, Output* pOut);
 	virtual Statement* Clone() const;
 	
 	virtual void SetPosition(Point p) override;

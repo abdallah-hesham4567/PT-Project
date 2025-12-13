@@ -62,7 +62,7 @@ public:
 	///		Decide the parameters that you should pass to each function and its return type
 
 
-	virtual void Edit() = 0;		//Edit the Statement parameter
+	virtual void Edit(Input* pIn, Output* pOut) = 0;		//Edit the Statement parameter
 	virtual string getStatementType() const = 0;
 	//virtual void Simulate();	//Execute the statement in the simulation mode
 

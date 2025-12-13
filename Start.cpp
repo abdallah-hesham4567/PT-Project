@@ -28,11 +28,9 @@ void Start::Draw(Output* pOut) const
     pOut->DrawStart(LCorner, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
 }
 
-void Start::Edit()
+void Start::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
 	// Start statement has no editable parameters
-	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Start statement has no editable parameters.");
 }
 

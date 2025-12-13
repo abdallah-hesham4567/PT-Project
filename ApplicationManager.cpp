@@ -17,6 +17,7 @@
 #include "Copy.h"
 #include "Cut.h"
 #include "Paste.h"
+#include "Edit.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -293,7 +294,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case PASTE:
 		pAct = new Paste(this);
 		break;
-
+	case EDIT_STAT:
+		pAct = new Edit(this);
+		break;
 	//case SAVE:
 	//	pAct = new Save(this);
 	//	break;

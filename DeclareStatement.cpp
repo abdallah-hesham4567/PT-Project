@@ -93,12 +93,8 @@ bool DeclareStatement::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.ASSGN_HI);
 }
 
-void DeclareStatement::Edit()
+void DeclareStatement::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
-    pOut->PrintMessage("Edit Declare Statement - enter variable name:");
     string newVar = pIn->GetVariable(pOut);
     this->setVariable(newVar);
 	pOut->PrintMessage("Do you want to initialize it? (OK/NO THANKS)");

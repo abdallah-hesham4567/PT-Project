@@ -56,12 +56,8 @@ void ValueAssign::Draw(Output* pOut) const
 	pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
-void ValueAssign::Edit()
-
+void ValueAssign::Edit(Input* pIn, Output* pOut)
 {
-	ApplicationManager* pManager;
-	Input* pIn = pManager->GetInput();
-	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Editing Value Assignment Statement: Enter new LHS variable name:");
 	string newLHS = pIn->GetVariable(pOut);
 	if (newLHS.empty()) // User cancelled
