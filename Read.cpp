@@ -37,6 +37,21 @@ void Read::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.READ_HI / 2;
 }
 
+Point Read::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int Read::GetWidth() const
+{
+	return UI.READ_WDTH;
+}
+
+int Read::GetHeight() const
+{
+	return UI.READ_HI;
+}
+
 void Read::setVarName(const string& v)
 {
     VarName = v;
@@ -82,11 +97,8 @@ bool Read::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.READ_HI);
 }
 
-void Read::Edit()
+void Read::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Editing Read Statement: Enter variable name: ");
     string varName = pIn->GetString(pOut);
     if (!varName.empty())

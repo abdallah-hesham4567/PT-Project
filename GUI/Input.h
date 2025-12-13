@@ -5,6 +5,7 @@
 #include "UI_Info.h"
 #include "..\HelperFn.h"
 #include "..\CMUgraphicsLib\CMUgraphics.h"
+
 class Output;   //Class forward declaration
 class Input		//The application manager should have a pointer to this class
 {
@@ -29,6 +30,7 @@ public:
 
 	string GetVariable(Output* p0) const;
 	string GetVariableOrVal(Output* p0) const;
+	char GetChoice(Output* p0) const;
 
 	//TODO: Add the function Input::GetArithOperator 
 	// to read an arithmetic operator (+, -, * or /) from the user. 

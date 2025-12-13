@@ -10,12 +10,20 @@ void AddEnd::ReadActionParameters()
     Input* pIn = pManager->GetInput();
     Output* pOut = pManager->GetOutput();
 
-    pOut->PrintMessage("Click where you want to place the End.");
+    pOut->PrintMessage("Write: Click where to place the statement.");
     pIn->GetPointClicked(Position);
-    while (!InDrawingArea(Position))
+
+    Point Corner;
+    Corner.x = Position.x - UI.START_END_WDTH / 2;
+    Corner.y = Position.y - UI.START_END_HI / 2;
+
+    while (!pManager->CanPlaceStatement(Corner, UI.START_END_WDTH, UI.START_END_HI))
     {
-        pOut->PrintMessage("Invalid position! Click inside the drawing area.");
+        pOut->PrintMessage("Invalid position! Click in empty drawing area.");
         pIn->GetPointClicked(Position);
+
+        Corner.x = Position.x - UI.START_END_WDTH   / 2;
+        Corner.y = Position.y - UI.START_END_HI / 2;
     }
     pOut->ClearStatusBar();
 }

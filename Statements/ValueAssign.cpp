@@ -56,12 +56,8 @@ void ValueAssign::Draw(Output* pOut) const
 	pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
-void ValueAssign::Edit()
-
+void ValueAssign::Edit(Input* pIn, Output* pOut)
 {
-	ApplicationManager* pManager;
-	Input* pIn = pManager->GetInput();
-	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Editing Value Assignment Statement: Enter new LHS variable name:");
 	string newLHS = pIn->GetVariable(pOut);
 	if (newLHS.empty()) // User cancelled
@@ -91,6 +87,21 @@ Statement* ValueAssign::Clone() const
 	ValueAssign* copy = new ValueAssign(*this);
 	//copy->SetOutConn(nullptr); // Reset the outgoing connector for the cloned statement
 	return copy;
+}
+
+Point ValueAssign::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int ValueAssign::GetWidth() const
+{
+	return UI.ASSGN_WDTH;
+}
+
+int ValueAssign::GetHeight() const
+{
+	return UI.ASSGN_HI;
 }
 
 

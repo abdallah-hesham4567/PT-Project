@@ -44,6 +44,21 @@ void ConditionStatement::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.COND_HI / 2;
 }
 
+Point ConditionStatement::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int ConditionStatement::GetWidth() const
+{
+	return UI.COND_WDTH;
+}
+
+int ConditionStatement::GetHeight() const
+{  
+	return UI.COND_HI;
+}
+
 
 void ConditionStatement::setCondition(const string& cond)
 {
@@ -64,23 +79,7 @@ void ConditionStatement::Draw(Output* pOut) const
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
 }
 
-void ConditionStatement::Edit()
-{
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
-    pOut->PrintMessage("Editing Condition Statement: Enter the LHS:");
-	string LHS = pIn->GetVariableOrVal(pOut);  
-	pOut->PrintMessage("Enter the comparison operator (==, !=, <, <=, >, >=):");
-	string op = pIn->GetCompOperator(pOut);
-    pOut->PrintMessage("Enter the RHS:");
-    string RHS = pIn->GetVariableOrVal(pOut);      
-    string ConditionText = LHS + " " + op + " " + RHS;
-    Condition = ConditionText;
-	pOut->ClearStatusBar();
-    
 
-}
 //void ConditionStatement::SetBranchConnector(Connector* pConn, int branch)
 //{
 //    if (branch == 1)      // True branch
@@ -198,6 +197,21 @@ void ConditionStatement::Load(ifstream& InFile)
 string ConditionStatement::getStatementType() const
 {
     return "COND";
+}
+
+void ConditionStatement::Edit(Input* pIn, Output* pOut)
+{
+    string LHS = pIn->GetVariableOrVal(pOut);
+    pOut->PrintMessage("Enter the comparison operator (==, !=, <, <=, >, >=):");
+    string op = pIn->GetCompOperator(pOut);
+    pOut->PrintMessage("Enter the RHS:");
+    string RHS = pIn->GetVariableOrVal(pOut);
+    string ConditionText = LHS + " " + op + " " + RHS;
+    Condition = ConditionText;
+	this->setCondition(ConditionText);
+    pOut->ClearStatusBar();
+
+
 }
 
 

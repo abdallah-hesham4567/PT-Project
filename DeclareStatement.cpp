@@ -34,6 +34,21 @@ void DeclareStatement::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
 
+Point DeclareStatement::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int DeclareStatement::GetWidth() const
+{
+    return UI.ASSGN_WDTH;
+}
+
+int DeclareStatement::GetHeight() const
+{
+    return UI.ASSGN_HI;
+}
+
 void DeclareStatement::setVariable(const string& var)
 {
     VariableName = var;
@@ -50,17 +65,20 @@ void DeclareStatement::setValue(double val)
 void DeclareStatement::UpdateStatementText()
 {
     if (HasValue)
-        Text = VariableName + " = " + to_string(Value);
+    {
+        ostringstream oss;
+        oss << Value;
+        Text = "Declare " + VariableName + " = " + oss.str();
+    }
     else
-        Text = VariableName;
+        Text = "Declare " + VariableName;
 }
+
 
 void DeclareStatement::Draw(Output* pOut) const
 {
     pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
-
-
 
 
 Point DeclareStatement::GetOutletPoint(int branch) const
@@ -90,17 +108,13 @@ bool DeclareStatement::IsPointInside(Point p) const
         p.y <= LeftCorner.y + UI.ASSGN_HI);
 }
 
-void DeclareStatement::Edit()
+void DeclareStatement::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
-    pOut->PrintMessage("Edit Declare Statement - enter variable name:");
     string newVar = pIn->GetVariable(pOut);
     this->setVariable(newVar);
-	pOut->PrintMessage("Do you want to initialize it? (OK/NO THANKS)");
+	pOut->PrintMessage("Do you want to initialize it? y/n THANKS)");
     string choice = pIn->GetString(pOut);
-    if (choice == "OK"||choice=="Ok"||choice=="ok")
+    if (choice == "y" || choice == "Y")
     {
         pOut->PrintMessage("Enter initial value:");
         double val = pIn->GetValue(pOut);

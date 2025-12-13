@@ -38,6 +38,21 @@ void Write::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.READ_HI / 2;
 }
 
+Point Write::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int Write::GetWidth() const
+{
+	return UI.WRITE_WDTH;
+}
+
+int Write::GetHeight() const
+{
+    return UI.WRITE_HI;
+}
+
 void Write::setExpr(const string& e)
 {
     Expr = e;
@@ -49,11 +64,8 @@ void Write::Draw(Output* pOut) const
     pOut->DrawReadAndWrite(LeftCorner, UI.READ_WDTH, UI.READ_HI, Text, Selected);
 }
 
-void Write::Edit()
+void Write::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Edit Write Statement: Enter new expression:");
     string newExpr = pIn->GetString(pOut);
     if (!newExpr.empty())
@@ -119,4 +131,5 @@ void Write::Load(ifstream& InFile)
 {
     InFile >> ID >> Center.x >> Center.y >> Expr;
 }
+
 

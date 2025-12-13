@@ -30,11 +30,14 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const ;
     virtual void Load(ifstream& InFile);
-	virtual void Edit();
+	virtual void Edit(Input* pIn, Output* pOut);
 	virtual string getStatementType() const { return "WRITE"; }
     virtual Statement* Clone() const;
 
     virtual void SetPosition(Point p);
+	virtual Point GetPosition() const;
+	virtual int GetWidth() const;
+	virtual int GetHeight() const;
 };
 
 #endif

@@ -46,6 +46,20 @@ void WhileStatement::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.COND_HI / 2;
 }
 
+Point WhileStatement::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int WhileStatement::GetWidth() const
+{
+    return UI.COND_WDTH;
+}
+
+int WhileStatement::GetHeight() const
+{
+    return UI.COND_HI;
+}   
 void WhileStatement::setCondition(const string& cond)
 {
     Condition = cond;
@@ -65,11 +79,8 @@ void WhileStatement::Draw(Output* pOut) const
 
 }
 
-void WhileStatement::Edit()
+void WhileStatement::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
     pOut->PrintMessage("Edit While Statement Condition: Enter new LHS:");
     string LHS = pIn->GetVariableOrVal(pOut);
     pOut->PrintMessage("Enter new comparison operator (==, !=, <, <=, >, >=):");

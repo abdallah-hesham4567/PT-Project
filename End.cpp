@@ -55,12 +55,9 @@ bool End::IsPointInside(Point p) const
         p.y <= LCorner.y + UI.START_END_HI);
 }
 
-void End::Edit()
+void End::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-	// No editable parameters 
-    Output* pOut;
-	pOut->PrintMessage("End statement has no editable parameters.");
+    pOut->PrintMessage("End statement has no editable parameters.");
 
 }
 
@@ -71,6 +68,21 @@ Statement* End::Clone() const
     Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("End statement cannot be cloned.");
     return nullptr;
+}
+
+Point End::GetPosition() const
+{
+	return LCorner;
+}
+
+int End::GetWidth() const
+{
+    return UI.START_END_WDTH;
+}
+
+int End::GetHeight() const
+{
+    return UI.START_END_HI;
 }
 
 void End::Save(ofstream& OutFile) const

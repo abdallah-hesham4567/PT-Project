@@ -17,6 +17,8 @@
 #include "Copy.h"
 #include "Cut.h"
 #include "Paste.h"
+#include "Edit.h"
+
 #include "ActionSave.h"
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -294,9 +296,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new Paste(this);
 		break;
 
-     case SAVE:
-	 pAct = new ActionSave(this);
-	 break;
+	//case SAVE:
+	//	pAct = new Save(this);
+	//	break;
 
 	//case LOAD:
 	//	pAct = new Load(this);
@@ -497,7 +499,148 @@ void ApplicationManager::SaveAll(ofstream& OutFile)
 ///		////////////////////////////////////////Validation Function///////////////////////////////////////////	
 bool ApplicationManager::Validate() const
 {
+	Output* pOut = GetOutput();
+	string errorMsg = "";
 
+	// Validation Rule 1: Must have exactly ONE Start statement
+	int startCount = 0;
+	Statement* startStat = nullptr;
+
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (StatList[i]->getStatementType() == "START")  // Adjust based on your implementation
+		{
+			startCount++;
+			startStat = StatList[i];
+		}
+	}
+
+	if (startCount != 0)
+	{
+		errorMsg = "Error: Flowchart must have exactly ONE Start statement. Found 0.";
+		pOut->PrintMessage(errorMsg);
+		return false;
+	}
+
+	// Validation Rule 2: Must have at least ONE End statement
+	int endCount = 0;
+
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (StatList[i]->getStatementType() == "END")  // Adjust based on your implementation
+		{
+			endCount++;
+		}
+	}
+
+	if (endCount != 0)
+	{
+		errorMsg = "Error: Flowchart must have exactly ONE End statement.";
+		pOut->PrintMessage(errorMsg);
+		return false;
+	}
+
+	// Validation Rule 3: Every statement must have valid connections
+	for (int i = 0; i < StatCount; i++)
+	{
+		Statement* pStat = StatList[i];
+		string statType = pStat->getStatementType();
+
+		// Check input connectors (except Start statement)
+		if (statType != "START")
+		{
+			int inCount = GetInConnCount(pStat);
+			if (inCount == 0)
+			{
+				errorMsg = "Error: Statement at position has no input connector (orphan statement).";
+				pOut->PrintMessage(errorMsg);
+				return false;
+			}
+		}
+
+		// Check output connectors (except End statement)
+		if (statType != "END")
+		{
+			int outCount = GetOutConnCount(pStat);
+
+			// Conditional statements must have exactly 2 outputs
+			if (statType == "CONDITIONAL" || statType == "IF")
+			{
+				if (outCount != 2)
+				{
+					errorMsg = "Error: Conditional statement must have exactly 2 output connectors (TRUE and FALSE branches).";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+
+				// Check that one is branch 0 and one is branch 1
+				int count = 0;
+				Connector** outConns = GetOutConnectors(pStat);
+				bool hasBranch0 = false;
+				bool hasBranch1 = false;
+
+				for (int j = 0; j < count; j++)
+				{
+					if (outConns[j]->getOutletBranch() == 0)
+						hasBranch0 = true;
+					if (outConns[j]->getOutletBranch() == 1)
+						hasBranch1 = true;
+				}
+
+				delete[] outConns;
+
+				if (!hasBranch0 || !hasBranch1)
+				{
+					errorMsg = "Error: Conditional statement must have both TRUE (0) and FALSE (1) branches.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+			}
+			else
+			{
+				// Normal statements must have exactly 1 output
+				if (outCount == 0)
+				{
+					errorMsg = "Error: Non-End statement has no output connector.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+				else if (outCount > 1)
+				{
+					errorMsg = "Error: Non-conditional statement cannot have multiple output connectors.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+			}
+		}
+		else  // End statement
+		{
+			// End statements should have NO output connectors
+			int outCount = GetOutConnCount(pStat);
+			if (outCount > 0)
+			{
+				errorMsg = "Error: End statement cannot have output connectors.";
+				pOut->PrintMessage(errorMsg);
+				return false;
+			}
+		}
+	}
+
+	// Validation Rule 4: Validate all connectors
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (!ConnList[i]->Validate(errorMsg))
+		{
+			pOut->PrintMessage("Error: Invalid connector - " + errorMsg);
+			return false;
+		}
+	}
+
+	// Validation Rule 5: Check for cycles (optional, advanced)
+	// You can implement cycle detection if required
+
+	// If all validations pass
+	pOut->PrintMessage("Validation successful! Flowchart is valid.");
 	return true;
 }
 
@@ -754,30 +897,18 @@ int ApplicationManager::GetUsedBranch(Statement* src)
 
 	return 0;
 }
-
-
-void ApplicationManager::ClearAll()
+bool ApplicationManager::CanPlaceStatement(Point p, int w, int h) const
 {
-	// Delete all statements
+	if (!InDrawingArea(p, w, h))
+		return false;
+
 	for (int i = 0; i < StatCount; i++)
 	{
-		delete StatList[i];
-		StatList[i] = nullptr;
+		if (StatList[i]->IsOverlapping(p, w, h))
+			return false;
 	}
-	StatCount = 0;
 
-	// Delete all connectors
-	for (int i = 0; i < ConnCount; i++)
-	{
-		delete ConnList[i];
-		ConnList[i] = nullptr;
-	}
-	ConnCount = 0;
-
-	// Clear clipboard if needed
-	if (Clipboard != nullptr)
-	{
-		delete Clipboard;
-		Clipboard = nullptr;
-	}
+	return true;
 }
+
+

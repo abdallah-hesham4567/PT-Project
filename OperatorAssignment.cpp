@@ -38,6 +38,22 @@ void OperatorAssignment::SetPosition(Point p)
     Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
 
+Point OperatorAssignment::GetPosition() const
+{
+	return LeftCorner;
+}
+
+int OperatorAssignment::GetWidth() const
+{
+	return UI.ASSGN_WDTH;
+}
+
+int OperatorAssignment::GetHeight() const
+{
+	return UI.ASSGN_HI;
+
+}
+
 
 void OperatorAssignment::setLHS(const string& L)
 {
@@ -65,12 +81,8 @@ void OperatorAssignment::Draw(Output* pOut) const
     pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
 }
 
-void OperatorAssignment::Edit()
+void OperatorAssignment::Edit(Input* pIn, Output* pOut)
 {
-    ApplicationManager* pManager;
-    Input* pIn = pManager->GetInput();
-    Output* pOut = pManager->GetOutput();
-    pOut->PrintMessage("Edit Operator Assignment Statement:");
     pOut->PrintMessage("Enter new LHS variable name:");
     string newLHS = pIn->GetVariable(pOut);
     setLHS(newLHS);
