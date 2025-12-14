@@ -503,14 +503,14 @@ bool ApplicationManager::Validate() const
 
 	// Validation Rule 1: Must have exactly ONE Start statement
 	int startCount = 0;
-	Statement* startStat = nullptr;
+	//Statement* startStat = nullptr;
 
 	for (int i = 0; i < StatCount; i++)
 	{
 		if (StatList[i]->getStatementType() == "START")  // Adjust based on your implementation
 		{
 			startCount++;
-			startStat = StatList[i];
+			//startStat = StatList[i];
 		}
 	}
 
@@ -521,12 +521,12 @@ bool ApplicationManager::Validate() const
 		return false;
 	}
 
-	// Validation Rule 2: Must have at least ONE End statement
+	// Validation Rule 2: Must have exactly ONE End statement
 	int endCount = 0;
 
 	for (int i = 0; i < StatCount; i++)
 	{
-		if (StatList[i]->getStatementType() == "END")  // Adjust based on your implementation
+		if (StatList[i]->getStatementType() == "END")
 		{
 			endCount++;
 		}
@@ -551,7 +551,7 @@ bool ApplicationManager::Validate() const
 			int inCount = GetInConnCount(pStat);
 			if (inCount == 0)
 			{
-				errorMsg = "Error: Statement at position has no input connector (orphan statement).";
+				errorMsg = "Error: Statement at position has no input connector (orphaned statement).";
 				pOut->PrintMessage(errorMsg);
 				return false;
 			}
@@ -563,7 +563,7 @@ bool ApplicationManager::Validate() const
 			int outCount = GetOutConnCount(pStat);
 
 			// Conditional statements must have exactly 2 outputs
-			if (statType == "CONDITIONAL" || statType == "IF")
+			if (statType == "CONDITIONAL" || statType == "WHILE")
 			{
 				if (outCount != 2)
 				{
@@ -635,11 +635,8 @@ bool ApplicationManager::Validate() const
 		}
 	}
 
-	// Validation Rule 5: Check for cycles (optional, advanced)
-	// You can implement cycle detection if required
-
 	// If all validations pass
-	pOut->PrintMessage("Validation successful! Flowchart is valid.");
+	pOut->PrintMessage("Validation successful! Congrats, Flowchart is valid.");
 	return true;
 }
 
