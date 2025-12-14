@@ -18,7 +18,6 @@
 #include "Cut.h"
 #include "Paste.h"
 #include "Edit.h"
-
 #include "ActionSave.h"
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -296,9 +295,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new Paste(this);
 		break;
 
-	//case SAVE:
-	//	pAct = new Save(this);
-	//	break;
+	case SAVE:
+		pAct = new ActionSave(this);
+	break;
 
 	//case LOAD:
 	//	pAct = new Load(this);
@@ -911,4 +910,28 @@ bool ApplicationManager::CanPlaceStatement(Point p, int w, int h) const
 	return true;
 }
 
+void ApplicationManager::ClearAll()
+{
+	// Delete all statements
+	for (int i = 0; i < StatCount; i++)
+	{
+		delete StatList[i];
+		StatList[i] = nullptr;
+	}
+	StatCount = 0;
 
+	// Delete all connectors
+	for (int i = 0; i < ConnCount; i++)
+	{
+		delete ConnList[i];
+		ConnList[i] = nullptr;
+	}
+	ConnCount = 0;
+
+	// Clear clipboard if needed
+	if (Clipboard != nullptr)
+	{
+		delete Clipboard;
+		Clipboard = nullptr;
+	}
+}

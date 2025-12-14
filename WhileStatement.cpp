@@ -5,10 +5,10 @@
 using namespace std;
 
 
-WhileStatement::WhileStatement(Point Lcorner, const string& cond)
+WhileStatement::WhileStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS)
 {
     LeftCorner = Lcorner;
-    Condition = cond;
+    Condition = LHS +OP+RHS;
     TrueBranch = nullptr;
     FalseBranch = nullptr;
 
@@ -22,7 +22,9 @@ WhileStatement::WhileStatement(Point Lcorner, const string& cond)
     OutletFalse.y = LeftCorner.y + UI.COND_HI;
     Center.x = LeftCorner.x + UI.COND_WDTH / 2;
     Center.y = LeftCorner.y + UI.COND_HI/2;
-
+    this->LHS = LHS;
+    this->RHS = RHS;
+    op = OP;
     UpdateStatementText();
 }
 
@@ -143,26 +145,12 @@ bool WhileStatement::IsPointInside(Point p) const
 
 void WhileStatement::Save(ofstream& OutFile) const
 {
-    // Convert ENUM to STRING
-    string comparisonStr;
-    if (Comp == EQUAL)
-        comparisonStr = "EQL";
-    else if (Comp == NOT_EQUAL)
-        comparisonStr = "NOTEQL";
-    else if (Comp == GREATER)
-        comparisonStr = "GRT";
-    else if (Comp == LESS)
-        comparisonStr = "LSS";
-    else if (Comp == GREATER_OR_EQUAL)
-        comparisonStr = "GRTEQL";
-    else if (Comp == LESS_OR_EQUAL)
-        comparisonStr = "LSSEQL";
+    string comparisonStr = OpToString(op); // Use the helper function
 
     OutFile << "COND\t" << ID << "\t"
         << Center.x << "\t" << Center.y << "\t"
-        << LHS << "\t" << comparisonStr << "\t" << RHS;
+        << LHS << "\t" << comparisonStr << "\t" << RHS<<endl;
 }
-
 
 void WhileStatement::Load(ifstream& InFile)
 {
@@ -183,8 +171,6 @@ void WhileStatement::Load(ifstream& InFile)
         Comp = GREATER_OR_EQUAL;
     else if (comparisonStr == "LSSEQL")
         Comp = LESS_OR_EQUAL; 
-
-
     
 }
 

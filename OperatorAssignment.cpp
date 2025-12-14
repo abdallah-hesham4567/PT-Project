@@ -144,18 +144,18 @@ void OperatorAssignment::Save(ofstream& OutFile) const
 {
     // Convert ENUM to STRING
     string operatorStr;
-    if (Opp == ADD_OP)
+    if (Op == '+')
         operatorStr = "ADD";
-    else if (Opp == SUB_OP)
+    else if (Op == '-')
         operatorStr = "SUB";
-    else if (Opp == MUL_OP)
+    else if (Op == '*')
         operatorStr = "MUL";
-    else if (Opp == DIV_OP)
+    else if (Op == '/')
         operatorStr = "DIV";
 
     OutFile << "OP_ASSIGN\t" << ID << "\t"
         << Center.x << "\t" << Center.y << "\t"
-        << LHS << "\t" << RHS1 << "\t" << operatorStr << "\t"<<RHS2;
+        << LHS << "\t" << RHS1 << "\t" << operatorStr << "\t"<<RHS2 <<endl;
 
    
 }

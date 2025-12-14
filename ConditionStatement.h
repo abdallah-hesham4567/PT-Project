@@ -15,12 +15,12 @@ class ConditionStatement : public Statement
     Point OutletTrue;
     Point OutletFalse;
     Point Center;
-    CompOperator Comp;
+    string op;
     string RHS;
     string LHS;
 
 public:
-    ConditionStatement(Point Lcorner, const string& cond);
+    ConditionStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS);
 
     void setCondition(const string& cond);
     string getCondition() const { return Condition; }

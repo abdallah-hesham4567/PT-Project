@@ -115,3 +115,39 @@ OpType ValueOrVariable(string input)
 	else if (IsValue(input))        return VALUE_OP;
 	return INVALID_OP;
 }
+
+string OpToString(const string& op)
+{
+	if (op == "==")
+		return "EQL";
+	else if (op == "!=")
+		return "NOTEQL";
+	else if (op == ">")
+		return "GRT";
+	else if (op == "<")
+		return "LSS";
+	else if (op == ">=")
+		return "GRTEQL";
+	else if (op == "<=")
+		return "LSSEQL";
+	else
+		return op; // Return as-is if not recognized
+}
+
+string StringToOp(const string& opStr)
+{
+	if (opStr == "EQL")
+		return "==";
+	else if (opStr == "NOTEQL")
+		return "!=";
+	else if (opStr == "GRT")
+		return ">";
+	else if (opStr == "LSS")
+		return "<";
+	else if (opStr == "GRTEQL")
+		return ">=";
+	else if (opStr == "LSSEQL")
+		return "<=";
+	else
+		return opStr; // Return as-is if not recognized
+}

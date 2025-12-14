@@ -2,13 +2,15 @@
 #include "..\GUI\Output.h"
 #include <sstream>
 #include "ApplicationManager.h"
-ConditionStatement::ConditionStatement(Point Lcorner, const string& cond)
+ConditionStatement::ConditionStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS)
 {
     LeftCorner = Lcorner;
-    Condition = cond;
+    Condition = LHS + OP +RHS;
     TrueBranch = nullptr;
     FalseBranch = nullptr;
-
+    this->RHS = RHS;
+    this->LHS = LHS;
+    op = OP;
     
 
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
@@ -144,25 +146,10 @@ bool ConditionStatement::IsPointInside(Point p) const
 
 void ConditionStatement::Save(ofstream& OutFile) const
 {
-    // Convert ENUM to STRING
-        string comparisonStr;
-    if (Comp == EQUAL)
-        comparisonStr = "EQL";
-    else if (Comp == NOT_EQUAL)
-        comparisonStr = "NOTEQL";
-    else if (Comp == GREATER)
-        comparisonStr = "GRT";
-    else if (Comp == LESS)
-        comparisonStr = "LSS";
-    else if (Comp == GREATER_OR_EQUAL)
-        comparisonStr = "GRTEQL";
-    else if (Comp == LESS_OR_EQUAL)
-        comparisonStr = "LSSEQL";
-
+    string comparisonStr = OpToString(op); // Use the helper function
     OutFile << "COND\t" << ID << "\t"
         << Center.x << "\t" << Center.y << "\t"
-        << LHS << "\t" << comparisonStr << "\t"<<RHS;
-
+        << LHS << "\t" << comparisonStr << "\t"<<RHS<<endl;
 }
 
 
@@ -172,21 +159,6 @@ void ConditionStatement::Load(ifstream& InFile)
         string comparisonStr;
         InFile >> ID >> Center.x >> Center.y
             >> LHS >> comparisonStr >> RHS;
-
-        // Convert STRING to ENUM
-        if (comparisonStr == "EQL")
-            Comp = EQUAL;
-        else if (comparisonStr == "NOTEQL")
-            Comp = NOT_EQUAL;
-        else if (comparisonStr == "GRT")
-            Comp = GREATER;
-        else if (comparisonStr == "LSS")
-            Comp = LESS;
-        else if (comparisonStr == "GRTEQL")
-            Comp = GREATER_OR_EQUAL;
-        else if (comparisonStr == "LSSEQL")
-            Comp = LESS_OR_EQUAL;
-
 
 
 }

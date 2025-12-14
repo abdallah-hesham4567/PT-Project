@@ -18,3 +18,8 @@ enum OpType
 bool IsValue (string input);
 bool IsVariable (string input);
 OpType ValueOrVariable (string input);
+// Convert operator symbol to string representation
+string OpToString(const string& op);
+
+// Convert string representation back to operator symbol
+string StringToOp(const string& opStr);

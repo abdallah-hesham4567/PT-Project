@@ -53,6 +53,6 @@ void AddCondition::Execute()
     Corner.x = Position.x - UI.COND_WDTH / 2;
     Corner.y = Position.y - UI.COND_HI/2;
 
-    ConditionStatement* pCond = new ConditionStatement(Corner, ConditionText);
+    ConditionStatement* pCond = new ConditionStatement(Corner, LHS,op,RHS);
     pManager->AddStatement(pCond);
 }

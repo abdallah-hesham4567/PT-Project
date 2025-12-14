@@ -3,9 +3,10 @@
 #include "..\Defs.h"
 #include "..\GUI\Output.h"
 #include <string>
+#include "../AddWhile.h"
 using namespace std;
 
-class WhileStatement : public Statement
+class WhileStatement : public Statement 
 {
     string Condition;       // شرط اللوب
     Connector* TrueBranch;  // لو الشرط صح
@@ -15,12 +16,14 @@ class WhileStatement : public Statement
     Point OutletFalse;
     Point LeftCorner;
     CompOperator Comp;
+    string op;
     string RHS;
     string LHS;
     Point Center;
 
 public:
-    WhileStatement(Point Lcorner, const string& cond);
+    WhileStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS);
+
 
     void setCondition(const string& cond);
     string getCondition() const { return Condition; }

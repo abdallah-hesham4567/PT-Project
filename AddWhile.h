@@ -11,5 +11,6 @@ public:
     AddWhile(ApplicationManager* pAppManager);
     virtual void ReadActionParameters();
     virtual void Execute();
+    string GetOp() { return op; }
 };
 
