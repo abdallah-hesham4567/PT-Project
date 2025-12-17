@@ -123,13 +123,22 @@ bool Write::IsPointInside(Point p) const
 
 void Write::Save(ofstream& OutFile) const 
 {
-    OutFile << "WRITE\t" << ID << "\t" << Center.x << "\t"
-        << Center.y << "\t" << Expr << "\n";
+    OutFile << "WRITE\t" << ID << "\t" << LeftCorner.x << "\t"
+        << LeftCorner.y << "\t" << Expr << "\n";
 }
 
 void Write::Load(ifstream& InFile)
 {
-    InFile >> ID >> Center.x >> Center.y >> Expr;
+
+    InFile >> ID >> LeftCorner.x >> LeftCorner.y >> Expr;
+    Inlet.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Inlet.y = LeftCorner.y;
+
+    Outlet.x = Inlet.x;
+    Outlet.y = LeftCorner.y + UI.READ_HI;
+    Center.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Center.y = LeftCorner.y + UI.READ_HI / 2;
+    UpdateStatementText();
 }
 
 

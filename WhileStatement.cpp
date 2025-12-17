@@ -186,7 +186,8 @@ void WhileStatement::Load(ifstream& InFile)
 
     OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
     OutletFalse.y = LeftCorner.y + UI.COND_HI;
-    
+    Center.x = LeftCorner.x + UI.COND_WDTH / 2;
+    Center.y = LeftCorner.y + UI.COND_HI / 2;
     Condition = LHS + op + RHS;
     UpdateStatementText();
 }

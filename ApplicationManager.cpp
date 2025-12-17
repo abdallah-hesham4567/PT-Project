@@ -738,7 +738,7 @@ void ApplicationManager::LoadAll(ifstream& InFile)
 
 			// Check if source is a conditional statement
 			ConditionStatement* pCond = dynamic_cast<ConditionStatement*>(pSrc);
-
+			WhileStatement *pWhile = dynamic_cast<WhileStatement*>(pSrc);
 			if (pCond)  // Source is a conditional statement
 			{
 				if (OutletBranch == 1)  // YES/TRUE branch
@@ -748,6 +748,18 @@ void ApplicationManager::LoadAll(ifstream& InFile)
 				else if (OutletBranch == 2)  // NO/FALSE branch
 				{
 					pCond->setFalseBranch(pConn);
+				}
+			}
+
+			else if (pWhile)  // Source is a conditional statement
+			{
+				if (OutletBranch == 1)  // YES/TRUE branch
+				{
+					pWhile->setTrueBranch(pConn);
+				}
+				else if (OutletBranch == 2)  // NO/FALSE branch
+				{
+					pWhile->setFalseBranch(pConn);
 				}
 			}
 
@@ -764,11 +776,6 @@ void ApplicationManager::LoadAll(ifstream& InFile)
 		}
 	}
 }
-
-//void ApplicationManager::AddConnector(Connector* pConn)
-//{
-//	ConnList.push_back(pConn);
-//}
 
 
 

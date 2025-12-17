@@ -22,9 +22,7 @@ Read::Read(Point Lcorner, const string& var)
     UpdateStatementText();
 }
 
-Read::Read()
-{
-}
+
 
 
 void Read::SetPosition(Point p)
@@ -126,14 +124,22 @@ Statement* Read::Clone() const
 
 void Read::Save(ofstream& OutFile) const
 {
-    OutFile << "READ\t" << ID << "\t" << Center.x << "\t"
-        << Center.y << "\t" << VarName << "\n";
+    OutFile << "READ\t" << ID << "\t" << LeftCorner.x << "\t"
+        << LeftCorner.y << "\t" << VarName << "\n";
 }
 
 void Read::Load(ifstream& InFile)
 {
    
-    InFile >> ID >> Center.x >> Center.y >> VarName;
+    InFile >> ID >> LeftCorner.x >> LeftCorner.y >> VarName;
+    Inlet.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Inlet.y = LeftCorner.y;
+
+    Outlet.x = Inlet.x;
+    Outlet.y = LeftCorner.y + UI.READ_HI;
+    Center.x = LeftCorner.x + UI.READ_WDTH / 2;
+    Center.y = LeftCorner.y + UI.READ_HI / 2;
+    UpdateStatementText();
     
 }
 

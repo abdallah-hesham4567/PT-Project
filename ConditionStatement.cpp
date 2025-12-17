@@ -184,6 +184,10 @@ void ConditionStatement::Load(ifstream& InFile)
     OutletFalse.y = LeftCorner.y + UI.COND_HI;
 
     Condition = LHS + op + RHS;
+
+    Center.x = LeftCorner.x + UI.COND_WDTH / 2;
+    Center.y = LeftCorner.y + UI.COND_HI / 2;
+
     UpdateStatementText();
 }
 
