@@ -17,6 +17,8 @@ Start::Start(Point C)
     UpdateStatementText();
 }
 
+
+
 void Start::UpdateStatementText()
 {
     Text = "Start";
@@ -93,9 +95,17 @@ void Start::Save(ofstream& OutFile) const
 
 void Start::Load(ifstream& InFile)
 {
-    
-    InFile >> ID >> Center.x >> Center.y;
-    
+    int x, y;
+    InFile >> ID >> x >> y;
+    Center.x = x;
+    Center.y = y;
+    LCorner.x = Center.x - UI.START_END_WDTH / 2;
+    LCorner.y = Center.y - UI.START_END_HI / 2;
+    Inlet.x = Center.x;
+    Inlet.y = Center.y - UI.START_END_HI / 2;
+    Outlet.x = Center.x;
+    Outlet.y = Center.y + UI.START_END_HI / 2;
+    UpdateStatementText();
 }
 
 string Start::getStatementType() const

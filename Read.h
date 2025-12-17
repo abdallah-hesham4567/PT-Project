@@ -17,7 +17,7 @@ private:
 
 public:
     Read(Point Lcorner, const std::string& var = "");
-
+    Read();
     void setVarName(const std::string& v);
 
   

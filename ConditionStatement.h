@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Statement.h"
 #include "..\GUI\Output.h"
 #include <string>
@@ -7,8 +7,8 @@ using namespace std;
 class ConditionStatement : public Statement
 {
     string Condition;   // e.g., "x > 5"
-    Statement* TrueBranch;  // pointer to the statement for the true path
-    Statement* FalseBranch; // pointer to the statement for the false path (optional)
+    Connector* TrueBranch;  // لو الشرط صح
+    Connector* FalseBranch; // لو الشرط غلط
 
     Point LeftCorner;
     Point Inlet;
@@ -20,17 +20,17 @@ class ConditionStatement : public Statement
     string LHS;
 
 public:
-    ConditionStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS);
-
+    ConditionStatement(Point Lcorner, const string& LHS="", const string& OP="", const string& RHS="");
+    
     void setCondition(const string& cond);
     string getCondition() const { return Condition; }
 
     void UpdateStatementText();
 
-    void setTrueBranch(Statement* stmt) { TrueBranch = stmt; }
-    void setFalseBranch(Statement* stmt) { FalseBranch = stmt; }
-    Statement* getTrueBranch() const { return TrueBranch; }
-    Statement* getFalseBranch() const { return FalseBranch; }
+    void setTrueBranch(Connector* Conn) { TrueBranch = Conn; }
+    void setFalseBranch(Connector* Conn) { FalseBranch = Conn; }
+    Connector* getTrueBranch() const { return TrueBranch; }
+    Connector* getFalseBranch() const { return FalseBranch; }
 
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;

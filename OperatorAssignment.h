@@ -23,7 +23,8 @@ class OperatorAssignment : public Statement
 
 	public:
 
-	OperatorAssignment(Point Lcorner, string LeftHS, char Oper, string RHS1 , string RHS2 );
+	OperatorAssignment(Point Lcorner, string LeftHS="", char Oper=' ', string RHS1="", string RHS2="");
+	
 	void setLHS(const string& L);
 	void setRHS1(const string R);
 	void setRHS2(const string R);

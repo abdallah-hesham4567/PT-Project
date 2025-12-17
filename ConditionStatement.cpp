@@ -26,6 +26,7 @@ ConditionStatement::ConditionStatement(Point Lcorner, const string& LHS, const s
     UpdateStatementText();
 }
 
+
 void ConditionStatement::SetPosition(Point p)
 {
     // Center the diamond around the clicked point
@@ -148,19 +149,42 @@ void ConditionStatement::Save(ofstream& OutFile) const
 {
     string comparisonStr = OpToString(op); // Use the helper function
     OutFile << "COND\t" << ID << "\t"
-        << Center.x << "\t" << Center.y << "\t"
-        << LHS << "\t" << comparisonStr << "\t"<<RHS<<endl;
+        << Inlet.x << "\t" << Inlet.y << "\t"
+        << LHS << "\t" << comparisonStr << "\t" << RHS << endl;
 }
 
 
 void ConditionStatement::Load(ifstream& InFile)
 {
-   
-        string comparisonStr;
-        InFile >> ID >> Center.x >> Center.y
-            >> LHS >> comparisonStr >> RHS;
+    string opStr;
+    InFile >> ID >> Inlet.x >> Inlet.y >> LHS >> opStr >> RHS;
 
 
+    // Convert string back to operator
+    if (opStr == "EQL")
+        op = "==";
+    else if (opStr == "NOTEQL")
+        op = "!=";
+    else if (opStr == "GRT")
+        op = ">";
+    else if (opStr == "LSS")
+        op = "<";
+    else if (opStr == "GRTEQL")
+        op = ">=";
+    else if (opStr == "LSSEQL")
+        op = "<=";
+
+    LeftCorner.x = Inlet.x - UI.COND_WDTH / 2;
+    LeftCorner.y = Inlet.y;
+
+    OutletTrue.x = LeftCorner.x;
+    OutletTrue.y = LeftCorner.y + UI.COND_HI;
+
+    OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
+    OutletFalse.y = LeftCorner.y + UI.COND_HI;
+
+    Condition = LHS + op + RHS;
+    UpdateStatementText();
 }
 
 

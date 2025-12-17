@@ -22,7 +22,7 @@ class WhileStatement : public Statement
     Point Center;
 
 public:
-    WhileStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS);
+    WhileStatement(Point Lcorner, const string& LHS="", const string& OP="", const string& RHS="");
 
 
     void setCondition(const string& cond);

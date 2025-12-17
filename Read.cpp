@@ -22,6 +22,11 @@ Read::Read(Point Lcorner, const string& var)
     UpdateStatementText();
 }
 
+Read::Read()
+{
+}
+
+
 void Read::SetPosition(Point p)
 {
     LeftCorner.x = p.x - UI.READ_WDTH / 2;
@@ -127,7 +132,7 @@ void Read::Save(ofstream& OutFile) const
 
 void Read::Load(ifstream& InFile)
 {
-    int x, y;
+   
     InFile >> ID >> Center.x >> Center.y >> VarName;
     
 }

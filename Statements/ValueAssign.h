@@ -31,7 +31,7 @@ private:
 
 public:
 	ValueAssign(Point Lcorner, string LeftHS = "", double RightHS = 0);
-
+	
 	void setLHS(const string& L);
 	void setRHS(double R);
 	virtual void SetPosition(Point p);

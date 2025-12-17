@@ -94,7 +94,15 @@ void End::Save(ofstream& OutFile) const
 void End::Load(ifstream& InFile)
 {
     int x, y;
-    InFile >> ID >> Center.x >> Center.y;
-    
+    InFile >> ID >> x >> y;
+    Center.x = x;
+    Center.y = y;
+    LCorner.x = Center.x - UI.START_END_WDTH / 2;
+    LCorner.y = Center.y - UI.START_END_HI / 2;
+    Inlet.x = Center.x;
+    Inlet.y = Center.y - UI.START_END_HI / 2;
+    Outlet.x = Center.x;
+    Outlet.y = Center.y + UI.START_END_HI / 2;
+    UpdateStatementText();
 }
 

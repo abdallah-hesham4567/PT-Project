@@ -1,4 +1,4 @@
-#ifndef START_STATEMENT_H
+﻿#ifndef START_STATEMENT_H
 #define START_STATEMENT_H
 
 #include "Statement.h"
@@ -16,7 +16,7 @@ private:
 
 public:
     Start(Point C);
-
+    Start();               // Load constructor ✅
     
 
     // connectors helpers

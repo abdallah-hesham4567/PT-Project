@@ -98,8 +98,8 @@ public:
 	bool Validate() const;
 	void RunSimulation();
 
-	void LoadAll(const string& filename);
-	Statement* GetStatementWithID(int id) const;
+	void LoadAll(ifstream& InFile);
+		Statement* GetStatementWithID(int id) const;
 	bool ApplicationManager::InDrawingArea(Point p, int w, int h) const
 	{
 		return (p.x >= 0 && p.x + w <= UI.DrawingAreaWidth && p.y >= UI.ToolBarHeight && p.y + h <= UI.height - UI.StatusBarHeight);

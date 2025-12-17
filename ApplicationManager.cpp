@@ -19,6 +19,8 @@
 #include "Paste.h"
 #include "Edit.h"
 #include "ActionSave.h"
+#include "VariableAssign.h"
+#include "ActionLoad.h"
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -299,9 +301,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new ActionSave(this);
 	break;
 
-	//case LOAD:
-	//	pAct = new Load(this);
-	//	break;
+	case LOAD:
+		pAct = new ActionLoad(this);
+		break;
 
 	case SWITCH_DSN_MODE:
 	{
@@ -668,117 +670,105 @@ ApplicationManager::~ApplicationManager()
 
 
 
-
-void ApplicationManager::LoadAll(const string& filename)
+void ApplicationManager::LoadAll(ifstream& InFile)
 {
-	ifstream InFile(filename);
-	if (!InFile.is_open())
-	{
-		// Show error message
-		pOut->PrintMessage("Error: Could not open file " + filename);
-		return;
-	}
 
-	// Clear existing statements
-	pOut->ClearDrawArea();
-	
-	// Load statement count
+	// Clear existing flowchart first
+	ClearAll();
+
+	// Read number of statements
 	int statCount;
 	InFile >> statCount;
 
-	// Map to store statements by ID
-	//map<int, Statement*> statMap;
-
-	//// Load all statements
-	//for (int i = 0; i < statCount; i++)
-	//{
-	//	string Type;
-	//	InFile >> Type;
-
-	//	Statement* S = nullptr;
-
-	//	if (Type == "STRT")
-	//		S = new Start(InFile);
-
-	//	else if (Type == "READ")
-	//		S = new Read(InFile);
-
-	//	else if (Type == "WRITE")
-	//		S = new Write(InFile);
-
-	//	else if (Type == "DECLARE")
-	//		S = new DeclareStatement(InFile);
-
-	//	else if (Type == "OP_ASSIGN")
-	//		S = new OperatorAssignment(InFile);
-
-	//	else if (Type == "COND")
-	//		S = new ConditionStatement(InFile);
-
-	//	else if (Type == "END")
-	//		S = new End(InFile);
-
-	//	if (S)
-	//	{
-	//		AddStatement(S);
-	//	}
-	//}
-	// Load connector count
-	int ConnCount;
-	InFile >> ConnCount;
-
-	for (int i = 0; i < ConnCount; i++)
+	// Load all statements
+	for (int i = 0; i < statCount; i++)
 	{
-		int srcID, dstID, branch;
-		InFile >> srcID >> dstID >> branch;
+		string StatType;
+		InFile >> StatType;
 
-		Statement* s = GetStatementWithID(srcID);
-		Statement* d = GetStatementWithID(dstID);
+		Statement* pStat = nullptr;
+		Point p (0,0);
 
-		if (s && d)
+		// Create statement using load constructor (pass ifstream)
+		if (StatType == "STRT")
+			pStat = new Start(p);
+		else if (StatType == "END")
+			pStat = new End(p);
+		else if (StatType == "DECLARE")
+			pStat = new DeclareStatement(p);
+		else if (StatType == "VALUE_ASSIGN")
+			pStat = new ValueAssign(p);
+		else if (StatType == "VAR_ASSIGN")
+			pStat = new VariableAssign(p);
+		else if (StatType == "OP_ASSIGN")
+			pStat = new OperatorAssignment(p);
+		else if (StatType == "COND")
+			pStat = new ConditionStatement(p);
+		else if (StatType == "WHILE")
+			pStat = new WhileStatement(p);
+		else if (StatType == "READ")
+			pStat = new Read(p);
+		else if (StatType == "WRITE")
+			pStat = new Write(p);
+
+		if (pStat)
 		{
-			Connector* pConn = new Connector(s, d, branch);
+			pStat->Load(InFile);
+			AddStatement(pStat);
+		}
+		
+	}
 
-			// Set output connector according to branch
-			ConditionStatement* cond = dynamic_cast<ConditionStatement*>(s);
-			if (cond)
+	// Read number of connectors
+	int connCount;
+	InFile >> connCount;
+
+	// Load all connectors
+	for (int i = 0; i < connCount; i++)
+	{
+		int SrcID, DstID, OutletBranch;
+		InFile >> SrcID >> DstID >> OutletBranch;
+
+		Statement* pSrc = GetStatementWithID(SrcID);
+		Statement* pDst = GetStatementWithID(DstID);
+
+		if (pSrc && pDst)
+		{
+			Connector* pConn = new Connector(pSrc, pDst, OutletBranch);
+
+			// Check if source is a conditional statement
+			ConditionStatement* pCond = dynamic_cast<ConditionStatement*>(pSrc);
+
+			if (pCond)  // Source is a conditional statement
 			{
-				//cond->SetBranchConnector(pConn, branch);
-			}
-			else
-			{
-				//s->SetOutConn(pConn);
+				if (OutletBranch == 1)  // YES/TRUE branch
+				{
+					pCond->setTrueBranch(pConn);
+				}
+				else if (OutletBranch == 2)  // NO/FALSE branch
+				{
+					pCond->setFalseBranch(pConn);
+				}
 			}
 
+			else  // Source is a normal statement
+			{
+				pSrc->SetOutConn(pConn);
+			}
+
+			// Set input connector for destination
+			pDst->SetInConn(pConn);
+
+			// Add to connector list
 			AddConnector(pConn);
 		}
 	}
-
-	InFile.close();
-
-	// Update display
-	UpdateInterface();
 }
 
 //void ApplicationManager::AddConnector(Connector* pConn)
 //{
 //	ConnList.push_back(pConn);
 //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -793,6 +783,21 @@ Statement* ApplicationManager::GetStatementWithID(int id) const
 	}
 	return nullptr;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Connector** ApplicationManager::GetOutConnectors(Statement* pStat) const

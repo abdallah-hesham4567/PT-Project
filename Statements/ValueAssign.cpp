@@ -31,6 +31,7 @@ ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS)
 }
 
 
+
 void ValueAssign::setLHS(const string& L)
 {
 
@@ -144,16 +145,24 @@ bool ValueAssign::IsPointInside(Point p) const
 
 void ValueAssign::Save(ofstream& OutFile) const
 {
-	OutFile << "DECLARE\t" << ID << "\t"
-		<< Center.x << "\t" << Center.y << "\t"
-		<< LHS << endl;
+	OutFile << "VALUE_ASSIGN\t" << ID << "\t"
+		<< LeftCorner.x << "\t" << LeftCorner.y << "\t"
+		<< LHS <<"\t" << RHS << endl;
 }
 
 void ValueAssign::Load(ifstream& InFile)
 {
 
-	InFile >> ID >>  Center.x >>Center.y >> LHS;
 	
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> LHS >> RHS;
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Inlet.y = LeftCorner.y;
+
+	Outlet.x = Inlet.x;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
+	UpdateStatementText();
 }
 
 

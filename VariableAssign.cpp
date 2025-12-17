@@ -112,19 +112,27 @@ int VariableAssign::GetHeight() const
 
 void VariableAssign::Save(ofstream& OutFile) const
 {
-	OutFile << "DECLARE\t" << ID << "\t"
-		<< Center.x << "\t" << Center.y << "\t"
-		<< LHS << endl;
+	OutFile << "VAR_ASSIGN\t" << ID << "\t"
+		<< LeftCorner.x << "\t" << LeftCorner.y << "\t"
+		<< LHS << "\t" << RHS << endl;
 }
 
 void VariableAssign::Load(ifstream& InFile)
 {
-	InFile >> ID >> Center.x >> Center.y >> LHS;
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> LHS >> RHS;
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Inlet.y = LeftCorner.y;
+
+	Outlet.x = Inlet.x;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
+	UpdateStatementText();
 }
 
 string VariableAssign::getStatementType() const
 {
-	return "VALASSIGN";
+	return "VAR_ASSIGN";
 }
 void VariableAssign::SetPosition(Point p)
 {

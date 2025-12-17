@@ -15,7 +15,7 @@ private:
 
 public:
     End(Point C);
-
+    End() {}
     virtual void Draw(Output* pOut) const;
     Connector* getInputConnector() const { return pInConn; }
     void setInputConnector(Connector* c) { pInConn = c; }
@@ -33,6 +33,7 @@ public:
 	virtual Point GetPosition() const;
 	virtual int GetWidth() const;
 	virtual int GetHeight() const;
+    virtual void setCenter(Point c) { Center = c; }
 
 };
 

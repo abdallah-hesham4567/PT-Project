@@ -24,6 +24,7 @@ private:
 	virtual void UpdateStatementText();
 public:
 	VariableAssign(Point Lcorner, string LeftHS = "", string RightHS = "");
+	
 	void setLHS(const string& L);
 	void setRHS(const string& R);
 

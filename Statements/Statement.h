@@ -16,7 +16,7 @@ protected:
 	bool Selected;	//true if the statement is selected on the folwchart
 	static int NextID;
 	Connector* pOutconn;
-
+	Connector* pInConn;
 	virtual void UpdateStatementText() = 0;	//is called when any part of the stat. is edited	
 
 	/// Add more parameters if needed.
@@ -25,7 +25,10 @@ public:
 	Statement();
 	
 
-	
+	virtual void SetInConn(Connector* pConn)
+	{
+		pInConn = pConn;
+	}
 
     // Get outlet point for connectors (branch: 0=default, 1=YES, 2=NO)
     virtual Point GetOutletPoint(int branch = 0) const = 0;
@@ -85,6 +88,8 @@ public:
 	Connector* GetIncomingConnector(int index);//returns a specific incoming connector given it's index
 	virtual Statement* Clone() const =0 ;
 	bool IsOverlapping(Point p, int w, int h) const;
+	void setid(int x) { ID = x; }
+	virtual void setCenter(Point c) {}
 
 };
 

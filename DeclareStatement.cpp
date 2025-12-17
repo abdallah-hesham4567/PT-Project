@@ -137,16 +137,30 @@ Statement* DeclareStatement::Clone() const
 
 void DeclareStatement::Save(ofstream& OutFile) const
 {
-    OutFile << "DECLARE\t" << ID << "\t" << Center.x << "\t"
-        << Center.y << "\t" << VariableName << "\n";
+    OutFile << "DECLARE\t" << ID << "\t" << LeftCorner.x << "\t"
+        << LeftCorner.y << "\t" << VariableName << "\t" << HasValue << "\t";
+    if (HasValue) OutFile  << Value << "\n";
+    else
+        OutFile << "\n";
 }
-
 
 void DeclareStatement::Load(ifstream& InFile)
 {
-    InFile >> ID >> Center.x >> Center.y >> VariableName;
-    
+    InFile >> ID >> LeftCorner.x >> LeftCorner.y >> VariableName >> HasValue;
+    if (HasValue)
+        InFile >>Value;
+
+    Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+    Inlet.y = LeftCorner.y;
+
+    Outlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+    Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+    Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+    Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
+
+    UpdateStatementText();
 }
+
 
 
 

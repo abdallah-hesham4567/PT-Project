@@ -15,8 +15,8 @@ class DeclareStatement : public Statement
 	Point Center;
 
 public:
-    DeclareStatement(Point Lcorner, const string& var, bool hasVal = false, double val = 0);
-
+    DeclareStatement(Point Lcorner, const string& var ="", bool hasVal = false, double val = 0);
+    
     void setVariable(const string& var);
     void setValue(double val);
     string getVariable() const { return VariableName; }

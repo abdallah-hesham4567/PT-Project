@@ -17,7 +17,7 @@ private:
 
 public:
     Write(Point Lcorner, const std::string& expr = "");
-
+   
     void setExpr(const std::string& e);
 
     

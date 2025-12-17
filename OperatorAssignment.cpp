@@ -154,30 +154,37 @@ void OperatorAssignment::Save(ofstream& OutFile) const
         operatorStr = "DIV";
 
     OutFile << "OP_ASSIGN\t" << ID << "\t"
-        << Center.x << "\t" << Center.y << "\t"
+        << LeftCorner.x << "\t" << LeftCorner.y << "\t"
         << LHS << "\t" << RHS1 << "\t" << operatorStr << "\t"<<RHS2 <<endl;
 
    
 }
 
-
 void OperatorAssignment::Load(ifstream& InFile)
 {
-    string operatorStr;
-    InFile >> ID >> Center.x >> Center.y
-        >> LHS >> RHS1 >> operatorStr >> RHS2;
+ 
+    string opStr;
+    InFile >> ID >> LeftCorner.x >> LeftCorner.y >> LHS >> RHS1 >> opStr >> RHS2;
 
-    // Convert STRING to ENUM
-    if (operatorStr == "ADD")
-        Opp = ADD_OP;
-    else if (operatorStr == "SUB")
-        Opp = SUB_OP;
-    else if (operatorStr == "MUL")
-        Opp = MUL_OP;
-    else if (operatorStr == "DIV")
-        Opp = DIV_OP;
 
-   
+    // Convert string back to operator
+   if (opStr == "ADD")
+       Op = '+';
+   else if (opStr == "SUB")
+       Op = '-';
+   else if (opStr == "MUL")
+       Op = '*';
+   else if (opStr == "DIV")
+       Op = '/';
+   Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+   Inlet.y = LeftCorner.y;
+
+   Outlet.x = Inlet.x;
+   Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+   Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+   Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
+   UpdateStatementText();
+
 }
 
 

@@ -7,10 +7,15 @@ using namespace std;
 
 WhileStatement::WhileStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS)
 {
+
     LeftCorner = Lcorner;
-    Condition = LHS +OP+RHS;
+    Condition = LHS + OP + RHS;
     TrueBranch = nullptr;
     FalseBranch = nullptr;
+    this->RHS = RHS;
+    this->LHS = LHS;
+    op = OP;
+
 
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
     Inlet.y = LeftCorner.y;
@@ -21,10 +26,7 @@ WhileStatement::WhileStatement(Point Lcorner, const string& LHS, const string& O
     OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
     OutletFalse.y = LeftCorner.y + UI.COND_HI;
     Center.x = LeftCorner.x + UI.COND_WDTH / 2;
-    Center.y = LeftCorner.y + UI.COND_HI/2;
-    this->LHS = LHS;
-    this->RHS = RHS;
-    op = OP;
+    Center.y = LeftCorner.y + UI.COND_HI / 2;
     UpdateStatementText();
 }
 
@@ -117,7 +119,10 @@ Point WhileStatement::GetOutletPoint(int branch) const
 
 Point WhileStatement::GetInletPoint() const
 {
-    return Inlet.x; // Top point of diamond
+    Point inlet;
+    inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
+    inlet.y = LeftCorner.y;
+    return inlet; // Top point of diamond
 }
 
 int WhileStatement::GetExpectedOutConnCount() const
@@ -133,7 +138,6 @@ bool WhileStatement::IsConditional() const
 bool WhileStatement::IsPointInside(Point p) const
 {
 
-
     float dx = abs(p.x - Center.x);
     float dy = abs(p.y - Center.y);
 
@@ -147,36 +151,49 @@ void WhileStatement::Save(ofstream& OutFile) const
 {
     string comparisonStr = OpToString(op); // Use the helper function
 
-    OutFile << "COND\t" << ID << "\t"
-        << Center.x << "\t" << Center.y << "\t"
+    OutFile << "WHILE\t" << ID << "\t"
+        << Inlet.x << "\t" << Inlet.y << "\t"
         << LHS << "\t" << comparisonStr << "\t" << RHS<<endl;
 }
 
 void WhileStatement::Load(ifstream& InFile)
 {
-    string comparisonStr;
-    InFile >> ID >> Center.x >> Center.y
-        >> LHS >> comparisonStr >> RHS;
-
-    // Convert STRING to ENUM
-    if (comparisonStr == "EQL")
-        Comp = EQUAL;
-    else if (comparisonStr == "NOTEQL")
-        Comp = NOT_EQUAL;
-    else if (comparisonStr == "GRT")
-        Comp = GREATER;
-    else if (comparisonStr == "LSS")
-        Comp = LESS;
-    else if (comparisonStr == "GRTEQL")
-        Comp = GREATER_OR_EQUAL;
-    else if (comparisonStr == "LSSEQL")
-        Comp = LESS_OR_EQUAL; 
     
+    string opStr;
+    InFile >> ID >> Inlet.x >> Inlet.y >> LHS >> opStr >> RHS;
+
+
+    // Convert string back to operator
+    if (opStr == "EQL")
+        op = "==";
+    else if (opStr == "NOTEQL")
+        op = "!=";
+    else if (opStr == "GRT")
+        op = ">";
+    else if (opStr == "LSS")
+        op = "<";
+    else if (opStr == "GRTEQL")
+        op = ">=";
+    else if (opStr == "LSSEQL")
+        op = "<=";
+
+    LeftCorner.x = Inlet.x - UI.COND_WDTH / 2;
+    LeftCorner.y = Inlet.y;
+   
+
+    OutletTrue.x = LeftCorner.x;
+    OutletTrue.y = LeftCorner.y + UI.COND_HI;
+
+    OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
+    OutletFalse.y = LeftCorner.y + UI.COND_HI;
+    
+    Condition = LHS + op + RHS;
+    UpdateStatementText();
 }
 
 
 string WhileStatement::getStatementType() const
 {
-    return "COND";
+    return "WHILE";
 }
 
