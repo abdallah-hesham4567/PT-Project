@@ -6,7 +6,7 @@ Start::Start(Point C)
     Center = C;
     pOutConn = NULL;
 
-    // set inlet (top) and outlet (bottom) of the oval
+    
    LCorner.x = Center.x - UI.START_END_WDTH /2;
    LCorner.y = Center.y - UI.START_END_HI / 2;
     Inlet.x = Center.x;
@@ -17,6 +17,22 @@ Start::Start(Point C)
     UpdateStatementText();
 }
 
+void Start::SetPosition(Point p)
+{
+    Center = p;
+    pInConn = NULL;
+
+    // inlet is top of the oval (where connection will arrive)
+    Inlet.x = Center.x;
+    Inlet.y = Center.y - UI.START_END_HI / 2;
+
+    Outlet.x = Center.x;
+    Outlet.y = Center.y + UI.START_END_HI / 2;
+    LCorner.x = Center.x - UI.START_END_WDTH / 2;
+    LCorner.y = Center.y - UI.START_END_HI / 2;
+
+    UpdateStatementText();
+}
 
 
 void Start::UpdateStatementText()
@@ -26,7 +42,7 @@ void Start::UpdateStatementText()
 
 void Start::Draw(Output* pOut) const
 {
-    // DrawStart expects center point, width, height, text, selected
+    
     pOut->DrawStart(LCorner, UI.START_END_WDTH, UI.START_END_HI, Text, Selected);
 }
 
@@ -38,11 +54,9 @@ void Start::Edit(Input* pIn, Output* pOut)
 
 Statement* Start::Clone() const
 {
-    //Start Statement cannot be cloned
-    ApplicationManager* pManager;
-    Output* pOut = pManager->GetOutput();
-    pOut->PrintMessage("Start statement cannot be cloned.");
-    return nullptr;
+    Start* newStart = new Start(*this);
+    newStart->pOutConn = nullptr; // Reset outgoing connector for the cloned statement
+    return newStart;
 }
 
 Point Start::GetPosition() const
@@ -63,19 +77,17 @@ int Start::GetHeight() const
 
 Point Start::GetOutletPoint(int branch) const
 {
-    return Point(Outlet.x,
-        Outlet.y);
+    return Outlet;
 }
 
 Point Start::GetInletPoint() const
 {
-    return Point(Inlet.x,
-        Inlet.y);
+    return Inlet;
 }
 
 int Start::GetExpectedOutConnCount() const
 {
-    return 1; // Normal statement has 1 output
+    return 1;                                      // Normal statement has 1 output
 }
 
 bool Start::IsPointInside(Point p) const
@@ -101,15 +113,15 @@ void Start::Load(ifstream& InFile)
     Center.y = y;
     LCorner.x = Center.x - UI.START_END_WDTH / 2;
     LCorner.y = Center.y - UI.START_END_HI / 2;
+
     Inlet.x = Center.x;
     Inlet.y = Center.y - UI.START_END_HI / 2;
+
     Outlet.x = Center.x;
     Outlet.y = Center.y + UI.START_END_HI / 2;
+
     UpdateStatementText();
 }
 
-string Start::getStatementType() const
-{
-    return "STRT";
-}
+
 

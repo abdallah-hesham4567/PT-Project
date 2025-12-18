@@ -17,6 +17,7 @@ Read::Read(Point Lcorner, const string& var)
 
     Outlet.x = Inlet.x;
     Outlet.y = LeftCorner.y + UI.READ_HI;
+
 	Center.x = LeftCorner.x + UI.READ_WDTH / 2;
 	Center.y = LeftCorner.y + UI.READ_HI / 2;
     UpdateStatementText();
@@ -28,7 +29,7 @@ Read::Read(Point Lcorner, const string& var)
 void Read::SetPosition(Point p)
 {
     LeftCorner.x = p.x - UI.READ_WDTH / 2;
-    LeftCorner.y = p.y;
+    LeftCorner.y = p.y- UI.READ_HI / 2;
 
     Inlet.x = LeftCorner.x + UI.READ_WDTH / 2;
     Inlet.y = LeftCorner.y;
@@ -84,27 +85,25 @@ void Read::Draw(Output* pOut) const
 void Read::UpdateStatementText()
 {
     ostringstream T;
-    T << "read " << VarName;
+    T << "Read " << VarName;
     Text = T.str();
 }
 Point Read::GetOutletPoint(int branch) const
 {
 
     // Rectangle - outlet at bottom center
-    return Point(LeftCorner.x + UI.READ_WDTH / 2,
-        LeftCorner.y + UI.READ_HI);
+    return Outlet;
 }
 
 Point Read::GetInletPoint() const
 {
     // Rectangle - inlet at top center
-    return Point(LeftCorner.x + UI.READ_WDTH / 2,
-        LeftCorner.y);
+    return Inlet;
 }
 
 int Read::GetExpectedOutConnCount() const
 {
-    return 1; // Normal statement has 1 output
+    return 1;                   // Normal statement has 1 output
 }
 
 bool Read::IsPointInside(Point p) const
@@ -137,7 +136,7 @@ Statement* Read::Clone() const
 	return newRead;
 }
 
-void Read::Save(ofstream& OutFile) const
+void Read::Save(ofstream& OutFile) const      //save by Lcorner
 {
     OutFile << "READ\t" << ID << "\t" << LeftCorner.x << "\t"
         << LeftCorner.y << "\t" << VarName << "\n";
@@ -147,13 +146,16 @@ void Read::Load(ifstream& InFile)
 {
    
     InFile >> ID >> LeftCorner.x >> LeftCorner.y >> VarName;
+
     Inlet.x = LeftCorner.x + UI.READ_WDTH / 2;
     Inlet.y = LeftCorner.y;
 
     Outlet.x = Inlet.x;
     Outlet.y = LeftCorner.y + UI.READ_HI;
+
     Center.x = LeftCorner.x + UI.READ_WDTH / 2;
     Center.y = LeftCorner.y + UI.READ_HI / 2;
+
     UpdateStatementText();
     
 }

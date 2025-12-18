@@ -16,29 +16,29 @@ private:
 
 public:
     Start(Point C);
-    Start();               // Load constructor ✅
     
-
-    // connectors helpers
-    //Connector* getOutputConnector() const { return pOutConn; }
-    //void setOutputConnector(Connector* c) { pOutConn = c; }
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
+
     virtual bool IsPointInside(Point p) const;
 
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
-    string getStatementType() const;
+    string getStatementType() const {
+        return "STRT";
+    }
+
     virtual void Edit(Input* pIn, Output* pOut);
     virtual Statement* Clone() const;
 
-    virtual void SetPosition(Point p) {}
+    virtual void SetPosition(Point p);
 	virtual Point GetPosition() const;
 	virtual int GetWidth() const;
 	virtual int GetHeight() const;
-    virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut) {}
+
+    virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut) {} // we donot need it but it is pure virtual
 };
 
 #endif

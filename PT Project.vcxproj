@@ -291,7 +291,6 @@
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="End.cpp" />
-    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="GUI\Input.cpp" />
     <ClCompile Include="GUI\Output.cpp" />
     <ClCompile Include="HelperFn.cpp" />
@@ -307,7 +306,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="ToCPP.cpp" />
     <ClCompile Include="Validate.cpp" />
     <ClCompile Include="VariableAssign.cpp" />
     <ClCompile Include="WhileStatement.cpp" />
@@ -358,7 +356,6 @@
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Edit.h" />
     <ClInclude Include="End.h" />
-    <ClInclude Include="Exit.h" />
     <ClInclude Include="GUI\Input.h" />
     <ClInclude Include="GUI\Output.h" />
     <ClInclude Include="GUI\UI_Info.h" />
@@ -371,7 +368,6 @@
     <ClInclude Include="Start.h" />
     <ClInclude Include="Statements\ValueAssign.h" />
     <ClInclude Include="Statements\Statement.h" />
-    <ClInclude Include="ToCPP.h" />
     <ClInclude Include="Validate.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableAssign.h" />

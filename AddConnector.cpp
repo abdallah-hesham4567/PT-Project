@@ -64,19 +64,24 @@ void AddConnector::ReadActionParameters()
 		}
 		else
 		{
-			// First connector → ask user
-			pOut->PrintMessage("Source is conditional. Select outlet branch: 1 for TRUE, 2 for FALSE");
+			// First connector → FORCE valid input
+			string branchStr;
 
-			string branchStr = pIn->GetString(pOut);
-
-			if (branchStr == "1" || branchStr == "2")
-				OutletBranch = stoi(branchStr);
-			else
+			do
 			{
-				pOut->PrintMessage("Invalid branch number. Using default (1).");
-				OutletBranch = 1;
-			}
+				pOut->PrintMessage(
+					"Source is conditional. Choose branch: 1 = TRUE, 2 = FALSE"
+				);
+				branchStr = pIn->GetString(pOut);
+
+				if (branchStr != "1" && branchStr != "2")
+					pOut->PrintMessage("Invalid input! Please enter 1 or 2 only.");
+
+			} while (branchStr != "1" && branchStr != "2");
+
+			OutletBranch = stoi(branchStr);
 		}
+		
 	}
 
 	else

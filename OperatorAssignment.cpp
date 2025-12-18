@@ -9,8 +9,6 @@ OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, char Oper, 
 	RHS1 = R1;
 	Op = Oper;
 	RHS2 = R2;
-	
-
 
     UpdateStatementText();
     LeftCorner = Lcorner;
@@ -21,6 +19,7 @@ OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, char Oper, 
 
     Outlet.x = Inlet.x;
     Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+
 	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
@@ -28,12 +27,14 @@ OperatorAssignment::OperatorAssignment(Point Lcorner, string LeftHS, char Oper, 
 void OperatorAssignment::SetPosition(Point p)
 {
     LeftCorner.x = p.x - UI.ASSGN_WDTH / 2;
-    LeftCorner.y = p.y;
+    LeftCorner.y = p.y - UI.ASSGN_HI /2;
 
     Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
     Inlet.y = LeftCorner.y;
+
     Outlet.x = Inlet.x;
     Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+
     Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
     Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
@@ -118,15 +119,19 @@ void OperatorAssignment::Edit(Input* pIn, Output* pOut)
     pOut->PrintMessage("Enter new LHS variable name:");
     string newLHS = pIn->GetVariable(pOut);
     setLHS(newLHS);
+
     pOut->PrintMessage("Enter new first operand (RHS1):");
     string newRHS1 = pIn->GetVariableOrVal(pOut);
     setRHS1(newRHS1);
+
     pOut->PrintMessage("Enter new operator (+, -, *, /):");
     char newOp = pIn->GetArithOperator(pOut);
     setOp(newOp);
+
     pOut->PrintMessage("Enter new second operand (RHS2):");
     string newRHS2 = pIn->GetVariableOrVal(pOut);
     setRHS2(newRHS2);
+
 	pOut->ClearStatusBar();
 }
 
@@ -147,20 +152,18 @@ void OperatorAssignment::UpdateStatementText()
 Point OperatorAssignment::GetOutletPoint(int branch) const
 {
     // Rectangle - outlet at bottom center
-    return Point(Outlet.x,
-        Outlet.y);
+    return Outlet;
 }
 
 Point OperatorAssignment::GetInletPoint() const
 {
     /// Rectangle - inlet at bottom center
-    return Point(Inlet.x,
-        Inlet.y);
+    return Inlet;
 }
 
 int OperatorAssignment::GetExpectedOutConnCount() const
 {
-    return 1; // Normal statement has 1 output
+    return 1;                      // Normal statement has 1 output
 }
 
 bool OperatorAssignment::IsPointInside(Point p) const
@@ -174,7 +177,7 @@ bool OperatorAssignment::IsPointInside(Point p) const
 
 void OperatorAssignment::Save(ofstream& OutFile) const
 {
-    // Convert ENUM to STRING
+    
     string operatorStr;
     if (Op == '+')
         operatorStr = "ADD";
@@ -184,9 +187,9 @@ void OperatorAssignment::Save(ofstream& OutFile) const
         operatorStr = "MUL";
     else if (Op == '/')
         operatorStr = "DIV";
-
+    // save by left corner
     OutFile << "OP_ASSIGN\t" << ID << "\t"
-        << LeftCorner.x << "\t" << LeftCorner.y << "\t"
+        << LeftCorner.x << "\t" << LeftCorner.y << "\t"            
         << LHS << "\t" << RHS1 << "\t" << operatorStr << "\t"<<RHS2 <<endl;
 
    
@@ -199,7 +202,6 @@ void OperatorAssignment::Load(ifstream& InFile)
     InFile >> ID >> LeftCorner.x >> LeftCorner.y >> LHS >> RHS1 >> opStr >> RHS2;
 
 
-    // Convert string back to operator
    if (opStr == "ADD")
        Op = '+';
    else if (opStr == "SUB")
@@ -208,68 +210,16 @@ void OperatorAssignment::Load(ifstream& InFile)
        Op = '*';
    else if (opStr == "DIV")
        Op = '/';
+
    Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
    Inlet.y = LeftCorner.y;
 
    Outlet.x = Inlet.x;
    Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+
    Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
    Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
+
    UpdateStatementText();
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//bool OperatorAssignment::ValidateRHS(string RHS)
-//{
-//    // Remove spaces
-//    RHS.erase(remove_if(RHS.begin(), RHS.end(), ::isspace), RHS.end());
-//
-//    // Count operators
-//    int opCount = 0;
-//    char op = 0;
-//    int opPos = -1;
-//
-//    for (int i = 0; i < RHS.size(); i++)
-//    {
-//		if (RHS[i] == '+' || RHS[i] == '-' || RHS[i] == '*' || RHS[i] == '/')  
-//        {
-//            opCount++;
-//            op = RHS[i];
-//            opPos = i;
-//        }
-//    }
-//
-//    // Case 1: No operator → must be variable or value
-//    if (opCount == 0)
-//        return IsVariable(RHS) || IsValue(RHS);
-//
-//    // Case 2: More than 1 operator → invalid
-//    if (opCount > 1)
-//        return false;
-//
-//    // Case 3: Exactly one operator
-//    string left = RHS.substr(0, opPos);
-//    string right = RHS.substr(opPos + 1);
-//
-//    if (left.empty() || right.empty())
-//        return false;
-//
-//    return (IsVariable(left) || IsValue(left)) &&
-//        (IsVariable(right) || IsValue(right));
-//}
-//

@@ -173,14 +173,12 @@
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="End.cpp" />
-    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="ActionLoad.cpp" />
     <ClCompile Include="OperatorAssignment.cpp" />
     <ClCompile Include="Paste.cpp" />
     <ClCompile Include="Read.cpp" />
     <ClCompile Include="Run.cpp" />
     <ClCompile Include="Start.cpp" />
-    <ClCompile Include="ToCPP.cpp" />
     <ClCompile Include="Validate.cpp" />
     <ClCompile Include="VariableAssign.cpp" />
     <ClCompile Include="WhileStatement.cpp" />
@@ -295,19 +293,18 @@
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Edit.h" />
     <ClInclude Include="End.h" />
-    <ClInclude Include="Exit.h" />
     <ClInclude Include="ActionLoad.h" />
     <ClInclude Include="OperatorAssignment.h" />
     <ClInclude Include="Paste.h" />
     <ClInclude Include="Read.h" />
     <ClInclude Include="Run.h" />
     <ClInclude Include="Start.h" />
-    <ClInclude Include="ToCPP.h" />
     <ClInclude Include="Validate.h" />
     <ClInclude Include="VariableAssign.h" />
     <ClInclude Include="WhileStatement.h" />
     <ClInclude Include="Write.h" />
     <ClInclude Include="ActionSave.h" />
+    <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

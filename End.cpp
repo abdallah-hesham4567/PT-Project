@@ -18,6 +18,30 @@ End::End(Point C)
     UpdateStatementText();
 }
 
+ void End::SetPosition(Point p)
+{
+     Center = p;
+     pInConn = NULL;
+
+     // inlet is top of the oval (where connection will arrive)
+     Inlet.x = Center.x;
+     Inlet.y = Center.y - UI.START_END_HI / 2;
+
+     Outlet.x = Center.x;
+     Outlet.y = Center.y + UI.START_END_HI / 2;
+     LCorner.x = Center.x - UI.START_END_WDTH / 2;
+     LCorner.y = Center.y - UI.START_END_HI / 2;
+
+     UpdateStatementText();
+}
+
+
+
+
+
+
+
+
 void End::UpdateStatementText()
 {
     Text = "End";
@@ -63,11 +87,9 @@ void End::Edit(Input* pIn, Output* pOut)
 
 Statement* End::Clone() const
 {
-	//End statement cannot be cloned
-    ApplicationManager* pManager;
-    Output* pOut = pManager->GetOutput();
-	pOut->PrintMessage("End statement cannot be cloned.");
-    return nullptr;
+    End* newEnd = new End(*this);
+    newEnd->pInConn = nullptr; // Reset outgoing connector for the cloned statement
+    return newEnd;
 }
 
 Point End::GetPosition() const

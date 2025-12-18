@@ -17,19 +17,20 @@ private:
 
 public:
     Read(Point Lcorner, const std::string& var = "");
-    Read();
+   
     void setVarName(const std::string& v);
 
-  
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
+
     virtual bool IsPointInside(Point p) const;
 
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "READ"; }
+
     virtual void Edit(Input* pIn, Output* pOut);
     virtual Statement* Clone() const;
 

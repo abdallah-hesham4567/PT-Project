@@ -7,26 +7,26 @@ using namespace std;
 
 WhileStatement::WhileStatement(Point Lcorner, const string& LHS, const string& OP, const string& RHS)
 {
-
     LeftCorner = Lcorner;
-    Condition = LHS + OP + RHS;
+    
     TrueBranch = nullptr;
     FalseBranch = nullptr;
     this->RHS = RHS;
     this->LHS = LHS;
     op = OP;
-
-
+    Condition = LHS + " " + op + " " + RHS;
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
     Inlet.y = LeftCorner.y;
 
-    OutletTrue.x = LeftCorner.x;
-    OutletTrue.y = LeftCorner.y + UI.COND_HI;
+    OutletTrue.x = LeftCorner.x + UI.COND_WDTH;
+    OutletTrue.y = LeftCorner.y + UI.COND_HI /2;
 
-    OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
-    OutletFalse.y = LeftCorner.y + UI.COND_HI;
+    OutletFalse.x = LeftCorner.x ;
+    OutletFalse.y = LeftCorner.y + UI.COND_HI /2;
+
     Center.x = LeftCorner.x + UI.COND_WDTH / 2;
     Center.y = LeftCorner.y + UI.COND_HI / 2;
+
     UpdateStatementText();
 }
 
@@ -34,23 +34,23 @@ void WhileStatement::SetPosition(Point p)
 {
     // Center the diamond around the clicked point
     LeftCorner.x = p.x - UI.COND_WDTH / 2;
-    LeftCorner.y = p.y;
+    LeftCorner.y = p.y- UI.COND_HI/2 ;
 
     // Recalculate all dependent points
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
     Inlet.y = LeftCorner.y;
 
-    OutletTrue.x = LeftCorner.x;
-    OutletTrue.y = LeftCorner.y + UI.COND_HI;
+    OutletTrue.x = LeftCorner.x + UI.COND_WDTH;
+    OutletTrue.y = LeftCorner.y + UI.COND_HI / 2;
 
-    OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
-    OutletFalse.y = LeftCorner.y + UI.COND_HI;
+    OutletFalse.x = LeftCorner.x;
+    OutletFalse.y = LeftCorner.y + UI.COND_HI / 2;
 
     Center.x = LeftCorner.x + UI.COND_WDTH / 2;
     Center.y = LeftCorner.y + UI.COND_HI / 2;
 }
 
-Point WhileStatement::GetPosition() const
+Point WhileStatement::GetPosition() const              //Getters
 {
 	return LeftCorner;
 }
@@ -64,11 +64,12 @@ int WhileStatement::GetHeight() const
 {
     return UI.COND_HI;
 }
-bool WhileStatement::Evaluate(Variable vars[], int varCount)
+
+bool WhileStatement::Evaluate(Variable vars[], int varCount)       // Used in run
 {
     double v1, v2;
 
-    // operand 1
+    // LHS
     if (IsValue(LHS))
         v1 = stod(LHS);
     else
@@ -76,7 +77,7 @@ bool WhileStatement::Evaluate(Variable vars[], int varCount)
             if (vars[i].name == LHS)
                 v1 = vars[i].value;
 
-    // operand 2
+    // RHS
     if (IsValue(RHS))
         v2 = stod(RHS);
     else
@@ -91,7 +92,7 @@ bool WhileStatement::Evaluate(Variable vars[], int varCount)
     if (op == ">=") return v1 >= v2;
     return v1 <= v2;
 }
-void WhileStatement::setCondition(const string& cond)
+void WhileStatement::setCondition(const string& cond)       
 {
     Condition = cond;
     UpdateStatementText();
@@ -106,6 +107,7 @@ void WhileStatement::UpdateStatementText()
 
 void WhileStatement::Draw(Output* pOut) const
 {
+
     pOut->DrawConditionalStat(LeftCorner, UI.COND_WDTH, UI.COND_HI, Text, Selected);
 
 }
@@ -114,13 +116,18 @@ void WhileStatement::Edit(Input* pIn, Output* pOut)
 {
     pOut->PrintMessage("Edit While Statement Condition: Enter new LHS:");
     string LHS = pIn->GetVariableOrVal(pOut);
+
     pOut->PrintMessage("Enter new comparison operator (==, !=, <, <=, >, >=):");
     string op = pIn->GetCompOperator(pOut);
+
     pOut->PrintMessage("Enter new RHS:");
     string RHS = pIn->GetVariableOrVal(pOut);
+
     string newCondition = LHS + " " + op + " " + RHS;
+
     this->setCondition(newCondition);
 	pOut->ClearStatusBar();
+
 }
 
 Statement* WhileStatement::Clone() const
@@ -129,6 +136,7 @@ Statement* WhileStatement::Clone() const
 	//while has two outgoing connectors, reset them for the cloned statement
     newWhile->setTrueBranch(nullptr);
 	newWhile->setFalseBranch(nullptr);
+
 	return newWhile;
 
 }
@@ -136,25 +144,21 @@ Statement* WhileStatement::Clone() const
 
 Point WhileStatement::GetOutletPoint(int branch) const
 {
-    if (branch == 1) // YES - right side
-        return Point(Center.x + UI.COND_WDTH / 2, Center.y);
-    else if (branch == 2) // NO - left side
-        return Point(Center.x - UI.COND_WDTH / 2, Center.y);
-    else // Default - bottom
-        return Point(Center.x, Center.y + UI.COND_HI / 2);
+    if (branch == 1)                             // YES - right side
+        return OutletTrue;
+    else if (branch == 2)                       // NO - left side
+        return OutletFalse;
+    
 }
 
 Point WhileStatement::GetInletPoint() const
 {
-    Point inlet;
-    inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
-    inlet.y = LeftCorner.y;
-    return inlet; // Top point of diamond
+    return Inlet;                         // Top point of diamond
 }
 
 int WhileStatement::GetExpectedOutConnCount() const
 {
-    return 2; // YES and NO branches
+    return 2;                            // YES and NO branches
 }
 
 bool WhileStatement::IsConditional() const
@@ -164,19 +168,18 @@ bool WhileStatement::IsConditional() const
 
 bool WhileStatement::IsPointInside(Point p) const
 {
-
     float dx = abs(p.x - Center.x);
     float dy = abs(p.y - Center.y);
 
     int halfW = UI.COND_WDTH / 2;
     int halfH = UI.COND_HI / 2;
-    // Diamond equation: dx/halfW + dy/halfH <= 1
-    return ((dx * halfH + dy * halfW) <= (halfW * halfH));
+                                           
+    return ((dx * halfH + dy * halfW) <= (halfW * halfH)); // Diamond equation: dx/halfW + dy/halfH <= 1
 }
 
 void WhileStatement::Save(ofstream& OutFile) const
 {
-    string comparisonStr = OpToString(op); // Use the helper function
+    string comparisonStr = OpToString(op);                 // Use the helper function
 
     OutFile << "WHILE\t" << ID << "\t"
         << Inlet.x << "\t" << Inlet.y << "\t"
@@ -189,39 +192,26 @@ void WhileStatement::Load(ifstream& InFile)
     string opStr;
     InFile >> ID >> Inlet.x >> Inlet.y >> LHS >> opStr >> RHS;
 
-
-    // Convert string back to operator
-    if (opStr == "EQL")
-        op = "==";
-    else if (opStr == "NOTEQL")
-        op = "!=";
-    else if (opStr == "GRT")
-        op = ">";
-    else if (opStr == "LSS")
-        op = "<";
-    else if (opStr == "GRTEQL")
-        op = ">=";
-    else if (opStr == "LSSEQL")
-        op = "<=";
+    op = StringToOp(opStr);               //helper function we did
 
     LeftCorner.x = Inlet.x - UI.COND_WDTH / 2;
     LeftCorner.y = Inlet.y;
    
 
-    OutletTrue.x = LeftCorner.x;
-    OutletTrue.y = LeftCorner.y + UI.COND_HI;
+    OutletTrue.x = LeftCorner.x + UI.COND_WDTH;
+    OutletTrue.y = LeftCorner.y + UI.COND_HI /2;
 
-    OutletFalse.x = LeftCorner.x + UI.COND_WDTH;
-    OutletFalse.y = LeftCorner.y + UI.COND_HI;
+    OutletFalse.x = LeftCorner.x  ;
+    OutletFalse.y = LeftCorner.y + UI.COND_HI /2;
+
     Center.x = LeftCorner.x + UI.COND_WDTH / 2;
     Center.y = LeftCorner.y + UI.COND_HI / 2;
+
     Condition = LHS + op + RHS;
     UpdateStatementText();
+
 }
 
 
-string WhileStatement::getStatementType() const
-{
-    return "WHILE";
-}
+
 

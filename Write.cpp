@@ -3,13 +3,10 @@
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
 #include "..\ApplicationManager.h" 
-#include <sstream>
-#include <iomanip>
-
 
 using namespace std;
 
-Write::Write(Point Lcorner, const string& expr)
+Write::Write(Point Lcorner, const string& expr)      //Constructor
 {
     Expr = expr;
     LeftCorner = Lcorner;
@@ -26,7 +23,7 @@ Write::Write(Point Lcorner, const string& expr)
     UpdateStatementText();
 }
 
-void Write::SetPosition(Point p)
+void Write::SetPosition(Point p)        //SetPosition for Clone 
 {
     LeftCorner.x = p.x - UI.READ_WDTH / 2;
     LeftCorner.y = p.y;
@@ -62,15 +59,13 @@ void Write::Execute(Variable vars[], int& varCount, Input*, Output* pOut)
     {
         if (vars[i].name == Expr)
         {
-            std::ostringstream oss;
+            ostringstream oss;
             oss << vars[i].value;  
 
             pOut->PrintOutput(oss.str());
             return;
         }
     }
-
-    // لو رسالة
     pOut->PrintOutput(Expr);
 }
 
@@ -106,35 +101,32 @@ void Write::Edit(Input* pIn, Output* pOut)
 Statement* Write::Clone() const
 {
     Write* newWrite = new Write(*this);
-	//newWrite->SetOutConn(nullptr); // Reset outgoing connectors for the cloned statement
+	
     return newWrite;
 }
 
-
-void Write::UpdateStatementText()
+void Write::UpdateStatementText()                        
 {
     ostringstream T;
     T << "write " << Expr;
     Text = T.str();
 }
 
-Point Write::GetOutletPoint(int branch) const
+Point Write::GetOutletPoint(int branch) const            //return outlet point for connector
 {
-    // Rectangle - outlet at bottom center
-    return Point(LeftCorner.x + UI.READ_WDTH / 2,
-        LeftCorner.y + UI.READ_HI);
+   
+    return Outlet;
 }
 
-Point Write::GetInletPoint() const
+Point Write::GetInletPoint() const                 // return inlet point for connector
 {
-    // Rectangle - inlet at top center
-    return Point(LeftCorner.x + UI.READ_WDTH / 2,
-        LeftCorner.y);
+    
+    return Inlet;
 }
 
 int Write::GetExpectedOutConnCount() const
 {
-    return 1; // Normal statement has 1 output
+    return 1;                                         // Normal statement has 1 output
 }
 
 bool Write::IsPointInside(Point p) const
