@@ -15,7 +15,6 @@ class WhileStatement : public Statement
     Point OutletTrue;
     Point OutletFalse;
     Point LeftCorner;
-    CompOperator Comp;
     string op;
     string RHS;
     string LHS;
