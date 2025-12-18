@@ -49,7 +49,6 @@ enum ActionType // The actions supported
 	RUN,                 // run
 	EXITS,               //exit
 
-	CPP,              //cpp converter
 	DRAWING_AREA,  //A click on the drawing area
 	OUTPUT_AREA,   //A click on the output area
 	DSN_TOOL,	   //A click on an empty place in the design tool bar
@@ -101,29 +100,11 @@ enum SimMenuItem //The items of the simulation menu
 	ITM_VALIDATE,	//Validate
 	ITM_RUN,	      //Run 
 	ITM_SWITCH_DSN,      //switch to design mode 
-	ITM_CPP,
 	ITM_EXITS,            // EXIT    
 	SIM_ITM_CNT		//no. of simulation menu items ==> This should be the last line in this enum
 
 };
-enum ArithOperator
-{
-	ADD_OP,     // Addition (+)
-	SUB_OP,     // Subtraction (-)
-	MUL_OP,     // Multiplication (*)
-	DIV_OP      // Division (/)
-};
 
-// Comparison operators for Conditional
-enum CompOperator
-{
-	EQUAL,              // ==
-	NOT_EQUAL,          // !=
-	GREATER,            // >
-	LESS,               // <
-	GREATER_OR_EQUAL,   // >=
-	LESS_OR_EQUAL       // <=
-};
 
 
 

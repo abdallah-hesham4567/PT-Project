@@ -135,7 +135,7 @@ void Output::CreateSimulationToolBar() //Draws the Simulation Menu
 	string MenuItemImages[SIM_ITM_CNT];
 	MenuItemImages[ITM_VALIDATE] = "images\\validity.jpg";
 	MenuItemImages[ITM_RUN] = "images\\run.jpg";
-	MenuItemImages[ITM_CPP] = "images\\c++.jpg";
+	
 	MenuItemImages[ITM_EXITS] = "images\\exit.jpg";
 	MenuItemImages[ITM_SWITCH_DSN] = "images\\design mode.jpg";
 

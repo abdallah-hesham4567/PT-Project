@@ -184,32 +184,34 @@ ActionType Input::GetUserAction() const
 			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
 			switch (ClickedItem)                                             // return suitable action type for the button clicked depending on the coordinates of the click 
 			{
-			case ITM_START:                   return ADD_START;              //start statement 
-			case ITM_END:                     return ADD_END;                 // end statement  
-			case ITM_DECLARE_VARIABLE:        return ADD_DECLARE_VARIABLE;     //intiate a variable
-			case ITM_VALUE_ASSIGN:            return ADD_VALUE_ASSIGN;         // assign a value to a variable
-			case ITM_VAR_ASSIGN:              return ADD_VAR_ASSIGN;           // assign a variable to another variable
-			case ITM_OPER_ASSIGN:             return ADD_OPER_ASSIGN;          // assign an arithmetic operation to a variable
-			case ITM_READ:					  return ADD_READ;           //read variable 
-			case ITM_WRITE:					  return ADD_WRITE;          //print the variable 
-			case ITM_COND:					  return ADD_CONDITION;      // if condition 
-			case ITM_LOOP:					  return ADD_LOOP;       // loop
-			case ITM_CONNECTOR:				  return ADD_CONNECTOR;        //connector 
-			case ITM_DELETE:				  return DEL;              // delete 
-			case ITM_COPY:					  return COPY;             // copy
-			case ITM_CUT:					  return CUT;              // cut
-			case ITM_PASTE:					  return PASTE;            // paste
+			case ITM_START:   
+				selectionMode = false;
+				return ADD_START;              //start statement 
+			case ITM_END:             selectionMode = false;        return ADD_END;                 // end statement  
+			case ITM_DECLARE_VARIABLE:      selectionMode = false;  return ADD_DECLARE_VARIABLE;     //intiate a variable
+			case ITM_VALUE_ASSIGN:         selectionMode = false;   return ADD_VALUE_ASSIGN;         // assign a value to a variable
+			case ITM_VAR_ASSIGN:            selectionMode = false;  return ADD_VAR_ASSIGN;           // assign a variable to another variable
+			case ITM_OPER_ASSIGN:           selectionMode = false;  return ADD_OPER_ASSIGN;          // assign an arithmetic operation to a variable
+			case ITM_READ:					selectionMode = false;  return ADD_READ;           //read variable 
+			case ITM_WRITE:					selectionMode = false;  return ADD_WRITE;          //print the variable 
+			case ITM_COND:					selectionMode = false;  return ADD_CONDITION;      // if condition 
+			case ITM_LOOP:					selectionMode = false;  return ADD_LOOP;       // loop
+			case ITM_CONNECTOR:				selectionMode = false;  return ADD_CONNECTOR;        //connector 
+			case ITM_DELETE:				selectionMode = false;  return DEL;              // delete 
+			case ITM_COPY:					selectionMode = false;  return COPY;             // copy
+			case ITM_CUT:					selectionMode = false;  return CUT;              // cut
+			case ITM_PASTE:					selectionMode = false;  return PASTE;            // paste
 			case ITM_SELECT:
-				selectionMode = true; 
-				return SELECT;           // select 
-			case ITM_EDIT:					  return EDIT_STAT;            // edit selected 
-			case ITM_SAVE:					  return SAVE;                  // save
-			case ITM_LOAD:					  return LOAD;                  // restore 
+			selectionMode = true; 
+			return SELECT;           // select 
+			case ITM_EDIT:		selectionMode = false;			  return EDIT_STAT;            // edit selected 
+			case ITM_SAVE:			selectionMode = false;		  return SAVE;                  // save
+			case ITM_LOAD:			selectionMode = false;		  return LOAD;                  // restore 
 			
-			case ITM_REDO:					  return REDO;                  // redo last step
-			case ITM_CLEAR:				      return CLEAR;                 // clear
-			case ITM_SWITCH_SIM:			  return SWITCH_SIM_MODE;     //Switch to Simulation modecase 
-			case ITM_EXIT:					  return EXIT;				  // Exit Application
+			case ITM_REDO:			selectionMode = false;		  return REDO;                  // redo last step
+			case ITM_CLEAR:			selectionMode = false;	      return CLEAR;                 // clear
+			case ITM_SWITCH_SIM:		selectionMode = false;	  return SWITCH_SIM_MODE;     //Switch to Simulation modecase 
+			case ITM_EXIT:				selectionMode = false;	  return EXIT;				  // Exit Application
 			default:						  return DSN_TOOL;			  // A click on empty area in toolbar
 			}
 
@@ -238,7 +240,7 @@ ActionType Input::GetUserAction() const
 			case ITM_VALIDATE:      return VALIDATE;           //check the validity of the drawn flowchart
 			case ITM_RUN:           return RUN;                //run the simulation
 			case ITM_SWITCH_DSN:    return SWITCH_DSN_MODE;    //switch to Design mode
-			case ITM_CPP:           return CPP;                //convert to C++ code
+			
 			case ITM_EXITS:         return EXIT;               //exit the application
 
 			default:                return SIM_TOOL;           // A click on empty area in toolbar
