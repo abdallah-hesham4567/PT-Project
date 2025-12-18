@@ -41,6 +41,8 @@ public:
 	void PrintOutput(const string& text);
 	void DrawMidPoint(Point Start, Point End, bool Selected);
 
+	void ShowStartupScreen();
+	void DrawButton(int x, int y, int w, int h, string text, color btnColor);
 
 	//TODO: Add similar functions for drawing all other statements.
 	//		e.g. DrawDeclareStat(.....), DrawCondtionalStat(......), DrawStart(......), DrawEnd(.......), ...etc

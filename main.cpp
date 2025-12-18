@@ -1,9 +1,10 @@
 #include "ApplicationManager.h"
-
+#include <windows.h>
 //NOTE: YOU MUST NOT CHANGE THE MAIN FUNCTION
 
 int main()
 {
+	FreeConsole(); // to hide the console window
 	ActionType ActType;
 	//Create an object of ApplicationManager
 	ApplicationManager AppManager;

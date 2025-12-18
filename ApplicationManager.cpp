@@ -30,6 +30,8 @@ ApplicationManager::ApplicationManager()
 	pOut = new Output;
 	pIn = pOut->CreateInput();
 
+	RunStartup();
+	//Initialize StatCount and ConnCount
 	StatCount = 0;
 	ConnCount = 0;
 	SelectedStatement = NULL;	//no Statement is selected yet
@@ -1032,3 +1034,52 @@ void ApplicationManager::ClearAll()
 		Clipboard = nullptr;
 	}
 }
+
+void ApplicationManager::RunStartup()
+{
+	int x, y;
+	pOut->ShowStartupScreen();
+
+	while (true)
+	{
+		Point p;
+		pIn->GetPointClicked(p);
+		int btnW = 260;
+		int btnH = 50;
+		int btnX = 100 + (1366 / 2) - btnW / 2;
+		// Start Program
+		if (p.x >= btnX && p.x <= btnX + btnW &&
+			p.y >= 300 && p.y <= 300 + btnH)
+		{
+			pOut->ClearDrawArea();
+			pOut->CreateDesignToolBar();
+			pOut->CreateStatusBar();
+			pOut->ClearOutputBar();
+			pOut->PrintMessage("Welcome to the Flowchart Programming Tool!");
+			break;
+		}
+
+		// Student Info
+		else if (p.x >= btnX && p.x <= btnX + btnW &&
+			p.y >= 370 && p.y <= 370 + btnH)
+		{
+			ShellExecuteA(NULL, "open", "Names.txt", NULL, NULL, SW_SHOWNORMAL);
+		}
+
+		// GitHub
+		else if (p.x >= btnX && p.x <= btnX + btnW &&
+			p.y >= 440 && p.y <= 440 + btnH)
+		{
+			ShellExecuteA(NULL, "open",
+				"https://github.com/abdallah-hesham4567/PT-Project.git",
+				NULL, NULL, SW_SHOWNORMAL);
+		}
+		// Exit
+		else if (p.x >= btnX && p.x <= btnX + btnW &&
+			 p.y >= 510 && p.y <= 510 + btnH)
+		{
+			exit(0);
+		}
+	}
+}
+

@@ -1,6 +1,5 @@
 ﻿#include "Output.h"
 
-
 Output::Output()
 {
 	//Initialize user interface parameters
@@ -392,6 +391,63 @@ void Output::DrawMidPoint(Point Start, Point End, bool Selected)
 	pWind->DrawLine(Start.x, Start.y, End.x, End.y);
 
 }
+void Output::ShowStartupScreen()
+{
+	// Background
+	int centerX = 1366 / 2;
+	pWind->SetPen(BLACK, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.height);
+	
+
+	pWind->DrawImage("images\\panel.jpg",0,0,1450,786);
+
+	// Welcome
+	pWind->SetFont(52, BOLD, BY_NAME, "Roboto");
+	pWind->DrawString(centerX, 140, "Welcome");
+
+	// Team name
+	pWind->SetFont(26, PLAIN, BY_NAME, "Roboto");
+	pWind->DrawString(centerX+50, 200, "Team 20");
+
+
+
+	int btnW = 260;
+	int btnH = 50;
+	int btnX = 100 + centerX - btnW / 2;  
+
+	DrawButton(btnX, 300, btnW, btnH, "Start Program", color(30, 90, 180));
+	DrawButton(btnX, 370, btnW, btnH, "Student Info", color(30, 90, 180));
+	DrawButton(btnX, 440, btnW, btnH, "GitHub", color(30, 90, 180));
+	DrawButton(btnX, 510, btnW, btnH, "Exit", color(180, 50, 50));
+
+
+}
+
+void Output::DrawButton(int x, int y, int w, int h, string text, color btnColor)
+{
+	pWind->SetPen(BLACK, 1);
+	pWind->SetBrush(btnColor);
+	pWind->DrawRectangle(x, y, x + w, y + h);
+
+	pWind->SetFont(20, BOLD, BY_NAME, "Roboto");
+	pWind->SetPen(WHITE, 1);
+	int charWidth = 10;   
+	int charHeight = 20;
+
+	int textWidth = text.length() * charWidth;
+
+	int textX = x + (w - textWidth) / 2;
+	int textY = y + (h - charHeight) / 2;
+
+	pWind->DrawString(textX, textY, text);
+}
+
+
+
+
+
+
 void Output::PrintOutput(const string& text)
 {
 	if (OutputY == 0)
