@@ -379,7 +379,16 @@ void Output::DrawConnector(Point Start, Point End, bool Selected)
 
 	pWind->DrawLine(End.x, End.y, End.x - len * cos(angle - s), End.y - len * sin(angle - s));
 	pWind->DrawLine(End.x, End.y, End.x - len * cos(angle + s), End.y - len * sin(angle + s));
+}
 
+void Output::DrawMidPoint(Point Start, Point End, bool Selected)
+{
+	if (Selected)               // if highlighted
+		pWind->SetPen(UI.HighlightColor, 3);
+	else                             // if normal
+		pWind->SetPen(UI.DrawColor, 2);
+
+	pWind->DrawLine(Start.x, Start.y, End.x, End.y);
 
 }
 void Output::PrintOutput(const string& text)

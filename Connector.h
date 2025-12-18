@@ -57,6 +57,7 @@ public:
 
 	// Validate the connector (check if it's properly connected)
 	bool Validate(string& errorMsg) const;
+	bool IsPointNearSegment(Point p, Point segStart, Point segEnd, int tolerance) const;
 
 	// Destructor
 	~Connector();

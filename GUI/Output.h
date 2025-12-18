@@ -39,6 +39,7 @@ public:
 	void DrawConnector(Point Start, Point End, bool Selected = false);                                  //draw connector
 
 	void PrintOutput(const string& text);
+	void DrawMidPoint(Point Start, Point End, bool Selected);
 
 
 	//TODO: Add similar functions for drawing all other statements.

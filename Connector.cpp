@@ -1,4 +1,4 @@
-//#include "Connector.h"
+﻿//#include "Connector.h"
 //
 //Connector::Connector(Statement* Src, Statement* Dst)	
 ////When a connector is created, it must have a source statement and a destination statement
@@ -205,45 +205,37 @@ void Connector::Draw(Output* pOut) const
 	// The connector should be drawn highlighted if selected
 	if (pOut)
 	{
-		
-		pOut->DrawConnector(Start, End, Selected);
+		// Calculate midpoint for L-shaped connector
+		Point midPoint;
+		midPoint.x = End.x;      // Move horizontally to destination's x
+		midPoint.y = Start.y;    // Keep source's y
+
+		// Draw two line segments instead of one
+		// Segment 1: Start → MidPoint (horizontal)
+		pOut->DrawMidPoint(Start, midPoint, Selected);
+
+		// Segment 2: MidPoint → End (vertical)
+		pOut->DrawConnector(midPoint, End, Selected);
 	}
 }
 
 bool Connector::IsPointInConnector(Point p) const
 {
-	// Check if a point is near the connector line (for selection)
-	// We consider a tolerance area around the line
 	const int TOLERANCE = 5; // pixels
 
-	// Calculate distance from point to line segment
-	double dx = End.x - Start.x;
-	double dy = End.y - Start.y;
+	// For L-shaped connector with midpoint
+	Point midPoint;
+	midPoint.x = End.x;
+	midPoint.y = Start.y;
 
-	if (dx == 0 && dy == 0)
-	{
-		// Start and End are the same point
-		double dist = sqrt(pow(p.x - Start.x, 2) + pow(p.y - Start.y, 2));
-		return dist <= TOLERANCE;
-	}
+	// Check if point is near first segment (Start → Mid)
+	bool nearSegment1 = IsPointNearSegment(p, Start, midPoint, TOLERANCE);
 
-	// Calculate the parameter t for the closest point on the line
-	double t = ((p.x - Start.x) * dx + (p.y - Start.y) * dy) / (dx * dx + dy * dy);
+	// Check if point is near second segment (Mid → End)
+	bool nearSegment2 = IsPointNearSegment(p, midPoint, End, TOLERANCE);
 
-	// Clamp t to [0, 1] to stay within the line segment
-	if (t < 0) t = 0;
-	if (t > 1) t = 1;
-
-	// Calculate the closest point on the line segment
-	double closestX = Start.x + t * dx;
-	double closestY = Start.y + t * dy;
-
-	// Calculate distance from point to closest point on line
-	double distance = sqrt(pow(p.x - closestX, 2) + pow(p.y - closestY, 2));
-
-	return distance <= TOLERANCE;
+	return nearSegment1 || nearSegment2;
 }
-
 
 void Connector::Save(ofstream& OutFile) const
 {
@@ -294,6 +286,41 @@ bool Connector::Validate(string& errorMsg) const
 
 	return true;
 }
+
+bool Connector::IsPointNearSegment(Point p, Point segStart, Point segEnd, int tolerance) const
+{
+	double dx = segEnd.x - segStart.x;
+	double dy = segEnd.y - segStart.y;
+
+	if (dx == 0 && dy == 0)
+	{
+		double dist = sqrt(pow(p.x - segStart.x, 2) + pow(p.y - segStart.y, 2));
+		return dist <= tolerance;
+	}
+
+	double t = ((p.x - segStart.x) * dx + (p.y - segStart.y) * dy) / (dx * dx + dy * dy);
+
+	if (t < 0) t = 0;
+	if (t > 1) t = 1;
+
+	double closestX = segStart.x + t * dx;
+	double closestY = segStart.y + t * dy;
+
+	double distance = sqrt(pow(p.x - closestX, 2) + pow(p.y - closestY, 2));
+
+	return distance <= tolerance;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 Connector::~Connector()
 {
