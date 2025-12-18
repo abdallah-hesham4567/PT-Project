@@ -391,6 +391,7 @@ void Output::DrawMidPoint(Point Start, Point End, bool Selected)
 	pWind->DrawLine(Start.x, Start.y, End.x, End.y);
 
 }
+ 
 void Output::ShowStartupScreen()
 {
 	// Background
@@ -400,7 +401,7 @@ void Output::ShowStartupScreen()
 	pWind->DrawRectangle(0, 0, UI.width, UI.height);
 	
 
-	pWind->DrawImage("images\\panel.jpg",0,0,1450,786);
+	pWind->DrawImage("images\\panel.jpg",0,0,1600,786);
 
 	// Welcome
 	pWind->SetFont(52, BOLD, BY_NAME, "Roboto");
