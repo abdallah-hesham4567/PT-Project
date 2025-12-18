@@ -188,14 +188,33 @@ bool Connector::IsSelected() const
 
 void Connector::UpdateConnectionPoints()
 {
-	// Calculate start and end points based on source and destination statements
 	if (SrcStat && DstStat)
 	{
-		// Get the outlet point from source statement based on branch
+		// Get the outlet point from source statement
 		Start = SrcStat->GetOutletPoint(OutletBranch);
 
-		// Get the inlet point from destination statement
-		End = DstStat->GetInletPoint();
+		// Check if source is a Condition or While
+		if (DstStat->IsConditional())
+		{
+			Point p1 = DstStat->GetInletPoint();
+			Point p2 = SrcStat->GetOutletPoint();
+			// If destination is below source → inlet goes to top of destination
+			if (p2.y>p1.y)
+			{
+				End = DstStat->GetInletPoint();
+				End.y += UI.COND_HI;
+			}
+			else // If destination is above or overlapping → inlet goes to bottom
+			{
+				End = DstStat->GetInletPoint() ;
+				
+			}
+		}
+		else
+		{
+			// For other statements → default inlet
+			End = DstStat->GetInletPoint();
+		}
 	}
 }
 
