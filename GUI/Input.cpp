@@ -205,9 +205,10 @@ ActionType Input::GetUserAction() const
 			case ITM_EDIT:					  return EDIT_STAT;            // edit selected 
 			case ITM_SAVE:					  return SAVE;                  // save
 			case ITM_LOAD:					  return LOAD;                  // restore 
-			case ITM_REDO:					  return REDO;                  // redo last step 
-			case ITM_UNDO:					  return UNDO;                  // undo last step 
-			case ITM_SWITCH_SIM:			  return SWITCH_SIM_MODE;     //Switch to Simulation mode
+			
+			case ITM_REDO:					  return REDO;                  // redo last step
+			case ITM_CLEAR:				      return CLEAR;                 // clear
+			case ITM_SWITCH_SIM:			  return SWITCH_SIM_MODE;     //Switch to Simulation modecase 
 			case ITM_EXIT:					  return EXIT;				  // Exit Application
 			default:						  return DSN_TOOL;			  // A click on empty area in toolbar
 			}

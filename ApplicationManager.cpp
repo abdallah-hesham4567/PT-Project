@@ -324,16 +324,14 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pOut->CreateSimulationToolBar();
 		break;
 	}
-
-	/*case UNDO:
-		pAct = new UNDO(this);
+	case CLEAR:
+	{
+		///create Clear Action here
+		this->ClearAll();
+		pOut->PrintMessage("All Cleared !");
 		break;
-	case REDO:
-		pAct = new REDO(this);
-		break;
-	case VALIDATE:
-		pAct = new Validate(this);
-		break;*/
+		
+	}
 	case EDIT_STAT:
 	pAct = new Edit(this);
 	break;
