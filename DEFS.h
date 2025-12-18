@@ -40,7 +40,7 @@ enum ActionType // The actions supported
 
 	EXIT,		//Exit the application
 	CLEAR,         // clear
-	REDO,           // redo last step
+	GITHUB,           // redo last step
 	
 	//TODO: ADD THE ACTIONS OF SIMULATION MODE
 
@@ -87,7 +87,7 @@ enum DesignMenuItem //The items of the design menu --> THE ORDER MATTERS
 
 	
 	ITM_CLEAR,
-	ITM_REDO,
+	ITM_GITHUB,
 	ITM_EXIT,
 	DSN_ITM_CNT		//no. of design menu items ==> This should be the last line in this enum
 

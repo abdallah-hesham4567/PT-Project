@@ -207,8 +207,8 @@ ActionType Input::GetUserAction() const
 			case ITM_EDIT:		selectionMode = false;			  return EDIT_STAT;            // edit selected 
 			case ITM_SAVE:			selectionMode = false;		  return SAVE;                  // save
 			case ITM_LOAD:			selectionMode = false;		  return LOAD;                  // restore 
-			
-			case ITM_REDO:			selectionMode = false;		  return REDO;                  // redo last step
+
+			case ITM_GITHUB:			selectionMode = false;		  return GITHUB;                  // redo last step
 			case ITM_CLEAR:			selectionMode = false;	      return CLEAR;                 // clear
 			case ITM_SWITCH_SIM:		selectionMode = false;	  return SWITCH_SIM_MODE;     //Switch to Simulation modecase 
 			case ITM_EXIT:				selectionMode = false;	  return EXIT;				  // Exit Application

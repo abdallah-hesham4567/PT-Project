@@ -107,7 +107,7 @@ void Output::CreateDesignToolBar() //Draws the Design Menu
 	MenuItemImages[ITM_LOAD] = "images\\load.jpg";
 	MenuItemImages[ITM_SWITCH_SIM] = "images\\simulation mode.jpg";
 	MenuItemImages[ITM_CLEAR] = "images\\clear.jpg";
-	MenuItemImages[ITM_REDO] = "images\\redo.jpg";
+	MenuItemImages[ITM_GITHUB] = "images\\github.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\exit.jpg";
 
 

@@ -336,7 +336,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	pAct = new Edit(this);
 	break;
 
-
+	case GITHUB:
+	{
+		///create Github Action here
+		pOut->PrintMessage("Redirecting to GitHub...");
+		ShellExecuteA(NULL, "open", "https://github.com/abdallah-hesham4567/PT-Project.git", NULL, NULL, SW_SHOWNORMAL);
+		break;
+	}
 
 
 	case RUN:
