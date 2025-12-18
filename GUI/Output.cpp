@@ -1,4 +1,4 @@
-#include "Output.h"
+﻿#include "Output.h"
 
 
 Output::Output()
@@ -16,9 +16,10 @@ Output::Output()
 	UI.MenuItemWidth = 67;
 
 	UI.DrawingAreaWidth = .60 * UI.width;
-	UI.DrawColor = BLUE;                    // color for normal shapes
-	UI.HighlightColor = YELLOW;            // color for highlighted shapes
-	UI.MsgColor = BLACK;                  // color for messages
+	UI.DrawColor = BLACK;        // لون الرسومات الطبيعي
+	UI.HighlightColor = DARKBLUE;   
+	UI.MsgColor = BLACK;        
+	UI.ConnectorColor = BLACK;
 
 	UI.ASSGN_WDTH = 200;                 // width rectangle 
 	UI.ASSGN_HI = 45;                    // hight rectangle 
@@ -36,7 +37,7 @@ Output::Output()
 	UI.START_END_HI = 60;                // hight ellipse
 
 	UI.ConnectorColor = BLACK;
-	UI.HighlightColor = RED;
+	UI.HighlightColor = DARKCYAN;
 
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, 0, 0);
@@ -149,7 +150,7 @@ void Output::CreateSimulationToolBar() //Draws the Simulation Menu
 	}
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 2);
+	pWind->SetPen(BLACK, 1);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 }
@@ -158,7 +159,7 @@ void Output::CreateSimulationToolBar() //Draws the Simulation Menu
 
 void Output::Clear_DesignToolBar()
 {
-	pWind->SetPen(RED, 2);
+	pWind->SetPen(BLACK, 1);
 	pWind->SetBrush(WHITE);
 
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
@@ -169,7 +170,7 @@ void Output::Clear_DesignToolBar()
 
 void Output::Clear_SimulationToolBar()
 {
-	pWind->SetPen(RED, 2);
+	pWind->SetPen(BLACK, 1);
 	pWind->SetBrush(WHITE);
 
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
@@ -179,15 +180,15 @@ void Output::Clear_SimulationToolBar()
 void Output::ClearStatusBar()
 {
 	//Clear Status bar by drawing a filled white rectangle
-	pWind->SetPen(RED, 2);
-	pWind->SetBrush(YELLOW);
+	pWind->SetPen(BLACK, 1);
+	pWind->SetBrush(LIGHTGRAY);
 	pWind->DrawRectangle(0, UI.height - UI.StatusBarHeight, UI.width, UI.height);
 }
 
 // to clear Drawing area
 void Output::ClearDrawArea()
 {
-	pWind->SetPen(RED, 2);
+	pWind->SetPen(BLACK, 1);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, UI.ToolBarHeight, UI.DrawingAreaWidth, UI.height - UI.StatusBarHeight);
 }
@@ -196,7 +197,7 @@ void Output::ClearDrawArea()
 void Output::ClearOutputBar()
 {
 	//Create output bar by drawing a filled rectangle
-	pWind->SetPen(RED, 2);
+	pWind->SetPen(BLACK, 1);
 	pWind->SetBrush(GREY);
 	pWind->DrawRectangle(UI.DrawingAreaWidth, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);
 }

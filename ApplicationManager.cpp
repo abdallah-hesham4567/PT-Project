@@ -334,7 +334,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case VALIDATE:
 		pAct = new Validate(this);
 		break;*/
-
+	case EDIT_STAT:
+	pAct = new Edit(this);
+	break;
 
 
 
