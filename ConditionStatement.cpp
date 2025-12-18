@@ -62,6 +62,35 @@ int ConditionStatement::GetHeight() const
 	return UI.COND_HI;
 }
 
+bool ConditionStatement::Evaluate(Variable vars[], int varCount)
+{
+    double v1, v2;
+
+    // operand 1
+    if (IsValue(LHS))
+        v1 = stod(LHS);
+    else
+        for (int i = 0; i < varCount; i++)
+            if (vars[i].name == LHS)
+                v1 = vars[i].value;
+
+    // operand 2
+    if (IsValue(RHS))
+        v2 = stod(RHS);
+    else
+        for (int i = 0; i < varCount; i++)
+            if (vars[i].name == RHS)
+                v2 = vars[i].value;
+
+    if (op == ">")  return v1 > v2;
+    if (op == "<")  return v1 < v2;
+    if (op == "==") return v1 == v2;
+    if (op == "!=") return v1 != v2;
+    if (op == ">=") return v1 >= v2;
+    return v1 <= v2;
+}
+
+
 
 void ConditionStatement::setCondition(const string& cond)
 {

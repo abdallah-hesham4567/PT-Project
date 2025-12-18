@@ -2,6 +2,7 @@
 #include "Statement.h"
 #include "..\Defs.h"
 #include <string>
+#include "Variable.h"
 using namespace std;
 
 class DeclareStatement : public Statement
@@ -41,4 +42,5 @@ public:
 	virtual int GetWidth() const;
 	virtual int GetHeight() const;
 
+	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut);
 };

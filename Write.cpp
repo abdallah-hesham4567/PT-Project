@@ -1,8 +1,11 @@
-#include "Write.h"
+﻿#include "Write.h"
 #include <sstream>
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
 #include "..\ApplicationManager.h" 
+#include <sstream>
+#include <iomanip>
+
 
 using namespace std;
 
@@ -52,6 +55,27 @@ int Write::GetHeight() const
 {
     return UI.WRITE_HI;
 }
+
+void Write::Execute(Variable vars[], int& varCount, Input*, Output* pOut)
+{
+    for (int i = 0; i < varCount; i++)
+    {
+        if (vars[i].name == Expr)
+        {
+            std::ostringstream oss;
+            oss << vars[i].value;  
+
+            pOut->PrintOutput(oss.str());
+            return;
+        }
+    }
+
+    // لو رسالة
+    pOut->PrintOutput(Expr);
+}
+
+
+
 
 void Write::setExpr(const string& e)
 {

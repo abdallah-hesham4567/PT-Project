@@ -382,6 +382,22 @@ void Output::DrawConnector(Point Start, Point End, bool Selected)
 
 
 }
+void Output::PrintOutput(const string& text)
+{
+	if (OutputY == 0)
+		OutputY = UI.ToolBarHeight + 20;
+
+	pWind->SetPen(BLACK, 2);
+	pWind->SetFont(20, BOLD, BY_NAME, "Roboto");
+
+	pWind->DrawString(
+		UI.DrawingAreaWidth + 20,
+		OutputY,
+		text
+	);
+
+	OutputY += 25; 
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////

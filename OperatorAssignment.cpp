@@ -54,6 +54,38 @@ int OperatorAssignment::GetHeight() const
 
 }
 
+void OperatorAssignment::Execute(Variable vars[], int& varCount, Input*, Output*)
+{
+    double v1, v2;
+
+    // RHS1
+    if (IsValue(RHS1))
+        v1 = stod(RHS1);
+    else
+        for (int i = 0; i < varCount; i++)
+            if (vars[i].name == RHS1)
+                v1 = vars[i].value;
+
+    // RHS2
+    if (IsValue(RHS2))
+        v2 = stod(RHS2);
+    else
+        for (int i = 0; i < varCount; i++)
+            if (vars[i].name == RHS2)
+                v2 = vars[i].value;
+
+    double result;
+    if (Op == '+') result = v1 + v2;
+    else if (Op == '-') result = v1 - v2;
+    else if (Op == '*') result = v1 * v2;
+    else result = v1 / v2;
+
+    for (int i = 0; i < varCount; i++)
+        if (vars[i].name == LHS)
+            vars[i].value = result;
+}
+
+
 
 void OperatorAssignment::setLHS(const string& L)
 {

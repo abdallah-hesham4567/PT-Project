@@ -109,6 +109,20 @@ int VariableAssign::GetHeight() const
 	return UI.ASSGN_HI;
 }
 
+void VariableAssign::Execute(Variable vars[], int& varCount, Input*, Output*)
+{
+	double rhsValue = 0;
+
+	for (int i = 0; i < varCount; i++)
+		if (vars[i].name == RHS)
+			rhsValue = vars[i].value;
+
+	for (int i = 0; i < varCount; i++)
+		if (vars[i].name == LHS)
+			vars[i].value = rhsValue;
+}
+
+
 
 void VariableAssign::Save(ofstream& OutFile) const
 {

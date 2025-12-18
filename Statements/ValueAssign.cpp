@@ -105,6 +105,19 @@ int ValueAssign::GetHeight() const
 	return UI.ASSGN_HI;
 }
 
+void ValueAssign::Execute(Variable vars[], int& varCount, Input*, Output*)
+{
+	for (int i = 0; i < varCount; i++)
+	{
+		if (vars[i].name == LHS)
+		{
+			vars[i].value = RHS;
+			return;
+		}
+	}
+}
+
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()

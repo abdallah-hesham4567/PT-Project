@@ -1,4 +1,4 @@
-#include "ApplicationManager.h"
+﻿#include "ApplicationManager.h"
 #include "Actions\AddValueAssign.h"
 #include "AddCondition.h"
 #include "AddRead.h"
@@ -21,6 +21,8 @@
 #include "ActionSave.h"
 #include "VariableAssign.h"
 #include "ActionLoad.h"
+#include "Variable.h"
+#include "Run.h"
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -308,11 +310,19 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case SWITCH_DSN_MODE:
 	{
 		//// remove toolbar and switch 
+		pOut->ClearOutputBar();
+		pOut->Clear_SimulationToolBar();
+		pOut->CreateDesignToolBar();
+		break;
 	}
 
 	case SWITCH_SIM_MODE:
 	{
 		//// remove toolbar and switch 
+		pOut->ClearOutputBar();
+		pOut->Clear_DesignToolBar();
+		pOut->CreateSimulationToolBar();
+		break;
 	}
 
 	/*case UNDO:
@@ -329,10 +339,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 
 
-	//case RUN:
-	//	///create Select Action here
-	//	pAct = new Run(this);
-	//	break;*/
+	case RUN:
+		///create Select Action here
+		pOut->ClearOutputBar();
+		pAct = new Run(this);
+		break;
 
 	/*case EXIT:
 		///create Exit Action here
@@ -640,6 +651,77 @@ bool ApplicationManager::Validate() const
 	// If all validations pass
 	pOut->PrintMessage("Validation successful! Congrats, Flowchart is valid.");
 	return true;
+}
+Statement* ApplicationManager::GetNextStatement(Statement* pStat)
+{
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i]->getSrcStat() == pStat)
+			return ConnList[i]->getDstStat();
+	}
+	return nullptr;
+}
+
+Statement* ApplicationManager::GetNextAfterCondition(Statement* pStat, bool result)
+{
+	int wantedBranch;
+
+	if (result == true)
+		wantedBranch = 1;
+	else
+		wantedBranch = 2;
+
+	for (int i = 0; i < ConnCount; i++)
+	{
+		if (ConnList[i]->getSrcStat() == pStat &&
+			ConnList[i]->getOutletBranch() == wantedBranch)
+		{
+			return ConnList[i]->getDstStat();
+		}
+	}
+
+	return nullptr;
+}
+
+void ApplicationManager::RunSimulation()
+{
+	Variable Vars[100];
+	int VarCount = 0;
+
+	Statement* pCurrent = nullptr;
+
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Start*>(StatList[i]))
+		{
+			pCurrent = StatList[i];
+			break;
+		}
+	}
+	while (!dynamic_cast<End*>(pCurrent))
+	{
+		// لو Condition
+		if (auto pCond = dynamic_cast<ConditionStatement*>(pCurrent))
+		{
+			bool res = pCond->Evaluate(Vars, VarCount);
+			pCurrent = GetNextAfterCondition(pCond, res);
+			continue;
+		}
+
+		// لو While
+		if (auto pWhile = dynamic_cast<WhileStatement*>(pCurrent))
+		{
+			bool res = pWhile->Evaluate(Vars, VarCount);
+			pCurrent = GetNextAfterCondition(pWhile, res);
+			continue;
+		}
+
+		// أي Statement عادي
+		pCurrent->Execute(Vars, VarCount, pIn, pOut);
+		pCurrent = GetNextStatement(pCurrent);
+	}
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

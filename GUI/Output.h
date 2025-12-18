@@ -2,6 +2,7 @@
 #define OUPTUT_H
 
 #include "Input.h"
+static int OutputY = 0;
 
 class Output	//The application manager should have a pointer to this class
 {
@@ -37,6 +38,7 @@ public:
 	void DrawReadAndWrite(Point Left, int width, int height, string Text, bool Selected = false);      // draw  parallelogram
 	void DrawConnector(Point Start, Point End, bool Selected = false);                                  //draw connector
 
+	void PrintOutput(const string& text);
 
 
 	//TODO: Add similar functions for drawing all other statements.

@@ -51,5 +51,7 @@ class OperatorAssignment : public Statement
 	virtual int GetWidth() const override;
 	virtual int GetHeight() const override;
 
+	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut);
+
 };
 

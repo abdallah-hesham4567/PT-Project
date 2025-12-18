@@ -49,5 +49,8 @@ public:
 	virtual Point GetPosition() const;
 	virtual int GetWidth() const;
 	virtual int GetHeight() const;
+	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut){}
+    bool Evaluate(Variable vars[], int varCount);
+
 
 };

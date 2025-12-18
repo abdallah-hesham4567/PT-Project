@@ -55,6 +55,21 @@ int Read::GetHeight() const
 	return UI.READ_HI;
 }
 
+void Read::Execute(Variable vars[], int& varCount, Input* pIn, Output*pOut)
+{
+    double val = pIn->GetValue(pOut);
+
+    for (int i = 0; i < varCount; i++)
+    {
+        if (vars[i].name == VarName)
+        {
+            vars[i].value = val;
+            return;
+        }
+    }
+}
+
+
 void Read::setVarName(const string& v)
 {
     VarName = v;

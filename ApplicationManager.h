@@ -96,10 +96,13 @@ public:
 
 	// == Simulation Functions ==
 	bool Validate() const;
+	Statement* GetNextStatement(Statement* pStat);
+	Statement* GetNextAfterCondition(Statement* pStat,bool result);
 	void RunSimulation();
 
+
 	void LoadAll(ifstream& InFile);
-		Statement* GetStatementWithID(int id) const;
+	Statement* GetStatementWithID(int id) const;
 	bool ApplicationManager::InDrawingArea(Point p, int w, int h) const
 	{
 		return (p.x >= 0 && p.x + w <= UI.DrawingAreaWidth && p.y >= UI.ToolBarHeight && p.y + h <= UI.height - UI.StatusBarHeight);

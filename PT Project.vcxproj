@@ -373,6 +373,7 @@
     <ClInclude Include="Statements\Statement.h" />
     <ClInclude Include="ToCPP.h" />
     <ClInclude Include="Validate.h" />
+    <ClInclude Include="Variable.h" />
     <ClInclude Include="VariableAssign.h" />
     <ClInclude Include="WhileStatement.h" />
     <ClInclude Include="Write.h" />

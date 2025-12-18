@@ -7,6 +7,7 @@
 //class Output;
 #include "..\GUI\Output.h"
 #include "..\ApplicationManager.h"
+#include "..\Variable.h"
 //Base class for all Statements
 class Statement
 {
@@ -91,6 +92,7 @@ public:
 	void setid(int x) { ID = x; }
 	virtual void setCenter(Point c) {}
 
+	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut) = 0;
 };
 
 #endif

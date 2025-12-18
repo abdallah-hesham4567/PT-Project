@@ -1,6 +1,6 @@
 #ifndef END_STATEMENT_H
 #define END_STATEMENT_H
-
+#include "Variable.h"
 #include "Statement.h"
 #include "ApplicationManager.h"
 class End : public Statement
@@ -35,6 +35,7 @@ public:
 	virtual int GetHeight() const;
     virtual void setCenter(Point c) { Center = c; }
 
+	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut){}
 };
 
 #endif
