@@ -36,12 +36,12 @@ enum ActionType // The actions supported
 	LOAD,		//Load a graph from a file
 
 	SWITCH_DSN_MODE,	//Switch to Design mode
-	SWITCH_SIM_MODE,	//Switch to simulatiom mode
+	SWITCH_SIM_MODE,	//Switch to simulation mode
 
 	EXIT,		//Exit the application
-	UNDO,         // undo
-	REDO,           // redo
-
+	CLEAR,         // clear
+	REDO,           // redo last step
+	
 	//TODO: ADD THE ACTIONS OF SIMULATION MODE
 
 
@@ -86,8 +86,8 @@ enum DesignMenuItem //The items of the design menu --> THE ORDER MATTERS
 
 	ITM_SWITCH_SIM,
 
-	//Exit
-	ITM_UNDO,
+	
+	ITM_CLEAR,
 	ITM_REDO,
 	ITM_EXIT,
 	DSN_ITM_CNT		//no. of design menu items ==> This should be the last line in this enum
