@@ -31,7 +31,7 @@ void ConditionStatement::SetPosition(Point p)
 {
     // Center the diamond around the clicked point
     LeftCorner.x = p.x - UI.COND_WDTH / 2;
-    LeftCorner.y = p.y;
+    LeftCorner.y = p.y- UI.COND_HI /2 ;
 
     // Recalculate all dependent points
     Inlet.x = LeftCorner.x + UI.COND_WDTH / 2;
@@ -112,13 +112,7 @@ void ConditionStatement::Draw(Output* pOut) const
 }
 
 
-//void ConditionStatement::SetBranchConnector(Connector* pConn, int branch)
-//{
-//    if (branch == 1)      // True branch
-//        TrueBranch = pConn;
-//    else if (branch == 2) // False branch
-//        FalseBranch = pConn;
-//}
+
 
 Statement* ConditionStatement::Clone() const
 {
@@ -133,15 +127,11 @@ Statement* ConditionStatement::Clone() const
 
 Point ConditionStatement::GetOutletPoint(int branch) const
 {
-    // Diamond shape - upper point is LeftCorner
     
-
     if (branch == 1) // YES - right side
         return Point(Center.x + UI.COND_WDTH / 2, Center.y);
     else if (branch == 2) // NO - left side
         return Point(Center.x - UI.COND_WDTH / 2, Center.y);
-    else // Default - bottom
-        return Point(Center.x, Center.y + UI.COND_HI / 2);
 }
 
 Point ConditionStatement::GetInletPoint() const
@@ -154,7 +144,7 @@ Point ConditionStatement::GetInletPoint() const
 
 int ConditionStatement::GetExpectedOutConnCount() const
 {
-    return 2; // YES and NO branches
+    return 2;                                  // YES and NO branches
 }
 
 bool ConditionStatement::IsConditional() const
@@ -190,19 +180,7 @@ void ConditionStatement::Load(ifstream& InFile)
     InFile >> ID >> Inlet.x >> Inlet.y >> LHS >> opStr >> RHS;
 
 
-    // Convert string back to operator
-    if (opStr == "EQL")
-        op = "==";
-    else if (opStr == "NOTEQL")
-        op = "!=";
-    else if (opStr == "GRT")
-        op = ">";
-    else if (opStr == "LSS")
-        op = "<";
-    else if (opStr == "GRTEQL")
-        op = ">=";
-    else if (opStr == "LSSEQL")
-        op = "<=";
+     op = StringToOp(opStr);               //helper function we did
 
     LeftCorner.x = Inlet.x - UI.COND_WDTH / 2;
     LeftCorner.y = Inlet.y;
@@ -230,12 +208,15 @@ string ConditionStatement::getStatementType() const
 }
 
 void ConditionStatement::Edit(Input* pIn, Output* pOut)
-{
+{ // enter lhs , op and rhs
     string LHS = pIn->GetVariableOrVal(pOut);
+
     pOut->PrintMessage("Enter the comparison operator (==, !=, <, <=, >, >=):");
     string op = pIn->GetCompOperator(pOut);
+
     pOut->PrintMessage("Enter the RHS:");
     string RHS = pIn->GetVariableOrVal(pOut);
+
     string ConditionText = LHS + " " + op + " " + RHS;
     Condition = ConditionText;
 	this->setCondition(ConditionText);

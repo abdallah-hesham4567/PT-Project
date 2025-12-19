@@ -11,7 +11,7 @@ Cut::Cut(ApplicationManager* pAppManager) : Action(pAppManager)
 
 void Cut::Execute()
 {
-	//ApplicationManager* pManager;
+	
 
 	// Get pointers to Output
 	Output* pOut = pManager->GetOutput();

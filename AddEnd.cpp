@@ -3,6 +3,7 @@
 #include "..\GUI\Input.h"
 #include "..\GUI\Output.h"
 #include "End.h"
+
 AddEnd::AddEnd(ApplicationManager* pAppManager) : Action(pAppManager) {}
 
 void AddEnd::ReadActionParameters()

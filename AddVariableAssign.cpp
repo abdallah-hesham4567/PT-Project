@@ -16,7 +16,7 @@ void AddVariableAssign::ReadActionParameters()
 {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-	// 1️⃣ اقرأ موقع النقر
+	
 	pOut->PrintMessage("Write: Click where to place the statement.");
 	pIn->GetPointClicked(Position);
 
@@ -33,13 +33,11 @@ void AddVariableAssign::ReadActionParameters()
 		Corner.y = Position.y - UI.ASSGN_HI / 2;
 	}
 	pOut->ClearStatusBar();
-	// 2️⃣ اقرأ LHS من المستخدم وتحقق من صحته
 	pOut->PrintMessage("Enter the variable name for LHS:");
-	LHS = pIn->GetVariable(pOut);   // GetVariable يضمن اسم متغير صالح
-	// 3️⃣ اقرأ RHS من المستخدم وتحقق من صحته
+	LHS = pIn->GetVariable(pOut);   // GetVariable 
 	pOut->PrintMessage("Enter the variable name for RHS:");
-	RHS = pIn->GetVariable(pOut);      // GetVariable يضمن اسم متغير صالح
-	pOut->ClearStatusBar();  // نظف الرسائل بعد إدخال البيانات
+	RHS = pIn->GetVariable(pOut);      // GetVariable
+	pOut->ClearStatusBar();  //clear 
 }
 void AddVariableAssign::Execute()
 {

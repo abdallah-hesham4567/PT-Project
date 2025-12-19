@@ -17,7 +17,7 @@ void AddOperationAssign::ReadActionParameters()
 {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-	// 1️⃣ اقرأ موقع النقر
+	
 	pOut->PrintMessage("Write: Click where to place the statement.");
 	pIn->GetPointClicked(Position);
 
@@ -35,19 +35,19 @@ void AddOperationAssign::ReadActionParameters()
 	}
 	pOut->ClearStatusBar();
 
-	// 2️⃣ اقرأ LHS من المستخدم وتحقق من صحته
+	
 	pOut->PrintMessage("Enter the variable name for LHS:");
-	LHS = pIn->GetVariable(pOut);   // GetVariable يضمن اسم متغير صالح
-	// 3️⃣ اقرأ RHS1 من المستخدم وتحقق من صحته
+	LHS = pIn->GetVariable(pOut);   // check lhs
+	
 	pOut->PrintMessage("Enter the first operand for RHS:");
-	RHS1 = pIn->GetVariableOrVal(pOut);      // GetVariable يضمن اسم متغير صالح
-	// 4️⃣ اقرأ operator من المستخدم وتحقق من صحته
+	RHS1 = pIn->GetVariableOrVal(pOut);      // can be var or value
+	
 	pOut->PrintMessage("Enter the operator (+, -, *, /):");
-	op = pIn->GetArithOperator(pOut);      // GetOperator يضمن عامل صالح
-	// 5️⃣ اقرأ RHS2 من المستخدم وتحقق من صحته
+	op = pIn->GetArithOperator(pOut);      // GetOperator
+	
 	pOut->PrintMessage("Enter the second operand for RHS:");
-	RHS2 = pIn->GetVariableOrVal(pOut);      // GetVariable يضمن اسم متغير صالح
-	pOut->ClearStatusBar();  // نظف الرسائل بعد إدخال البيانات
+	RHS2 = pIn->GetVariableOrVal(pOut);      // can be var or value
+	pOut->ClearStatusBar();  
 }
 
 void AddOperationAssign::Execute()
@@ -59,7 +59,6 @@ void AddOperationAssign::Execute()
 	Corner.y = Position.y - UI.ASSGN_HI /2 ;
 	OperatorAssignment* pAssign = new OperatorAssignment(Corner, LHS, op, RHS1, RHS2);
 	pManager->AddStatement(pAssign);
-	// Adds the created statement to application manger's statement list
 }
 
 

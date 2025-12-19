@@ -15,7 +15,7 @@ Output::Output()
 	UI.MenuItemWidth = 67;
 
 	UI.DrawingAreaWidth = .60 * UI.width;
-	UI.DrawColor = BLACK;         
+	UI.DrawColor = BLACK;                          // now we donot use it 
 	UI.HighlightColor = YELLOW;   
 	UI.MsgColor = BLACK;        
 	UI.ConnectorColor = BLACK;

@@ -34,11 +34,11 @@ void AddWhile::ReadActionParameters()
 
    
     pOut->PrintMessage("Enter the LHS:");
-    LHS = pIn->GetVariableOrVal(pOut);   // GetVariable يضمن اسم متغير صالح
+    LHS = pIn->GetVariableOrVal(pOut);   // GetVariable or val
     pOut->PrintMessage("Enter the comparison operator (==, !=, <, <=, >, >=):");
-    op = pIn->GetCompOperator(pOut);      // GetCompOperator يضمن عامل صالح
+    op = pIn->GetCompOperator(pOut);      // GetCompOperator 
     pOut->PrintMessage("Enter the RHS:");
-    RHS = pIn->GetVariableOrVal(pOut);      // GetVariable يضمن اسم متغير صالح
+    RHS = pIn->GetVariableOrVal(pOut);      // GetVariable or val
     // Construct condition text
     ConditionText = LHS + " " + op + " " + RHS;
     pOut->ClearStatusBar();  // Clean messages after data entry

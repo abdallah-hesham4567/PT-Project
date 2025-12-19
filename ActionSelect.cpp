@@ -16,7 +16,7 @@ void ActionSelect::Execute()
     pIn->GetPointClicked(P);
 
     // Remove old selection
-    //pManager->UnselectAll();
+    
     Statement* pClickedStat = pManager->GetStatement(P);
     Connector* pClickedConn = pManager->GetConnectorAtPoint(P);
 
@@ -48,8 +48,8 @@ void ActionSelect::Execute()
         return;
     }
 
-    // -------- CASE 2: CONNECTOR CLICKED --------
-    if (pClickedConn)
+    
+    if (pClickedConn)                 //if connector selected
     {
         if (pClickedConn->IsSelected())
         {
@@ -70,8 +70,7 @@ void ActionSelect::Execute()
         return;
     }
 
-    // -------- CASE 3: CLICKED EMPTY AREA --------
-   // pManager->UnselectAll();
+     // nothing 
     pOut->PrintMessage("Nothing clicked. All unselected.");
 }
 

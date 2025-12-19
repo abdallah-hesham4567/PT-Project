@@ -132,23 +132,7 @@ void AddConnector::Execute()
 	{
 		Output* pOut = pManager->GetOutput();
 
-		// Check if a connector already exists at this outlet
-		//Connector** existingConns = pManager->GetOutConnectors(SrcStat, OutletBranch);
-		//if (existingConns != nullptr)
-		//{
-		//	// Check if any existing connector uses this specific branch
-		//	int existingCount = pManager->GetOutConnCount(SrcStat);
-		//	for (int i = 0; i < existingCount; i++)
-		//	{
-		//		if (existingConns[i]->getOutletBranch() == OutletBranch)
-		//		{
-		//			pOut->PrintMessage("Error: This outlet already has a connector. Delete it first.");
-		//			delete[] existingConns;
-		//			return;
-		//		}
-		//	}
-		//	delete[] existingConns;
-		//}
+
 
 		// Create a new connector
 		Connector* pConn = new Connector(SrcStat, DstStat, OutletBranch);
@@ -162,10 +146,6 @@ void AddConnector::Execute()
 		// Update the interface to show the new connector
 		pManager->UpdateInterface();
 	}
-	else
-	{
-
-		// Parameters are invalid, action was already cancelled in ReadActionParameters
-		// No need to show additional error message
-	}
+	
+	
 }

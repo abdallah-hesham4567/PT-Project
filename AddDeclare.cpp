@@ -31,8 +31,7 @@ void AddDeclare::ReadActionParameters()
     }
     pOut->ClearStatusBar();
     string choice;
-    // Get variable name
-   // pOut->PrintMessage("Enter variable name:");
+    
     VariableName = pIn->GetVariable(pOut); // your function to ensure valid name
     // Ask if initialized
     choice = pIn->GetChoice(pOut);

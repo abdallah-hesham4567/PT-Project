@@ -79,10 +79,9 @@ public:
 	virtual string GetRHS() const { return ""; } //gives RHS
 	virtual string GetRHS2() const { return ""; } //gives second RHS if exists
 
-	// virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
+	
 
 
-	///TODO: Add more functions if needed
 
 	virtual void SetOutConn(Connector* pConn);
 	Connector* GetOutConn();  //return the outgoing connector for the statement

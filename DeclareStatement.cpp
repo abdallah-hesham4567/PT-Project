@@ -24,7 +24,7 @@ DeclareStatement::DeclareStatement(Point Lcorner, const string& var, bool hasVal
 void DeclareStatement::SetPosition(Point p)
 {
     LeftCorner.x = p.x - UI.ASSGN_WDTH / 2;
-    LeftCorner.y = p.y;
+    LeftCorner.y = p.y- UI.ASSGN_HI /2;
 
     Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
     Inlet.y = LeftCorner.y;
@@ -95,15 +95,13 @@ void DeclareStatement::Draw(Output* pOut) const
 Point DeclareStatement::GetOutletPoint(int branch) const
 {
     // Rectangle - outlet at bottom center
-    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
-        LeftCorner.y + UI.ASSGN_HI);
+    return Outlet;
 }
 
 Point DeclareStatement::GetInletPoint() const
 {
     // Rectangle - inlet at top center
-    return Point(LeftCorner.x + UI.ASSGN_WDTH / 2,
-        LeftCorner.y);
+    return Inlet;
 }
 
 int DeclareStatement::GetExpectedOutConnCount() const
