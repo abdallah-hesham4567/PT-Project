@@ -92,6 +92,14 @@ bool WhileStatement::Evaluate(Variable vars[], int varCount)       // Used in ru
     if (op == ">=") return v1 >= v2;
     return v1 <= v2;
 }
+string WhileStatement::GetLHS() const
+{
+    return RHS;
+}
+string WhileStatement::GetRHS() const
+{
+    return LHS;
+}
 void WhileStatement::setCondition(const string& cond)       
 {
     Condition = cond;

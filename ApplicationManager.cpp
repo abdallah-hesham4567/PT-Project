@@ -702,8 +702,8 @@ bool ApplicationManager::IsValid() const
 				// Add to declared list
 				declaredVars[declaredCount++] = varName;
 			}
-			// WRITE Statement
 
+			// WRITE Statement
 			else if (statType == "WRITE")
 			{
 				string varName = currentStat->GetVariableName();
@@ -797,6 +797,12 @@ bool ApplicationManager::IsValid() const
 						break;
 					}
 				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + rhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
 			}
 
 			// operation assign statement
@@ -816,13 +822,94 @@ bool ApplicationManager::IsValid() const
 						break;
 					}
 				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + lhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
 
+				// Check if RHS1 is declared
+				exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == rhs1)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + rhs1 + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+
+				// Check if RHS2 is declared
+				exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == rhs2)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + rhs2 + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
 			}
+
 			//CONDITIONAL or WHILE Statement
 			else if (statType == "COND" || statType == "WHILE")
 			{
-				// TODO: Check variables in condition
-				// For now, skip
+				string lhs = currentStat->GetLHS();
+				string rhs = currentStat->GetRHS();
+				// Check if LHS is declared
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == lhs)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + lhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+
+				//check if rhs is value or variable 
+				if (IsValue(rhs))
+				{
+					// Literal value - no declaration needed
+				}
+				else
+				{
+					// Check if RHS is declared
+					exists = false;
+					for (int j = 0; j < declaredCount; j++)
+					{
+						if (declaredVars[j] == rhs)
+						{
+							exists = true;
+							break;
+						}
+					}
+					if (!exists)
+					{
+						errorMsg = "Error: Variable '" + rhs + "' is not declared.";
+						pOut->PrintMessage(errorMsg);
+						return false;
+					}
+				}
 			}
 		}
 
