@@ -94,11 +94,11 @@ bool WhileStatement::Evaluate(Variable vars[], int varCount)       // Used in ru
 }
 string WhileStatement::GetLHS() const
 {
-    return RHS;
+    return LHS;
 }
 string WhileStatement::GetRHS() const
 {
-    return LHS;
+    return RHS;
 }
 void WhileStatement::setCondition(const string& cond)       
 {
