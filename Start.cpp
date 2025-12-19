@@ -56,6 +56,7 @@ Statement* Start::Clone() const
 {
     Start* newStart = new Start(*this);
     newStart->pOutConn = nullptr; // Reset outgoing connector for the cloned statement
+    newStart->SetSelected(false);
     return newStart;
 }
 

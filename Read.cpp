@@ -133,7 +133,8 @@ Statement* Read::Clone() const
 {
     Read* newRead = new Read(*this);
     newRead->pOutConn = nullptr; // Reset outgoing connector for the cloned statement
-	return newRead;
+    newRead->SetSelected(false);
+    return newRead;
 }
 
 void Read::Save(ofstream& OutFile) const      //save by Lcorner

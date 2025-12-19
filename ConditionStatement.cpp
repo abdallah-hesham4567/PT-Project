@@ -126,6 +126,7 @@ Statement* ConditionStatement::Clone() const
     //while has two outgoing connectors, reset them for the cloned statement
     newCond->setTrueBranch(nullptr);
     newCond->setFalseBranch(nullptr);
+    newCond->SetSelected(false);
     return newCond;
 }
 

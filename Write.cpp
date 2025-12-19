@@ -101,7 +101,7 @@ void Write::Edit(Input* pIn, Output* pOut)
 Statement* Write::Clone() const
 {
     Write* newWrite = new Write(*this);
-	
+    newWrite->SetSelected(false);
     return newWrite;
 }
 

@@ -154,6 +154,7 @@ Statement* OperatorAssignment::Clone() const
 {
     OperatorAssignment* newOppAssign = new OperatorAssignment(*this);
     newOppAssign->SetOutConn(nullptr);
+    newOppAssign->SetSelected(false);
     return newOppAssign;
 }
 
