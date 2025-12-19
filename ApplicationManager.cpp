@@ -23,6 +23,7 @@
 #include "ActionLoad.h"
 #include "Variable.h"
 #include "Run.h"
+#include "Validate.h"
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -353,18 +354,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		pAct = new Run(this);
 		break;
 
-	/*case EXIT:
-		///create Exit Action here
-		pAct = new Exit(this);
+	case VALIDATE:
+		pAct = new Validate(this);
 		break;
-	case EXITS:
-		///create Exit Action here
-		pAct = new Exit(this);
-		break;
-	case CPP:
-		///create Exit Action here
-		pAct = new Cpp(this);
-		break;*/
 
 	case DRAWING_AREA:
 	{
@@ -532,7 +524,7 @@ bool ApplicationManager::IsValid() const
 
 	for (int i = 0; i < StatCount; i++)
 	{
-		if (StatList[i]->getStatementType() == "START")
+		if (StatList[i]->getStatementType() == "STRT")
 		{
 			startCount++;
 			startStat = StatList[i];  // Store the Start statement
@@ -571,7 +563,7 @@ bool ApplicationManager::IsValid() const
 		string statType = pStat->getStatementType();
 
 		// Check input connectors (except Start)
-		if (statType != "START")
+		if (statType != "STRT")
 		{
 			int inCount = GetInConnCount(pStat);
 			if (inCount == 0)
@@ -588,7 +580,7 @@ bool ApplicationManager::IsValid() const
 			int outCount = GetOutConnCount(pStat);
 
 			// Conditional/While must have 2 outputs
-			if (statType == "CONDITIONAL" || statType == "WHILE")
+			if (statType == "COND" || statType == "WHILE")
 			{
 				if (outCount != 2)
 				{
@@ -599,22 +591,22 @@ bool ApplicationManager::IsValid() const
 
 				// Check branches 0 and 1 exist
 				Connector** outConns = GetOutConnectors(pStat);
-				bool hasBranch0 = false;
+				bool hasBranch2 = false;
 				bool hasBranch1 = false;
 
 				for (int j = 0; j < outCount; j++)
 				{
-					if (outConns[j]->getOutletBranch() == 0)
-						hasBranch0 = true;
+					if (outConns[j]->getOutletBranch() == 2)
+						hasBranch2 = true;
 					if (outConns[j]->getOutletBranch() == 1)
 						hasBranch1 = true;
 				}
 
 				delete[] outConns;
 
-				if (!hasBranch0 || !hasBranch1)
+				if (!hasBranch2 || !hasBranch1)
 				{
-					errorMsg = "Error: Conditional must have both TRUE (0) and FALSE (1) branches.";
+					errorMsg = "Error: Conditional must have both TRUE (1) and FALSE (2) branches.";
 					pOut->PrintMessage(errorMsg);
 					return false;
 				}
@@ -683,7 +675,7 @@ bool ApplicationManager::IsValid() const
 		string statType = currentStat->getStatementType();
 
 		// Skip Start statement (no variable logic)
-		if (statType != "START")
+		if (statType != "STRT")
 		{
 			if (statType == "READ" || statType == "DECLARE")
 			{
@@ -799,7 +791,7 @@ bool ApplicationManager::IsValid() const
 
 			}
 			// === CONDITIONAL or WHILE Statement ===
-			else if (statType == "CONDITIONAL" || statType == "WHILE")
+			else if (statType == "COND" || statType == "WHILE")
 			{
 				// TODO: Check variables in condition
 				// For now, skip

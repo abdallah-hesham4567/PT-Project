@@ -3,6 +3,7 @@
 #include "../ApplicationManager.h"
 class Run :public Action
 {
+	Output* pOut;
 	public:
 	Run(ApplicationManager* pAppManager):Action(pAppManager){};
 	virtual void ReadActionParameters();

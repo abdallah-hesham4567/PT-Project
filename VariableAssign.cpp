@@ -93,10 +93,7 @@ void VariableAssign::Edit(Input* pIn, Output* pOut)
 	pOut->ClearStatusBar();
 }
 
-string VariableAssign::GetVariableName() const
-{
-	return ;
-}
+
 
 Statement* VariableAssign::Clone() const
 {
