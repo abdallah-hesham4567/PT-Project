@@ -16,14 +16,14 @@ Output::Output()
 
 	UI.DrawingAreaWidth = .60 * UI.width;
 	UI.DrawColor = BLACK;        // لون الرسومات الطبيعي
-	UI.HighlightColor = DARKBLUE;   
+	UI.HighlightColor = BLACK;   
 	UI.MsgColor = BLACK;        
 	UI.ConnectorColor = BLACK;
 
 	UI.ASSGN_WDTH = 200;                 // width rectangle 
 	UI.ASSGN_HI = 45;                    // hight rectangle 
 
-	UI.COND_WDTH = 160;                  // width diamond
+	UI.COND_WDTH = 180;                  // width diamond
 	UI.COND_HI = 100;                    // hight diamond
 
 	UI.READ_WDTH = 160;                  // width Parallelogram
@@ -35,8 +35,7 @@ Output::Output()
 	UI.START_END_WDTH = 160;             // width ellipse 
 	UI.START_END_HI = 60;                // hight ellipse
 
-	UI.ConnectorColor = BLACK;
-	UI.HighlightColor = DARKCYAN;
+	
 
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, 0, 0);
@@ -235,7 +234,7 @@ void Output::DrawAssignAndDeclare(Point Left, int width, int height, string Text
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);  // highlighted
 	else
-		pWind->SetPen(UI.DrawColor, 3);       // normal
+		pWind->SetPen(color(30, 90, 180), 3);       // normal
 
 	//  check if   Empty / Filled
 	if (Text.empty())
@@ -264,7 +263,7 @@ void Output::DrawStart(Point Left, int width, int height, string Text, bool Sele
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
 	else
-		pWind->SetPen(UI.DrawColor, 3);
+		pWind->SetPen(DARKGREEN, 3);
 
 	if (Text.empty())
 		pWind->SetBrush(BLUE);
@@ -288,7 +287,7 @@ void Output::DrawEnd(Point Left, int width, int height, string Text, bool Select
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
 	else
-		pWind->SetPen(UI.DrawColor, 3);
+		pWind->SetPen(RED, 3);
 
 	if (Text.empty())
 		pWind->SetBrush(BLUE);
@@ -311,7 +310,7 @@ void Output::DrawConditionalStat(Point Left, int width, int height, string Text,
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
 	else
-		pWind->SetPen(UI.DrawColor, 3);
+		pWind->SetPen(ORANGE, 3);
 
 	if (Text.empty())
 		pWind->SetBrush(BLUE);
@@ -339,7 +338,7 @@ void Output::DrawReadAndWrite(Point Left, int width, int height, string Text, bo
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
 	else
-		pWind->SetPen(UI.DrawColor, 3);
+		pWind->SetPen(PURPLE, 3);
 
 	if (Text.empty())
 		pWind->SetBrush(BLUE);
