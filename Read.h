@@ -21,7 +21,6 @@ public:
     Read(Point Lcorner, const string& var = "");
    
     void setVarName(const string& v);
-	string getVarName() const { return VarName; }
 
 
     virtual Point GetOutletPoint(int branch = 0) const;
@@ -34,7 +33,7 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "READ"; }
-	string getVariableName() const { return VarName; }
+
 
     virtual void Edit(Input* pIn, Output* pOut);
     virtual Statement* Clone() const;
@@ -44,6 +43,7 @@ public:
 	virtual int GetWidth() const;
 	virtual int GetHeight() const;
 	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut);
+    string GetVariableName() const { return VarName; }
 };
 
 #endif
