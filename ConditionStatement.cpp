@@ -218,6 +218,9 @@ void ConditionStatement::Edit(Input* pIn, Output* pOut)
     string RHS = pIn->GetVariableOrVal(pOut);
 
     string ConditionText = LHS + " " + op + " " + RHS;
+    this->LHS = LHS;
+    this->op = op;
+    this->RHS = RHS;
     Condition = ConditionText;
 	this->setCondition(ConditionText);
     pOut->ClearStatusBar();

@@ -132,7 +132,9 @@ void WhileStatement::Edit(Input* pIn, Output* pOut)
     string RHS = pIn->GetVariableOrVal(pOut);
 
     string newCondition = LHS + " " + op + " " + RHS;
-
+    this->LHS = LHS;
+    this->op = op;
+    this->RHS = RHS;
     this->setCondition(newCondition);
 	pOut->ClearStatusBar();
 
