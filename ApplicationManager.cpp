@@ -778,12 +778,12 @@ bool ApplicationManager::IsValid() const
 						exists = true;
 						break;
 					}
-					if (!exists)
-					{
-						errorMsg = "Error: Variable '" + lhs + "' is not declared.";
-						pOut->PrintMessage(errorMsg);
-						return false;
-					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + lhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
 				}
 			}
 
