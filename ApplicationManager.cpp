@@ -855,36 +855,42 @@ bool ApplicationManager::IsValid() const
 
 				// Check if RHS1 is declared
 				exists = false;
-				for (int j = 0; j < declaredCount; j++)
+				if (!IsValue(rhs1))
 				{
-					if (declaredVars[j] == rhs1)
+					for (int j = 0; j < declaredCount; j++)
 					{
-						exists = true;
-						break;
+						if (declaredVars[j] == rhs1)
+						{
+							exists = true;
+							break;
+						}
 					}
-				}
-				if (!exists)
-				{
-					errorMsg = "Error: Variable '" + rhs1 + "' is not declared.";
-					pOut->PrintMessage(errorMsg);
-					return false;
+					if (!exists)
+					{
+						errorMsg = "Error: Variable '" + rhs1 + "' is not declared.";
+						pOut->PrintMessage(errorMsg);
+						return false;
+					}
 				}
 
 				// Check if RHS2 is declared
 				exists = false;
-				for (int j = 0; j < declaredCount; j++)
+				if (!IsValue(rhs2))
 				{
-					if (declaredVars[j] == rhs2)
+					for (int j = 0; j < declaredCount; j++)
 					{
-						exists = true;
-						break;
+						if (declaredVars[j] == rhs2)
+						{
+							exists = true;
+							break;
+						}
 					}
-				}
-				if (!exists)
-				{
-					errorMsg = "Error: Variable '" + rhs2 + "' is not declared.";
-					pOut->PrintMessage(errorMsg);
-					return false;
+					if (!exists)
+					{
+						errorMsg = "Error: Variable '" + rhs2 + "' is not declared.";
+						pOut->PrintMessage(errorMsg);
+						return false;
+					}
 				}
 			}
 
@@ -911,11 +917,7 @@ bool ApplicationManager::IsValid() const
 				}
 
 				//check if rhs is value or variable 
-				if (IsValue(rhs))
-				{
-					// Literal value - no declaration needed
-				}
-				else
+				if (!IsValue(rhs))
 				{
 					// Check if RHS is declared
 					exists = false;
