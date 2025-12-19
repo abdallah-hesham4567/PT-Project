@@ -27,6 +27,15 @@ void Paste::Execute()
     Point P;
     pOut->PrintMessage("Please click on the desired location to paste");
     pIn->GetPointClicked(P);
+    while (!pManager->InDrawingArea(P, newStat->GetWidth(), newStat->GetHeight()) ||
+		!pManager->CanPlaceStatement(Point(P.x - newStat->GetWidth() / 2, P.y - newStat->GetHeight() / 2), newStat->GetWidth(), newStat->GetHeight()))
+    {
+        pOut->PrintMessage("Invalid position! Click in empty drawing area.");
+        pIn->GetPointClicked(P);
+    }
+    {
+
+    }
     newStat->SetPosition(P);
 
     // Add to the application
