@@ -133,6 +133,7 @@ public:
 	void ClearAll(); // Clear all statements and connectors
 
 
+	void RunStartup();
 
 };
 
