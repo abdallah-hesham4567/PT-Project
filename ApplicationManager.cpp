@@ -677,7 +677,8 @@ bool ApplicationManager::IsValid() const
 		// Skip Start statement (no variable logic)
 		if (statType != "STRT")
 		{
-			if (statType == "READ" || statType == "DECLARE")
+			// DECLARE Statement
+			if (statType == "DECLARE")
 			{
 				string varName = currentStat->GetVariableName();
 
@@ -702,8 +703,45 @@ bool ApplicationManager::IsValid() const
 				// Add to declared list
 				declaredVars[declaredCount++] = varName;
 			}
+
 			// WRITE Statement
 			else if (statType == "WRITE")
+			{
+				string varName = currentStat->GetVariableName();
+				
+				if (varName.size() >= 2 && varName.front() == '"' && varName.back() == '"')
+				{
+					//means that the given string is literal and skip varibale check 
+				}
+				else if (IsValue(varName))
+				{
+					// Literal value skip variable check
+				}
+				else
+				{
+					// Check if variable exists
+					bool exists = false;
+					for (int j = 0; j < declaredCount; j++)
+					{
+						if (declaredVars[j] == varName)
+						{
+							exists = true;
+							break;
+						}
+					}
+
+					if (!exists)
+					{
+						errorMsg = "Error: Variable '" + varName + "' is not declared.";
+						pOut->PrintMessage(errorMsg);
+						return false;
+					}
+				}
+				
+			}
+
+			// READ Statement
+			else if (statType == "READ")
 			{
 				string varName = currentStat->GetVariableName();
 
@@ -717,7 +755,6 @@ bool ApplicationManager::IsValid() const
 						break;
 					}
 				}
-
 				if (!exists)
 				{
 					errorMsg = "Error: Variable '" + varName + "' is not declared.";
@@ -725,6 +762,7 @@ bool ApplicationManager::IsValid() const
 					return false;
 				}
 			}
+
 			// value assign Statement
 			else if (statType == "VALASSIGN")
 			{
@@ -741,13 +779,14 @@ bool ApplicationManager::IsValid() const
 						break;
 					}
 				}
-
-				//declare LHS if not declared
 				if (!exists)
 				{
-					declaredVars[declaredCount++] = lhs;
+					errorMsg = "Error: Variable '" + lhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
 				}
 			}
+
 			//variable assign
 			else if (statType == "VAR_ASSIGN")
 			{
@@ -782,19 +821,119 @@ bool ApplicationManager::IsValid() const
 						break;
 					}
 				}
-
-				//declare RHS if not declared
 				if (!exists)
 				{
-					declaredVars[declaredCount++] = rhs;
+					errorMsg = "Error: Variable '" + rhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+			}
+
+			// operation assign statement
+			else if (statType == "OP_ASSIGN")
+			{
+				string lhs = currentStat->GetLHS();
+				string rhs1 = currentStat->GetRHS();
+				string rhs2 = currentStat->GetRHS2();
+
+				// Check if LHS is declared
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == lhs)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + lhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
 				}
 
+				// Check if RHS1 is declared
+				exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == rhs1)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + rhs1 + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+
+				// Check if RHS2 is declared
+				exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == rhs2)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + rhs2 + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
 			}
-			// === CONDITIONAL or WHILE Statement ===
+
+			//CONDITIONAL or WHILE Statement
 			else if (statType == "COND" || statType == "WHILE")
 			{
-				// TODO: Check variables in condition
-				// For now, skip
+				string lhs = currentStat->GetLHS();
+				string rhs = currentStat->GetRHS();
+				// Check if LHS is declared
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == lhs)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + lhs + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+
+				//check if rhs is value or variable 
+				if (IsValue(rhs))
+				{
+					// Literal value - no declaration needed
+				}
+				else
+				{
+					// Check if RHS is declared
+					exists = false;
+					for (int j = 0; j < declaredCount; j++)
+					{
+						if (declaredVars[j] == rhs)
+						{
+							exists = true;
+							break;
+						}
+					}
+					if (!exists)
+					{
+						errorMsg = "Error: Variable '" + rhs + "' is not declared.";
+						pOut->PrintMessage(errorMsg);
+						return false;
+					}
+				}
 			}
 		}
 
@@ -805,12 +944,12 @@ bool ApplicationManager::IsValid() const
 
 		if (outCount == 0)
 		{
-			// Reached end (or error - should be caught earlier)
+			// Reached end
 			break;
 		}
 		else if (outCount == 1)
 		{
-			// Normal statement - follow the single connector
+			
 			Connector** outConns = GetOutConnectors(currentStat);
 			if (outConns != nullptr && outConns[0] != nullptr)
 			{
@@ -824,8 +963,6 @@ bool ApplicationManager::IsValid() const
 		}
 		else if (outCount == 2)
 		{
-			// Conditional - for validation, follow TRUE branch (branch 0)
-			// In real execution, you'd evaluate the condition
 			Connector** outConns = GetOutConnectors(currentStat);
 
 			Statement* nextStat = nullptr;

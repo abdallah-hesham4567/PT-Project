@@ -24,7 +24,6 @@ public:
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
     virtual string getStatementType() const { return "WRITE"; }
-	string GetVariableName() const { return Expr; }
     
 
     virtual void Draw(Output* pOut) const;
@@ -42,6 +41,8 @@ public:
 
     virtual void UpdateStatementText();
 	virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut);
+    string GetVariableName() const { return Expr; }
+
 };
 
 #endif

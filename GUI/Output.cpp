@@ -15,8 +15,8 @@ Output::Output()
 	UI.MenuItemWidth = 67;
 
 	UI.DrawingAreaWidth = .60 * UI.width;
-	UI.DrawColor = BLACK;        // لون الرسومات الطبيعي
-	UI.HighlightColor = BLACK;   
+	UI.DrawColor = BLACK;         
+	UI.HighlightColor = YELLOW;   
 	UI.MsgColor = BLACK;        
 	UI.ConnectorColor = BLACK;
 

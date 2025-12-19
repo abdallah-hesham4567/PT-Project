@@ -6,9 +6,9 @@ using namespace std;
 
 class ConditionStatement : public Statement
 {
-    string Condition;   // e.g., "x > 5"
-    Connector* TrueBranch;  // لو الشرط صح
-    Connector* FalseBranch; // لو الشرط غلط
+    string Condition;   
+    Connector* TrueBranch;  // true branch
+	Connector* FalseBranch; // false statement
 
     Point LeftCorner;
     Point Inlet;
@@ -42,6 +42,8 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const;
+	string GetLHS() const { return LHS; }
+	string GetRHS() const { return RHS; }
     virtual void Edit(Input* pIn, Output* pOut);
 	virtual Statement* Clone() const;
 

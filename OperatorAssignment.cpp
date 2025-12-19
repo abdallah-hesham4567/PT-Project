@@ -109,6 +109,21 @@ void OperatorAssignment::setRHS2(string R)
 	UpdateStatementText();
 }
 
+string OperatorAssignment::GetLHS() const
+{
+    return LHS;
+}
+
+string OperatorAssignment::GetRHS() const
+{
+    return RHS1;
+}
+
+string OperatorAssignment::GetRHS2() const
+{
+    return RHS2;
+}
+
 void OperatorAssignment::Draw(Output* pOut) const
 {
     pOut->DrawAssignAndDeclare(LeftCorner, UI.ASSGN_WDTH, UI.ASSGN_HI, Text, Selected);
@@ -139,6 +154,7 @@ Statement* OperatorAssignment::Clone() const
 {
     OperatorAssignment* newOppAssign = new OperatorAssignment(*this);
     newOppAssign->SetOutConn(nullptr);
+    newOppAssign->SetSelected(false);
     return newOppAssign;
 }
 

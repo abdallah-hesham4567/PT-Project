@@ -75,8 +75,9 @@ public:
 	virtual void Edit(Input* pIn, Output* pOut) = 0;		//Edit the Statement parameter
 	virtual string getStatementType() const = 0;
 	virtual string GetVariableName() const { return ""; }
-    virtual string GetLHS() const { return ""; }
-	virtual string GetRHS() const { return ""; }
+    virtual string GetLHS() const { return ""; } //gives LHS
+	virtual string GetRHS() const { return ""; } //gives RHS
+	virtual string GetRHS2() const { return ""; } //gives second RHS if exists
 
 	// virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
 

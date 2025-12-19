@@ -99,6 +99,7 @@ Statement* VariableAssign::Clone() const
 {
 	VariableAssign* newVarAssign = new VariableAssign(*this);
 	newVarAssign->SetOutConn(nullptr);
+	newVarAssign->SetSelected(false);
 	return newVarAssign;
 }
 

@@ -53,8 +53,8 @@ public:
 	virtual int GetHeight() const;
     virtual void Execute(Variable vars[], int& varCount, Input* pIn, Output* pOut){}
 	bool Evaluate(Variable vars[], int varCount);
-    string getStatementType() const override {             //to use in validate
-        return "WHILE";
-    }
+    string getStatementType() const override { return "WHILE"; }
+    string GetLHS() const override;
+	string GetRHS() const override;
 
 };

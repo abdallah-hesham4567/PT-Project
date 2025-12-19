@@ -142,7 +142,8 @@ void DeclareStatement::Edit(Input* pIn, Output* pOut)
 Statement* DeclareStatement::Clone() const
 {
     DeclareStatement* newDeclare = new DeclareStatement(*this);
-
+    newDeclare->SetOutConn(nullptr);
+    newDeclare->SetSelected(false);
     return newDeclare;
 }
 
