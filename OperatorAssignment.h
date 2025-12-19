@@ -26,6 +26,9 @@ class OperatorAssignment : public Statement
 	void setLHS(const string& L);
 	void setRHS1(const string R);
 	void setRHS2(const string R);
+	virtual string GetLHS() const override;
+	virtual string GetRHS() const override;
+	virtual string GetRHS2() const override;
 	
 	void setOp(char O);
 	virtual void UpdateStatementText();

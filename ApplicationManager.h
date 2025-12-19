@@ -4,6 +4,7 @@
 #include "DEFS.h"
 #include <fstream>
 #include <map>
+#include <string>
 #include "Statements\Statement.h"
 class Input;
 class Output;

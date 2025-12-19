@@ -77,6 +77,7 @@ public:
 	virtual string GetVariableName() const { return ""; }
     virtual string GetLHS() const { return ""; }
 	virtual string GetRHS() const { return ""; }
+	virtual string GetRHS2() const { return ""; }
 
 	// virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
 

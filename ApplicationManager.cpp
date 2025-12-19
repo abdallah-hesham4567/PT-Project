@@ -703,28 +703,42 @@ bool ApplicationManager::IsValid() const
 				declaredVars[declaredCount++] = varName;
 			}
 			// WRITE Statement
+
 			else if (statType == "WRITE")
 			{
 				string varName = currentStat->GetVariableName();
-
-				// Check if variable exists
-				bool exists = false;
-				for (int j = 0; j < declaredCount; j++)
+				
+				if (varName.size() >= 2 && varName.front() == '"' && varName.back() == '"')
 				{
-					if (declaredVars[j] == varName)
+					//means that the given string is literal and skip varibale check 
+				}
+				else if (IsValue(varName))
+				{
+					// Literal value skip variable check
+				}
+				else
+				{
+					// Check if variable exists
+					bool exists = false;
+					for (int j = 0; j < declaredCount; j++)
 					{
-						exists = true;
-						break;
+						if (declaredVars[j] == varName)
+						{
+							exists = true;
+							break;
+						}
+					}
+
+					if (!exists)
+					{
+						errorMsg = "Error: Variable '" + varName + "' is not declared.";
+						pOut->PrintMessage(errorMsg);
+						return false;
 					}
 				}
-
-				if (!exists)
-				{
-					errorMsg = "Error: Variable '" + varName + "' is not declared.";
-					pOut->PrintMessage(errorMsg);
-					return false;
-				}
+				
 			}
+
 			// value assign Statement
 			else if (statType == "VALASSIGN")
 			{
@@ -748,6 +762,7 @@ bool ApplicationManager::IsValid() const
 					declaredVars[declaredCount++] = lhs;
 				}
 			}
+
 			//variable assign
 			else if (statType == "VAR_ASSIGN")
 			{
@@ -782,15 +797,28 @@ bool ApplicationManager::IsValid() const
 						break;
 					}
 				}
+			}
 
-				//declare RHS if not declared
-				if (!exists)
+			// operation assign statement
+			else if (statType == "OP_ASSIGN")
+			{
+				string lhs = currentStat->GetLHS();
+				string rhs1 = currentStat->GetRHS();
+				string rhs2 = currentStat->GetRHS2();
+
+				// Check if LHS is declared
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
 				{
-					declaredVars[declaredCount++] = rhs;
+					if (declaredVars[j] == lhs)
+					{
+						exists = true;
+						break;
+					}
 				}
 
 			}
-			// === CONDITIONAL or WHILE Statement ===
+			//CONDITIONAL or WHILE Statement
 			else if (statType == "COND" || statType == "WHILE")
 			{
 				// TODO: Check variables in condition
