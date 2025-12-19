@@ -3,7 +3,7 @@
 Output::Output()
 {
 	//Initialize user interface parameters
-
+	OutputY = UI.height - UI.ToolBarHeight + 20;
 	UI.width = 2000;
 	UI.height = 800;
 	UI.wx = 15;
@@ -194,11 +194,18 @@ void Output::ClearDrawArea()
 // to clear Output area
 void Output::ClearOutputBar()
 {
-	//Create output bar by drawing a filled rectangle
 	pWind->SetPen(BLACK, 1);
 	pWind->SetBrush(GREY);
-	pWind->DrawRectangle(UI.DrawingAreaWidth, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);
+	pWind->DrawRectangle(
+		UI.DrawingAreaWidth,
+		UI.ToolBarHeight,
+		UI.width,
+		UI.height - UI.StatusBarHeight
+	);
+
+	OutputY = UI.ToolBarHeight + 20;
 }
+
 
 
 //Prints a message on status bar
@@ -450,9 +457,6 @@ void Output::DrawButton(int x, int y, int w, int h, string text, color btnColor)
 
 void Output::PrintOutput(const string& text)
 {
-	if (OutputY == 0)
-		OutputY = UI.ToolBarHeight + 20;
-
 	pWind->SetPen(BLACK, 2);
 	pWind->SetFont(20, BOLD, BY_NAME, "Roboto");
 
@@ -462,8 +466,9 @@ void Output::PrintOutput(const string& text)
 		text
 	);
 
-	OutputY += 25; 
+	OutputY += 25;
 }
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////

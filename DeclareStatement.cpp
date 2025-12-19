@@ -54,8 +54,8 @@ void DeclareStatement::Execute(Variable vars[], int& varCount, Input*, Output*)
     vars[varCount].name = VariableName;
 	if (HasValue)
         vars[varCount].value = Value;
-    //else
-    //    vars[varCount].value = 0;              // Default initialization
+    else
+        vars[varCount].value = 0;              // Default initialization
     varCount++;
 }
 
