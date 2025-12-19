@@ -886,6 +886,8 @@ Statement* ApplicationManager::GetNextAfterCondition(Statement* pStat, bool resu
 
 void ApplicationManager::RunSimulation()
 {
+	
+
 	Variable Vars[100];
 	int VarCount = 0;
 
