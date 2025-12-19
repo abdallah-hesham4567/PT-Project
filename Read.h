@@ -34,6 +34,7 @@ public:
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
     string getStatementType() const override { return "READ"; }
+	string getVariableName() const { return VarName; }
 
     virtual void Edit(Input* pIn, Output* pOut);
     virtual Statement* Clone() const;

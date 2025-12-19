@@ -677,7 +677,8 @@ bool ApplicationManager::IsValid() const
 		// Skip Start statement (no variable logic)
 		if (statType != "STRT")
 		{
-			if (statType == "READ" || statType == "DECLARE")
+			// DECLARE Statement
+			if (statType == "DECLARE")
 			{
 				string varName = currentStat->GetVariableName();
 
@@ -737,6 +738,29 @@ bool ApplicationManager::IsValid() const
 					}
 				}
 				
+			}
+
+			// READ Statement
+			else if (statType == "READ")
+			{
+				string varName = currentStat->GetVariableName();
+
+				// Check if variable exists
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == varName)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + varName + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
 			}
 
 			// value assign Statement
