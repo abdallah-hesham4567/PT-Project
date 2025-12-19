@@ -144,7 +144,7 @@ Statement* WhileStatement::Clone() const
 	//while has two outgoing connectors, reset them for the cloned statement
     newWhile->setTrueBranch(nullptr);
 	newWhile->setFalseBranch(nullptr);
-
+    newWhile->SetSelected(false);
 	return newWhile;
 
 }

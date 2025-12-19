@@ -89,6 +89,7 @@ Statement* End::Clone() const
 {
     End* newEnd = new End(*this);
     newEnd->pInConn = nullptr; // Reset outgoing connector for the cloned statement
+    newEnd->SetSelected(false);
     return newEnd;
 }
 

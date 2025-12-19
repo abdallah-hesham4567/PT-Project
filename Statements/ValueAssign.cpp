@@ -47,7 +47,18 @@ void ValueAssign::setRHS(double R)
 
 void ValueAssign::SetPosition(Point p)
 {
-	LeftCorner = p;
+
+	LeftCorner.x = p.x - UI.ASSGN_WDTH / 2;
+	LeftCorner.y = p.y - UI.ASSGN_HI / 2;
+
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Inlet.y = LeftCorner.y;
+
+	Outlet.x = Inlet.x;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+
+	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 
 }
 
@@ -86,7 +97,8 @@ void ValueAssign::Edit(Input* pIn, Output* pOut)
 Statement* ValueAssign::Clone() const
 {
 	ValueAssign* copy = new ValueAssign(*this);
-	//copy->SetOutConn(nullptr); // Reset the outgoing connector for the cloned statement
+	copy->SetOutConn(nullptr); // Reset the outgoing connector for the cloned statement
+	copy->SetSelected(false);
 	return copy;
 }
 
