@@ -65,6 +65,8 @@ public:
     bool IsSelected() const { return Selected; }
 
 
+
+
 	///TODO:The following functions should be supported by the Statement class
 	///		It should then be overridden by each derived Statement
 	///		Decide the parameters that you should pass to each function and its return type
@@ -72,7 +74,9 @@ public:
 
 	virtual void Edit(Input* pIn, Output* pOut) = 0;		//Edit the Statement parameter
 	virtual string getStatementType() const = 0;
-	//virtual void Simulate();	//Execute the statement in the simulation mode
+	virtual string GetVariableName() const { return ""; }
+    virtual string GetLHS() const { return ""; }
+	virtual string GetRHS() const { return ""; }
 
 	// virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
 

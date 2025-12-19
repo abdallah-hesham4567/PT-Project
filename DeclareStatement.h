@@ -20,9 +20,11 @@ public:
     
     void setVariable(const string& var);
     void setValue(double val);
-    string getVariable() const { return VariableName; }
+    string GetVariableName() const { return VariableName; }
+    string getStatementType() const override { return "DECLARE"; }
     bool hasValue() const { return HasValue; }
     double getValue() const { return Value; }
+
 
     void UpdateStatementText();  // Create text like "x = 5" or "y"
     virtual Point GetOutletPoint(int branch = 0) const;
@@ -33,7 +35,6 @@ public:
     virtual void Draw(Output* pOut) const;
     virtual void Save(ofstream& OutFile) const;
     virtual void Load(ifstream& InFile);
-    string getStatementType() const override { return "DECLARE"; }
     virtual void Edit(Input* pIn, Output* pOut);
 	virtual Statement* Clone() const;
     

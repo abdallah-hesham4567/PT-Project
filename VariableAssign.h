@@ -22,6 +22,8 @@ public:
 	
 	void setLHS(const string& L);
 	void setRHS(const string& R);
+	string GetLHS() const override;
+	string GetRHS() const override;
 
 	virtual Point GetOutletPoint(int branch = 0) const;
 	virtual Point GetInletPoint() const;

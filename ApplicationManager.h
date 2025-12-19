@@ -95,7 +95,7 @@ public:
 
 
 	// == Simulation Functions ==
-	bool Validate() const;
+	bool IsValid() const;
 	Statement* GetNextStatement(Statement* pStat);
 	Statement* GetNextAfterCondition(Statement* pStat,bool result);
 	void RunSimulation();

@@ -2,6 +2,8 @@
 #define WRITE_H
 #include "Statement.h"
 #include <string>
+using namespace std;
+
 class Write : public Statement
 {
 private:
@@ -14,14 +16,15 @@ private:
     
 
 public:
-    Write(Point Lcorner, const std::string& expr = "");
+    Write(Point Lcorner, const string& expr = "");
    
-    void setExpr(const std::string& e);
+    void setExpr(const string& e);
 
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;
     virtual int GetExpectedOutConnCount() const;
     virtual string getStatementType() const { return "WRITE"; }
+	string GetVariableName() const { return Expr; }
     
 
     virtual void Draw(Output* pOut) const;

@@ -178,9 +178,3 @@ void ValueAssign::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
-
-
-string ValueAssign::getStatementType() const
-{
-	 return "VALASSIGN"; 
-}

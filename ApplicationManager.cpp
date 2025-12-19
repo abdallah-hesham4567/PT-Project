@@ -515,27 +515,31 @@ void ApplicationManager::SaveAll(ofstream& OutFile)
 
 
 ///		////////////////////////////////////////Validation Function///////////////////////////////////////////	
-bool ApplicationManager::Validate() const
+bool ApplicationManager::IsValid() const
 {
 	Output* pOut = GetOutput();
 	string errorMsg = "";
 
+	// ============================================
+	// PHASE 1: STRUCTURE VALIDATION (Same as before)
+	// ============================================
+
 	// Validation Rule 1: Must have exactly ONE Start statement
 	int startCount = 0;
-	//Statement* startStat = nullptr;
+	Statement* startStat = nullptr;
 
 	for (int i = 0; i < StatCount; i++)
 	{
-		if (StatList[i]->getStatementType() == "START")  // Adjust based on your implementation
+		if (StatList[i]->getStatementType() == "START")
 		{
 			startCount++;
-			//startStat = StatList[i];
+			startStat = StatList[i];  // Store the Start statement
 		}
 	}
 
-	if (startCount != 0)
+	if (startCount != 1)
 	{
-		errorMsg = "Error: Flowchart must have exactly ONE Start statement. Found 0.";
+		errorMsg = "Error: Flowchart must have exactly ONE Start statement.";
 		pOut->PrintMessage(errorMsg);
 		return false;
 	}
@@ -551,53 +555,52 @@ bool ApplicationManager::Validate() const
 		}
 	}
 
-	if (endCount != 0)
+	if (endCount != 1)
 	{
 		errorMsg = "Error: Flowchart must have exactly ONE End statement.";
 		pOut->PrintMessage(errorMsg);
 		return false;
 	}
 
-	// Validation Rule 3: Every statement must have valid connections
+	// Validation Rule 3: Check connectivity (same as before)
 	for (int i = 0; i < StatCount; i++)
 	{
 		Statement* pStat = StatList[i];
 		string statType = pStat->getStatementType();
 
-		// Check input connectors (except Start statement)
+		// Check input connectors (except Start)
 		if (statType != "START")
 		{
 			int inCount = GetInConnCount(pStat);
 			if (inCount == 0)
 			{
-				errorMsg = "Error: Statement at position has no input connector (orphaned statement).";
+				errorMsg = "Error: Statement has no input connector (orphaned statement).";
 				pOut->PrintMessage(errorMsg);
 				return false;
 			}
 		}
 
-		// Check output connectors (except End statement)
+		// Check output connectors (except End)
 		if (statType != "END")
 		{
 			int outCount = GetOutConnCount(pStat);
 
-			// Conditional statements must have exactly 2 outputs
+			// Conditional/While must have 2 outputs
 			if (statType == "CONDITIONAL" || statType == "WHILE")
 			{
 				if (outCount != 2)
 				{
-					errorMsg = "Error: Conditional statement must have exactly 2 output connectors (TRUE and FALSE branches).";
+					errorMsg = "Error: Conditional statement must have exactly 2 output connectors.";
 					pOut->PrintMessage(errorMsg);
 					return false;
 				}
 
-				// Check that one is branch 0 and one is branch 1
-				int count = 0;
+				// Check branches 0 and 1 exist
 				Connector** outConns = GetOutConnectors(pStat);
 				bool hasBranch0 = false;
 				bool hasBranch1 = false;
 
-				for (int j = 0; j < count; j++)
+				for (int j = 0; j < outCount; j++)
 				{
 					if (outConns[j]->getOutletBranch() == 0)
 						hasBranch0 = true;
@@ -609,7 +612,7 @@ bool ApplicationManager::Validate() const
 
 				if (!hasBranch0 || !hasBranch1)
 				{
-					errorMsg = "Error: Conditional statement must have both TRUE (0) and FALSE (1) branches.";
+					errorMsg = "Error: Conditional must have both TRUE (0) and FALSE (1) branches.";
 					pOut->PrintMessage(errorMsg);
 					return false;
 				}
@@ -617,15 +620,9 @@ bool ApplicationManager::Validate() const
 			else
 			{
 				// Normal statements must have exactly 1 output
-				if (outCount == 0)
+				if (outCount != 1)
 				{
-					errorMsg = "Error: Non-End statement has no output connector.";
-					pOut->PrintMessage(errorMsg);
-					return false;
-				}
-				else if (outCount > 1)
-				{
-					errorMsg = "Error: Non-conditional statement cannot have multiple output connectors.";
+					errorMsg = "Error: Statement must have exactly 1 output connector.";
 					pOut->PrintMessage(errorMsg);
 					return false;
 				}
@@ -633,7 +630,6 @@ bool ApplicationManager::Validate() const
 		}
 		else  // End statement
 		{
-			// End statements should have NO output connectors
 			int outCount = GetOutConnCount(pStat);
 			if (outCount > 0)
 			{
@@ -654,10 +650,215 @@ bool ApplicationManager::Validate() const
 		}
 	}
 
-	// If all validations pass
-	pOut->PrintMessage("Validation successful! Congrats, Flowchart is valid.");
+
+	// VARIABLE VALIDATION IN EXECUTION ORDER
+	// =================================================================================================================================================
+
+	// Track declared variables
+	string declaredVars[100];
+	int declaredCount = 0;
+
+	// infinite loop detection
+	bool visited[200] = { false }; 
+	int visitCount = 0;
+
+	// Start from START statement
+	Statement* currentStat = startStat;
+
+	// Loop until we reach END or detect infinite loop
+	while (currentStat != nullptr && currentStat->getStatementType() != "END")
+	{
+		// Check for infinite loop (visited too many statements)
+		visitCount++;
+		if (visitCount > StatCount * 2)
+		{
+			errorMsg = "Error: Possible infinite loop detected in flowchart.";
+			pOut->PrintMessage(errorMsg);
+			return false;
+		}
+
+		// Get statement type
+		string statType = currentStat->getStatementType();
+
+		// Skip Start statement (no variable logic)
+		if (statType != "START")
+		{
+			if (statType == "READ" || statType == "DECLARE")
+			{
+				string varName = currentStat->GetVariableName();
+
+				// Check for duplicate declaration
+				bool alreadyDeclared = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == varName)
+					{
+						alreadyDeclared = true;
+						break;
+					}
+				}
+
+				if (alreadyDeclared)
+				{
+					errorMsg = "Error: Variable '" + varName + "' is already declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+
+				// Add to declared list
+				declaredVars[declaredCount++] = varName;
+			}
+			// WRITE Statement
+			else if (statType == "WRITE")
+			{
+				string varName = currentStat->GetVariableName();
+
+				// Check if variable exists
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == varName)
+					{
+						exists = true;
+						break;
+					}
+				}
+
+				if (!exists)
+				{
+					errorMsg = "Error: Variable '" + varName + "' is not declared.";
+					pOut->PrintMessage(errorMsg);
+					return false;
+				}
+			}
+			// value assign Statement
+			else if (statType == "VALASSIGN")
+			{
+				string lhs = currentStat->GetLHS();
+
+
+				// Check if LHS already declared
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == lhs)
+					{
+						exists = true;
+						break;
+					}
+				}
+
+				//declare LHS if not declared
+				if (!exists)
+				{
+					declaredVars[declaredCount++] = lhs;
+				}
+			}
+			//variable assign
+			else if (statType == "VAR_ASSIGN")
+			{
+				string lhs = currentStat->GetLHS();
+				string rhs = currentStat->GetRHS();
+
+				// Check if LHS already declared
+				bool exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == lhs)
+					{
+						exists = true;
+						break;
+					}
+				}
+
+				//declare LHS if not declared
+				if (!exists)
+				{
+					declaredVars[declaredCount++] = lhs;
+				}
+
+				
+				// Check if RHS already declared
+				exists = false;
+				for (int j = 0; j < declaredCount; j++)
+				{
+					if (declaredVars[j] == rhs)
+					{
+						exists = true;
+						break;
+					}
+				}
+
+				//declare RHS if not declared
+				if (!exists)
+				{
+					declaredVars[declaredCount++] = rhs;
+				}
+
+			}
+			// === CONDITIONAL or WHILE Statement ===
+			else if (statType == "CONDITIONAL" || statType == "WHILE")
+			{
+				// TODO: Check variables in condition
+				// For now, skip
+			}
+		}
+
+		// === MOVE TO NEXT STATEMENT ===
+
+		// Find output connector(s)
+		int outCount = GetOutConnCount(currentStat);
+
+		if (outCount == 0)
+		{
+			// Reached end (or error - should be caught earlier)
+			break;
+		}
+		else if (outCount == 1)
+		{
+			// Normal statement - follow the single connector
+			Connector** outConns = GetOutConnectors(currentStat);
+			if (outConns != nullptr && outConns[0] != nullptr)
+			{
+				currentStat = outConns[0]->getDstStat();
+			}
+			else
+			{
+				currentStat = nullptr;
+			}
+			delete[] outConns;
+		}
+		else if (outCount == 2)
+		{
+			// Conditional - for validation, follow TRUE branch (branch 0)
+			// In real execution, you'd evaluate the condition
+			Connector** outConns = GetOutConnectors(currentStat);
+
+			Statement* nextStat = nullptr;
+			for (int i = 0; i < outCount; i++)
+			{
+				if (outConns[i]->getOutletBranch() == 0)
+				{
+					nextStat = outConns[i]->getDstStat();
+					break;
+				}
+			}
+
+			currentStat = nextStat;
+			delete[] outConns;
+		}
+		else
+		{
+			// Invalid number of outputs (should be caught earlier)
+			break;
+		}
+	}
+
+	// All checks passed
+	pOut->PrintMessage("Validation successful!");
 	return true;
 }
+
 Statement* ApplicationManager::GetNextStatement(Statement* pStat)
 {
 	for (int i = 0; i < ConnCount; i++)

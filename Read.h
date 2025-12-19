@@ -4,6 +4,8 @@
 #include "Statement.h"
 #include <string>
 #include "ApplicationManager.h"
+using namespace std;
+
 class Read : public Statement
 {
 private:
@@ -16,9 +18,11 @@ private:
     virtual void UpdateStatementText();
 
 public:
-    Read(Point Lcorner, const std::string& var = "");
+    Read(Point Lcorner, const string& var = "");
    
-    void setVarName(const std::string& v);
+    void setVarName(const string& v);
+	string getVarName() const { return VarName; }
+
 
     virtual Point GetOutletPoint(int branch = 0) const;
     virtual Point GetInletPoint() const;

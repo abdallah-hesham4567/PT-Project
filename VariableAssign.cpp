@@ -34,6 +34,14 @@ void VariableAssign::setRHS(const string& R)
 	RHS = R;
 	UpdateStatementText();
 }
+string VariableAssign::GetLHS() const
+{
+	return LHS;
+}
+string VariableAssign::GetRHS() const
+{
+	return RHS;
+}
 void VariableAssign::Draw(Output* pOut) const
 {
 	
@@ -83,6 +91,11 @@ void VariableAssign::Edit(Input* pIn, Output* pOut)
 	RHS = newRHS;
 	UpdateStatementText();
 	pOut->ClearStatusBar();
+}
+
+string VariableAssign::GetVariableName() const
+{
+	return ;
 }
 
 Statement* VariableAssign::Clone() const
@@ -158,3 +171,4 @@ void VariableAssign::SetPosition(Point p)
 	Center.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Center.y = LeftCorner.y + UI.ASSGN_HI / 2;
 }
+
