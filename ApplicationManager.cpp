@@ -944,12 +944,12 @@ bool ApplicationManager::IsValid() const
 
 		if (outCount == 0)
 		{
-			// Reached end (or error - should be caught earlier)
+			// Reached end
 			break;
 		}
 		else if (outCount == 1)
 		{
-			// Normal statement - follow the single connector
+			
 			Connector** outConns = GetOutConnectors(currentStat);
 			if (outConns != nullptr && outConns[0] != nullptr)
 			{
@@ -963,8 +963,6 @@ bool ApplicationManager::IsValid() const
 		}
 		else if (outCount == 2)
 		{
-			// Conditional - for validation, follow TRUE branch (branch 0)
-			// In real execution, you'd evaluate the condition
 			Connector** outConns = GetOutConnectors(currentStat);
 
 			Statement* nextStat = nullptr;
